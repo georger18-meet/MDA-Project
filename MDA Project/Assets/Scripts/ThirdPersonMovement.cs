@@ -5,12 +5,33 @@ using UnityEngine;
 public class ThirdPersonMovement : MonoBehaviour
 {
     public Transform Cam;
+    public Transform GroundCheck;
     private CharacterController _characterController;
 
     public float MoveSpeed = 6f;
     public float RotationSmoothTime = 0.1f;
-    private float _rotationSmoothVelocity;
+    public float Gravity = -9.81f;
+    public float GroundDistance = 0.5f;
+    public LayerMask GroundMask;
+    public float JumpHeight = 3f;
+    public float SprintMultiplier = 2f;
+    public bool EnableJump = true;
+    public bool EnableSprint = true;
+    public bool EnableCrouch = true;
 
+    private float _rotationSmoothVelocity;
+    private Vector3 _velocity;
+    private bool _isGrounded;
+    private bool _isSprinting;
+    private float _TotalMoveSpeed;
+    private bool _isCrouching;
+    private Vector3 _standingOffset;
+    private Vector3 _crouchOffset;
+    private float _standingHeight;
+    private float _crouchHeight;
+
+    //--------------------------------
+    // Main Unity Methods
     private void Awake()
     {
        _characterController = GetComponent<CharacterController>(); 
@@ -19,13 +40,19 @@ public class ThirdPersonMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _standingHeight = _characterController.height;
+        _standingOffset = _characterController.center;
+        _crouchHeight = _standingHeight / 2;
+        _crouchOffset.y = (_crouchHeight - 2) / 2;
     }
 
     // Update is called once per frame
     void Update()
     {
         MovePlayer();
+        ApplyGravity();
+        Jump();
+        Crouch();
     }
 
 
@@ -50,8 +77,75 @@ public class ThirdPersonMovement : MonoBehaviour
 
             // Move Towards Look Direction
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            // Apply Sprint
+            Sprint();
             // Move Player
-            _characterController.Move(moveDir.normalized * MoveSpeed * Time.deltaTime);
+            _characterController.Move(moveDir.normalized * _TotalMoveSpeed * Time.deltaTime);
+        }
+    }
+
+    public void ApplyGravity()
+    {
+        _isGrounded = Physics.CheckSphere(GroundCheck.position,GroundDistance,GroundMask);
+
+        if (_isGrounded && _velocity.y < 0)
+        {
+            _velocity.y = -2;
+        }
+
+        _velocity.y += Gravity *Time.deltaTime;
+        _characterController.Move(_velocity * Time.deltaTime);
+    }
+
+    public void Jump()
+    {
+        if (Input.GetButtonDown("Jump") && _isGrounded && EnableJump)
+        {
+            _velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+        }
+    }
+
+    public void Sprint()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && EnableSprint)
+        {
+            _isSprinting = true;
+        }
+        else
+        {
+            _isSprinting = false;
+        }
+
+        if (_isSprinting)
+        {
+            _TotalMoveSpeed = MoveSpeed * SprintMultiplier;
+        }
+        else
+        {
+            _TotalMoveSpeed = MoveSpeed;
+        }
+    }
+
+    public void Crouch()
+    {
+        if (Input.GetKey(KeyCode.LeftControl) && EnableCrouch && _isGrounded)
+        {
+            _isCrouching = true;
+        }
+        else
+        {
+            _isCrouching = false;
+        }
+
+        if (_isCrouching)
+        {
+            _characterController.height = _crouchHeight;
+            _characterController.center = _crouchOffset;
+        }
+        else
+        {
+            _characterController.height = _standingHeight;
+            _characterController.center = _standingOffset;
         }
     }
 }
