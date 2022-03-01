@@ -15,9 +15,12 @@ public class ThirdPersonMovement : MonoBehaviour
     public LayerMask GroundMask;
     public float JumpHeight = 3f;
     public float SprintMultiplier = 2f;
+    public float MaxFlyingHeight = 100f;
+    public bool InControl = true;
     public bool EnableJump = true;
     public bool EnableSprint = true;
     public bool EnableCrouch = true;
+    public bool EnableFly = false;
 
     private float _rotationSmoothVelocity;
     private Vector3 _velocity;
@@ -34,7 +37,7 @@ public class ThirdPersonMovement : MonoBehaviour
     // Main Unity Methods
     private void Awake()
     {
-       _characterController = GetComponent<CharacterController>(); 
+        _characterController = GetComponent<CharacterController>();
     }
 
     // Start is called before the first frame update
@@ -49,10 +52,14 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MovePlayer();
-        ApplyGravity();
-        Jump();
-        Crouch();
+        if (InControl)
+        {
+            MovePlayer();
+            ApplyGravity();
+            Jump();
+            Crouch();
+            Fly();
+        }
     }
 
 
@@ -86,15 +93,18 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public void ApplyGravity()
     {
-        _isGrounded = Physics.CheckSphere(GroundCheck.position,GroundDistance,GroundMask);
-
-        if (_isGrounded && _velocity.y < 0)
+        if (!EnableFly)
         {
-            _velocity.y = -2;
-        }
+            _isGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask);
 
-        _velocity.y += Gravity *Time.deltaTime;
-        _characterController.Move(_velocity * Time.deltaTime);
+            if (_isGrounded && _velocity.y < 0)
+            {
+                _velocity.y = -2;
+            }
+
+            _velocity.y += Gravity * Time.deltaTime;
+            _characterController.Move(_velocity * Time.deltaTime);
+        }
     }
 
     public void Jump()
@@ -146,6 +156,39 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             _characterController.height = _standingHeight;
             _characterController.center = _standingOffset;
+        }
+    }
+
+    public void Fly()
+    {
+        if (Input.GetKeyDown(KeyCode.G) && EnableFly)
+        {
+            EnableFly = false;
+            EnableJump = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.G) && !EnableFly)
+        {
+            EnableFly = true;
+            EnableJump = false;
+        }
+        if (EnableFly)
+        {
+            Sprint();
+
+            Vector3 moveDir = Vector3.zero;
+            if (Input.GetKey(KeyCode.E) && !(_characterController.transform.position.y >= MaxFlyingHeight))
+            {
+                moveDir.y = 1f;
+            }
+            else if (Input.GetKey(KeyCode.Q))
+            {
+                moveDir.y = -1f;
+            }
+            else
+            {
+                moveDir.y = 0f;
+            }
+            _characterController.Move(moveDir.normalized * _TotalMoveSpeed * Time.deltaTime);
         }
     }
 }

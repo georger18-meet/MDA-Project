@@ -9,6 +9,7 @@ public class CarController : MonoBehaviour
     private float _currentSteerAngle;
     private float _currentbreakForce;
     private bool _isBreaking;
+    [SerializeField] private bool _isDrivable;
 
     [SerializeField] private float _motorForce;
     [SerializeField] private float _breakForce;
@@ -24,6 +25,13 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform rearRightWheelTransform;
     [SerializeField] private Transform rearLeftWheelTransform;
 
+    private CarDoorCollision DoorCollider;
+
+    private void Update()
+    {
+        PlayerInteractWithCar();
+    }
+
     private void FixedUpdate()
     {
         GetInput();
@@ -35,9 +43,12 @@ public class CarController : MonoBehaviour
 
     private void GetInput()
     {
-        _horizontalInput = Input.GetAxis("Horizontal");
-        _verticalInput = Input.GetAxis("Vertical");
-        _isBreaking = Input.GetKey(KeyCode.Space);
+        if (_isDrivable)
+        {
+            _horizontalInput = Input.GetAxis("Horizontal");
+            _verticalInput = Input.GetAxis("Vertical");
+            _isBreaking = Input.GetKey(KeyCode.Space);
+        }
     }
 
     private void HandleMotor()
@@ -74,9 +85,45 @@ public class CarController : MonoBehaviour
     private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)
     {
         Vector3 pos;
-        Quaternion rot; 
+        Quaternion rot;
         wheelCollider.GetWorldPose(out pos, out rot);
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
+    }
+
+
+    public void CollisionDetected(CarDoorCollision childScript)
+    {
+        if (childScript == null)
+        {
+            DoorCollider = null;
+        }
+        else if (childScript.SeatNum == 1)
+        {
+            DoorCollider = childScript;
+        }
+    }
+
+    private void PlayerInteractWithCar()
+    {
+        if (DoorCollider != null && _isDrivable)
+        {
+            DoorCollider.CollidedPlayer.transform.transform.position = DoorCollider.gameObject.transform.position;
+            DoorCollider.CollidedPlayer.transform.transform.position += new Vector3(0, 2, 0);
+        }
+
+        if (DoorCollider != null)
+        {
+            if (Input.GetKeyDown(KeyCode.F) && !_isDrivable)
+            {
+                _isDrivable = true;
+                DoorCollider.CollidedPlayer.GetComponent<ThirdPersonMovement>().InControl = false;
+            }
+            else if (Input.GetKeyDown(KeyCode.F) && _isDrivable)
+            {
+                _isDrivable = false;
+                DoorCollider.CollidedPlayer.GetComponent<ThirdPersonMovement>().InControl = true;
+            }
+        }
     }
 }
