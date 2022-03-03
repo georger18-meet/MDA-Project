@@ -6,6 +6,7 @@ public class ThirdPersonMovement : MonoBehaviour
 {
     public Transform Cam;
     public Transform GroundCheck;
+    public Animator PlayerAnimator;
     private CharacterController _characterController;
 
     public float MoveSpeed = 6f;
@@ -25,6 +26,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private float _rotationSmoothVelocity;
     private Vector3 _velocity;
     private bool _isGrounded;
+    private bool _isMoving;
     private bool _isSprinting;
     private float _TotalMoveSpeed;
     private bool _isCrouching;
@@ -59,6 +61,11 @@ public class ThirdPersonMovement : MonoBehaviour
             Jump();
             Crouch();
             Fly();
+            AnimationController();
+        }
+        else
+        {
+            AnimationController();
         }
     }
 
@@ -76,6 +83,7 @@ public class ThirdPersonMovement : MonoBehaviour
         // If There's Input
         if (direction.magnitude >= 0.1f)
         {
+            _isMoving = true;
             // Rotate Player to Direction of Movement
             // *(The "+ Cam.eulerAngles.y" Makes the Player Face Look Direction)
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Cam.eulerAngles.y;
@@ -88,6 +96,10 @@ public class ThirdPersonMovement : MonoBehaviour
             Sprint();
             // Move Player
             _characterController.Move(moveDir.normalized * _TotalMoveSpeed * Time.deltaTime);
+        }
+        else
+        {
+            _isMoving = false;
         }
     }
 
@@ -189,6 +201,52 @@ public class ThirdPersonMovement : MonoBehaviour
                 moveDir.y = 0f;
             }
             _characterController.Move(moveDir.normalized * _TotalMoveSpeed * Time.deltaTime);
+        }
+    }
+
+    public void AnimationController()
+    {
+        if (_isMoving && !_isSprinting)
+        {
+            PlayerAnimator.SetBool("IsWalking", true);
+            PlayerAnimator.SetBool("IsRunning", false);
+        }
+        else if (_isMoving && _isSprinting)
+        {
+            PlayerAnimator.SetBool("IsWalking", true);
+            PlayerAnimator.SetBool("IsRunning", true);
+        }
+        else
+        {
+            PlayerAnimator.SetBool("IsWalking", false);
+            PlayerAnimator.SetBool("IsRunning", false);
+        }
+
+        if (_velocity.y > 0 && !_isGrounded)
+        {
+            PlayerAnimator.SetBool("IsJumping", true);
+        }
+        else if (_velocity.y < 0)
+        {
+            PlayerAnimator.SetBool("IsJumping", false);
+        }
+
+        if (_isGrounded)
+        {
+            PlayerAnimator.SetBool("IsGrounded", true);
+        }
+        else
+        {
+            PlayerAnimator.SetBool("IsGrounded", false);
+        }
+
+        if (!InControl)
+        {
+            PlayerAnimator.SetBool("IsGrounded", true);
+            PlayerAnimator.SetBool("IsJumping", false);
+            PlayerAnimator.SetBool("IsWalking", false);
+            PlayerAnimator.SetBool("IsRunning", false);
+
         }
     }
 }

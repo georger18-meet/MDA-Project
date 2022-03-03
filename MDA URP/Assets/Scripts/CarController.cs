@@ -108,8 +108,9 @@ public class CarController : MonoBehaviour
     {
         if (DoorCollider != null && _isDrivable)
         {
-            DoorCollider.CollidedPlayer.transform.transform.position = DoorCollider.gameObject.transform.position;
-            DoorCollider.CollidedPlayer.transform.transform.position += new Vector3(0, 2, 0);
+            DoorCollider.CollidedPlayer.transform.position = DoorCollider.gameObject.transform.position;
+            DoorCollider.CollidedPlayer.transform.position += new Vector3(0, 2, 0);
+            DoorCollider.CollidedPlayer.transform.rotation = DoorCollider.gameObject.transform.rotation;
         }
 
         if (DoorCollider != null)
