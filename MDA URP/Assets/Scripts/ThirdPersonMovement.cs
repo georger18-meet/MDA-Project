@@ -22,6 +22,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public bool EnableSprint = true;
     public bool EnableCrouch = true;
     public bool EnableFly = false;
+    public bool IsFPS = false;
 
     private float _rotationSmoothVelocity;
     private Vector3 _velocity;
@@ -67,6 +68,11 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             AnimationController();
         }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            TogglePOV();
+        }
     }
 
 
@@ -83,19 +89,29 @@ public class ThirdPersonMovement : MonoBehaviour
         // If There's Input
         if (direction.magnitude >= 0.1f)
         {
-            _isMoving = true;
-            // Rotate Player to Direction of Movement
-            // *(The "+ Cam.eulerAngles.y" Makes the Player Face Look Direction)
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, RotationSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            if (IsFPS)
+            {
+                _isMoving = true;
+                Sprint();
+                Vector3 moveDirFPS = transform.right * horizontal + transform.forward * vertical;
+                _characterController.Move(moveDirFPS * _TotalMoveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                _isMoving = true;
+                // Rotate Player to Direction of Movement
+                // *(The "+ Cam.eulerAngles.y" Makes the Player Face Look Direction)
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, RotationSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            // Move Towards Look Direction
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            // Apply Sprint
-            Sprint();
-            // Move Player
-            _characterController.Move(moveDir.normalized * _TotalMoveSpeed * Time.deltaTime);
+                // Move Towards Look Direction
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                // Apply Sprint
+                Sprint();
+                // Move Player
+                _characterController.Move(moveDir.normalized * _TotalMoveSpeed * Time.deltaTime);
+            }
         }
         else
         {
@@ -201,6 +217,20 @@ public class ThirdPersonMovement : MonoBehaviour
                 moveDir.y = 0f;
             }
             _characterController.Move(moveDir.normalized * _TotalMoveSpeed * Time.deltaTime);
+        }
+    }
+
+    public void TogglePOV()
+    {
+        if (IsFPS)
+        {
+            IsFPS = false;
+            Cam.gameObject.GetComponent<Cinemachine.CinemachineBrain>().enabled = true;
+        }
+        else
+        {
+            IsFPS = true;
+            Cam.gameObject.GetComponent<Cinemachine.CinemachineBrain>().enabled = false;
         }
     }
 

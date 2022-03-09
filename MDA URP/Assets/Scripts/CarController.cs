@@ -119,11 +119,13 @@ public class CarController : MonoBehaviour
             {
                 _isDrivable = true;
                 DoorCollider.CollidedPlayer.GetComponent<ThirdPersonMovement>().InControl = false;
+                DoorCollider.CollidedPlayer.GetComponent<ThirdPersonMovement>().TogglePOV();
             }
             else if (Input.GetKeyDown(KeyCode.F) && _isDrivable)
             {
                 _isDrivable = false;
                 DoorCollider.CollidedPlayer.GetComponent<ThirdPersonMovement>().InControl = true;
+                DoorCollider.CollidedPlayer.GetComponent<ThirdPersonMovement>().TogglePOV();
             }
         }
     }
