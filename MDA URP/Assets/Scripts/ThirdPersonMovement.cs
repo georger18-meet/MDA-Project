@@ -1,10 +1,16 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
     public Transform Cam;
+    public GameObject VC3rdPerson;
+    public GameObject VC1stPerson;
+    public GameObject Reticle;
+    public LayerMask InteractableMask;
     public Transform GroundCheck;
     public Animator PlayerAnimator;
     private CharacterController _characterController;
@@ -49,14 +55,17 @@ public class ThirdPersonMovement : MonoBehaviour
         _standingHeight = _characterController.height;
         _standingOffset = _characterController.center;
         _crouchHeight = _standingHeight / 2;
-        _crouchOffset.y = (_crouchHeight - 2) / 2;
+        _crouchOffset.y = -(_crouchHeight / 2);
     }
 
     // Update is called once per frame
     void Update()
     {
+        FreeCursor();
+
         if (InControl)
         {
+            _characterController.enabled = true;
             MovePlayer();
             ApplyGravity();
             Jump();
@@ -66,6 +75,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         else
         {
+            _characterController.enabled = false;
             AnimationController();
         }
 
@@ -73,6 +83,8 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             TogglePOV();
         }
+
+        CheckInteraction();
     }
 
 
@@ -225,12 +237,47 @@ public class ThirdPersonMovement : MonoBehaviour
         if (IsFPS)
         {
             IsFPS = false;
-            Cam.gameObject.GetComponent<Cinemachine.CinemachineBrain>().enabled = true;
+            VC3rdPerson.SetActive(true);
+            VC1stPerson.SetActive(false);
+            Reticle.SetActive(false);
         }
         else
         {
             IsFPS = true;
-            Cam.gameObject.GetComponent<Cinemachine.CinemachineBrain>().enabled = false;
+            VC1stPerson.SetActive(true);
+            VC3rdPerson.SetActive(false);
+            Reticle.SetActive(true);
+        }
+    }
+
+    private void CheckInteraction()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit raycastHit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out raycastHit, 100f, InteractableMask))
+            {
+                //Our custom method. 
+                Debug.Log("Object Hit: " + raycastHit.transform.gameObject.name);
+                Vector3 pointToLook = ray.GetPoint(Vector3.Distance(ray.origin, raycastHit.transform.position));
+                Debug.DrawLine(ray.origin, pointToLook, Color.cyan, 5f);
+                raycastHit.transform.gameObject.GetComponent<MakeItAButton>().EventToCall.Invoke();
+            }
+        }
+    }
+
+    private void FreeCursor()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftAlt))
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 

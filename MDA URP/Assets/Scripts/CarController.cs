@@ -25,11 +25,17 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform rearRightWheelTransform;
     [SerializeField] private Transform rearLeftWheelTransform;
 
-    private CarDoorCollision DoorCollider;
+    public GameObject CarHeadLights;
+    private bool _carHeadLightsOn = true;
+
+    public GameObject CarSiren;
+    private bool _carSirenOn = true;
+
+    public List<CarDoorCollision> CarDoorCollisions;
 
     private void Update()
     {
-        PlayerInteractWithCar();
+        CheckIfDriveable();
     }
 
     private void FixedUpdate()
@@ -39,7 +45,6 @@ public class CarController : MonoBehaviour
         HandleSteering();
         UpdateWheels();
     }
-
 
     private void GetInput()
     {
@@ -92,40 +97,46 @@ public class CarController : MonoBehaviour
     }
 
 
-    public void CollisionDetected(CarDoorCollision childScript)
+    public void ToggleHeadlights()
     {
-        if (childScript == null)
+        if (_carHeadLightsOn)
         {
-            DoorCollider = null;
+            _carHeadLightsOn = false;
+            CarHeadLights.SetActive(false);
         }
-        else if (childScript.SeatNum == 1)
+        else
         {
-            DoorCollider = childScript;
+            _carHeadLightsOn = true;
+            CarHeadLights.SetActive(true);
         }
     }
 
-    private void PlayerInteractWithCar()
+    public void ToggleSiren()
     {
-        if (DoorCollider != null && _isDrivable)
+        if (_carSirenOn)
         {
-            DoorCollider.CollidedPlayer.transform.position = DoorCollider.gameObject.transform.position;
-            DoorCollider.CollidedPlayer.transform.position += new Vector3(0, 2, 0);
-            DoorCollider.CollidedPlayer.transform.rotation = DoorCollider.gameObject.transform.rotation;
+            _carSirenOn = false;
+            CarSiren.GetComponent<Animator>().enabled = false;
         }
-
-        if (DoorCollider != null)
+        else
         {
-            if (Input.GetKeyDown(KeyCode.F) && !_isDrivable)
+            _carSirenOn = true;
+            CarSiren.GetComponent<Animator>().enabled = true;
+        }
+    }
+
+
+    private void CheckIfDriveable()
+    {
+        foreach (var item in CarDoorCollisions)
+        {
+            if (item.SeatNum == 1 && item.SeatOccupied)
             {
                 _isDrivable = true;
-                DoorCollider.CollidedPlayer.GetComponent<ThirdPersonMovement>().InControl = false;
-                DoorCollider.CollidedPlayer.GetComponent<ThirdPersonMovement>().TogglePOV();
             }
-            else if (Input.GetKeyDown(KeyCode.F) && _isDrivable)
+            else if (item.SeatNum == 1 && !item.SeatOccupied)
             {
                 _isDrivable = false;
-                DoorCollider.CollidedPlayer.GetComponent<ThirdPersonMovement>().InControl = true;
-                DoorCollider.CollidedPlayer.GetComponent<ThirdPersonMovement>().TogglePOV();
             }
         }
     }

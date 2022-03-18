@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class CarDoorCollision : MonoBehaviour
 {
+    public bool SeatOccupied = false;
     public int SeatNum;
     public GameObject CollidedPlayer;
+    public Transform SeatPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,24 +17,48 @@ public class CarDoorCollision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        EnterExitVehicle();
+    }
 
+    private void EnterExitVehicle()
+    {
+        if (CollidedPlayer != null)
+        {
+            if (Input.GetKeyDown(KeyCode.E) && !SeatOccupied)
+            {
+                SeatOccupied = true;
+                CollidedPlayer.GetComponent<ThirdPersonMovement>().InControl = false;
+                CollidedPlayer.GetComponent<ThirdPersonMovement>().TogglePOV();
+            }
+            else if (Input.GetKeyDown(KeyCode.E) && SeatOccupied)
+            {
+                SeatOccupied = false;
+                CollidedPlayer.transform.position = gameObject.transform.position;
+                CollidedPlayer.GetComponent<ThirdPersonMovement>().InControl = true;
+                CollidedPlayer.GetComponent<ThirdPersonMovement>().TogglePOV();
+            }
+
+            if (SeatOccupied)
+            {
+                CollidedPlayer.transform.position = SeatPos.position;
+                CollidedPlayer.transform.rotation = SeatPos.rotation;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !SeatOccupied)
         {
             CollidedPlayer = other.gameObject;
-            transform.parent.GetComponent<CarController>().CollisionDetected(this);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!SeatOccupied)
         {
             CollidedPlayer = null;
-            transform.parent.GetComponent<CarController>().CollisionDetected(null);
         }
     }
 }
