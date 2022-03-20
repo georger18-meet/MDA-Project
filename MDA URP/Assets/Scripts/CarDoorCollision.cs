@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class CarDoorCollision : MonoBehaviour
 {
-    public bool DoorOnLeft;
     public bool DoorOpen = false;
     public bool SeatOccupied = false;
     public int SeatNum;
