@@ -48,15 +48,15 @@ public class CarDoorCollision : MonoBehaviour
                 {
                     OpenCloseDoorToggle();
                     SeatOccupied = true;
-                    CollidedPlayer.GetComponent<ThirdPersonMovement>().InControl = false;
-                    CollidedPlayer.GetComponent<ThirdPersonMovement>().TogglePOV();
+                    CollidedPlayer.GetComponent<PlayerMovement>().InControl = false;
+                    CollidedPlayer.GetComponent<PlayerMovement>().SetPOV("1st");
                 }
                 else if (Input.GetKeyDown(KeyCode.E) && SeatOccupied)
                 {
                     SeatOccupied = false;
                     CollidedPlayer.transform.position = gameObject.transform.position;
-                    CollidedPlayer.GetComponent<ThirdPersonMovement>().InControl = true;
-                    CollidedPlayer.GetComponent<ThirdPersonMovement>().TogglePOV();
+                    CollidedPlayer.GetComponent<PlayerMovement>().InControl = true;
+                    CollidedPlayer.GetComponent<PlayerMovement>().SetPOV("3rd");
                 }
             }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TrolleyController : MonoBehaviour
 {
@@ -14,8 +15,10 @@ public class TrolleyController : MonoBehaviour
     public Transform PatientPosOnBed;
     public Transform PatientPosOffBed;
     public Transform TrolleyPosInCar;
+    public TextMeshProUGUI _TakeReturnText, FollowUnfollowText, PlaceRemovePatientText;
 
     private bool _isFollowingPlayer;
+    private bool _isFacingTrolley = false;
     private bool _inCar;
 
     // Start is called before the first frame update
@@ -37,29 +40,16 @@ public class TrolleyController : MonoBehaviour
         {
             Folded = true;
         }
+        else if (!_inCar)
+        {
+            Folded = false;
+        }
 
         // Fold
-        if (Folded)
-        {
-            TrolleyLegs.SetActive(false);
-        }
-        else if (!Folded)
-        {
-            TrolleyLegs.SetActive(true);
-        }
+        FoldUnfold();
 
         // Follow Player
-        if (Player != null)
-        {
-            if (_isFollowingPlayer)
-            {
-                gameObject.transform.SetParent(Player.transform);
-            }
-            else if (!_isFollowingPlayer)
-            {
-                gameObject.transform.SetParent(null);
-            }
-        }
+        FollowPlayer();
 
         // Take Out Bed
         TakeOutReturnBed();
@@ -89,6 +79,18 @@ public class TrolleyController : MonoBehaviour
         }
     }
 
+    private void FoldUnfold()
+    {
+        if (Folded)
+        {
+            TrolleyLegs.SetActive(false);
+        }
+        else if (!Folded)
+        {
+            TrolleyLegs.SetActive(true);
+        }
+    }
+
     public void FollowPlayerToggle()
     {
         if (Player != null)
@@ -104,23 +106,55 @@ public class TrolleyController : MonoBehaviour
         }
     }
 
+    private void FollowPlayer()
+    {
+        if (Player != null)
+        {
+            if (_isFollowingPlayer)
+            {
+                if (!_isFacingTrolley)
+                {
+                    var lookPos = transform.position - Player.transform.position;
+                    lookPos.y = 0;
+                    var rotation = Quaternion.LookRotation(lookPos);
+                    Player.transform.rotation = Quaternion.Slerp(Player.transform.rotation, rotation, Time.deltaTime * 10f);
+                    if (Player.transform.rotation == rotation)
+                    {
+                        _isFacingTrolley = true;
+                        gameObject.transform.SetParent(Player.transform);
+                        FollowUnfollowText.text = "Detach \n Bed";
+                    }
+                }
+            }
+            else if (!_isFollowingPlayer)
+            {
+                _isFacingTrolley = false;
+                gameObject.transform.SetParent(null);
+                FollowUnfollowText.text = "Attach \n Bed";
+            }
+        }
+    }
+
     public void PutRemovePatient()
     {
-        if (Patient != null && Folded && !HasPatient)
+        if (Patient != null && !HasPatient)
         {
             HasPatient = true;
             Patient.transform.position = PatientPosOnBed.position;
+            Patient.transform.rotation = PatientPosOnBed.rotation;
             Patient.transform.SetParent(this.transform);
+            PlaceRemovePatientText.text = "Drop \n Patient";
         }
-        else if (Patient != null && Folded && HasPatient && !_inCar)
+        else if (Patient != null && HasPatient && !_inCar)
         {
             HasPatient = false;
             Patient.transform.position = PatientPosOffBed.position;
             Patient.transform.SetParent(null);
+            PlaceRemovePatientText.text = "Place \n Patient";
         }
     }
 
-    public void TakeOutBedToggle()
+    public void TakeOutReturnBedToggle()
     {
         if (_inCar && !TakeOutBed)
         {
@@ -140,10 +174,12 @@ public class TrolleyController : MonoBehaviour
             transform.position = TrolleyPosInCar.position;
             transform.rotation = TrolleyPosInCar.rotation;
             transform.SetParent(TrolleyPosInCar);
+            _TakeReturnText.text = "Take Out";
         }
         else if (_inCar && TakeOutBed)
         {
             _isFollowingPlayer = true;
+            _TakeReturnText.text = "Return";
         }
     }
 

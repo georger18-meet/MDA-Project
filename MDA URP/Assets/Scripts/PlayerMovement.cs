@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ThirdPersonMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     public Transform Cam;
+    public Transform Cam1stPersonTempHead;
     public GameObject VC3rdPerson;
     public GameObject VC1stPerson;
-    public GameObject Reticle;
     public LayerMask InteractableMask;
     public Transform GroundCheck;
     public Animator PlayerAnimator;
+    public GameObject BeanModel;
     private CharacterController _characterController;
 
-    public float MoveSpeed = 6f;
+    public float MoveSpeed = 4f;
     public float RotationSmoothTime = 0.1f;
     public float Gravity = -9.81f;
     public float GroundDistance = 0.5f;
@@ -41,6 +42,9 @@ public class ThirdPersonMovement : MonoBehaviour
     private Vector3 _crouchOffset;
     private float _standingHeight;
     private float _crouchHeight;
+
+    public float FPSMouseSensitivity = 100f;
+    private float _yHeadRotation = 0f;
 
     //--------------------------------
     // Main Unity Methods
@@ -71,7 +75,10 @@ public class ThirdPersonMovement : MonoBehaviour
             Jump();
             Crouch();
             Fly();
-            AnimationController();
+            if (!EnableFly)
+            {
+                AnimationController();
+            }
         }
         else
         {
@@ -84,6 +91,7 @@ public class ThirdPersonMovement : MonoBehaviour
             TogglePOV();
         }
 
+        CameraFPSControls();
         CheckInteraction();
     }
 
@@ -91,12 +99,36 @@ public class ThirdPersonMovement : MonoBehaviour
     //--------------------------------
     // Created Methods
 
+
+    public void CameraFPSControls()
+    {
+        if (InControl)
+        {
+            _yHeadRotation = 0f;
+            Cam1stPersonTempHead.localRotation = Quaternion.Euler(0f, _yHeadRotation, 0f);
+        }
+        else if (!InControl)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * FPSMouseSensitivity * Time.deltaTime;
+            _yHeadRotation += mouseX;
+            _yHeadRotation = Mathf.Clamp(_yHeadRotation, -90f, 90f);
+            Cam1stPersonTempHead.localRotation = Quaternion.Euler(0f, _yHeadRotation, 0f);
+        }
+    }
+
     public void MovePlayer()
     {
         // Calculate Direction
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+        if (IsFPS)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * FPSMouseSensitivity * Time.deltaTime;
+
+            transform.Rotate(Vector3.up * mouseX);
+        }
 
         // If There's Input
         if (direction.magnitude >= 0.1f)
@@ -204,12 +236,16 @@ public class ThirdPersonMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G) && EnableFly)
         {
             EnableFly = false;
-            EnableJump = true;
+            PlayerAnimator.gameObject.SetActive(true);
+            BeanModel.gameObject.SetActive(false);
+            MoveSpeed /= 8;
         }
         else if (Input.GetKeyDown(KeyCode.G) && !EnableFly)
         {
             EnableFly = true;
-            EnableJump = false;
+            PlayerAnimator.gameObject.SetActive(false);
+            BeanModel.gameObject.SetActive(true);
+            MoveSpeed *= 8;
         }
         if (EnableFly)
         {
@@ -232,6 +268,22 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
+    public void SetPOV(string pov)
+    {
+        if (pov == "1st")
+        {
+            IsFPS = true;
+            VC1stPerson.SetActive(true);
+            VC3rdPerson.SetActive(false);
+        }
+        else if (pov == "3rd")
+        {
+            IsFPS = false;
+            VC3rdPerson.SetActive(true);
+            VC1stPerson.SetActive(false);
+        }
+    }
+
     public void TogglePOV()
     {
         if (IsFPS)
@@ -239,14 +291,12 @@ public class ThirdPersonMovement : MonoBehaviour
             IsFPS = false;
             VC3rdPerson.SetActive(true);
             VC1stPerson.SetActive(false);
-            Reticle.SetActive(false);
         }
         else
         {
             IsFPS = true;
             VC1stPerson.SetActive(true);
             VC3rdPerson.SetActive(false);
-            Reticle.SetActive(true);
         }
     }
 

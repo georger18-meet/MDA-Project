@@ -14,6 +14,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private float _motorForce;
     [SerializeField] private float _breakForce;
     [SerializeField] private float _maxSteerAngle;
+    [SerializeField] private float _centerOfMassOffset;
 
     [SerializeField] private WheelCollider frontLeftWheelCollider;
     [SerializeField] private WheelCollider frontRightWheelCollider;
@@ -25,22 +26,31 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform rearRightWheelTransform;
     [SerializeField] private Transform rearLeftWheelTransform;
 
+    private Rigidbody _carRb;
+    
     public GameObject CarHeadLights;
-    private bool _carHeadLightsOn = true;
+    private bool _carHeadLightsOn = false;
 
-    public GameObject CarSiren;
-    private bool _carSirenOn = true;
+    public GameObject CarSiren/*, CarSirenLightLeft, CarSirenLightRight*/;
+    public AudioSource CarSirenAudioSource;
+    private bool _carSirenOn = false;
 
     public List<CarDoorCollision> CarDoorCollisions;
+
+    private void Start()
+    {
+        _carRb = GetComponent<Rigidbody>();
+        _carRb.centerOfMass = new Vector3(_carRb.centerOfMass.x, _carRb.centerOfMass.y - _centerOfMassOffset, _carRb.centerOfMass.z);
+    }
 
     private void Update()
     {
         CheckIfDriveable();
+        GetInput();
     }
 
     private void FixedUpdate()
     {
-        GetInput();
         HandleMotor();
         HandleSteering();
         UpdateWheels();
@@ -103,11 +113,17 @@ public class CarController : MonoBehaviour
         {
             _carHeadLightsOn = false;
             CarHeadLights.SetActive(false);
+            CarSiren.GetComponent<Animator>().enabled = false;
+            //CarSirenLightLeft.SetActive(false);
+            //CarSirenLightRight.SetActive(false);
         }
         else
         {
             _carHeadLightsOn = true;
             CarHeadLights.SetActive(true);
+            CarSiren.GetComponent<Animator>().enabled = true;
+            //CarSirenLightLeft.SetActive(true);
+            //CarSirenLightRight.SetActive(true);
         }
     }
 
@@ -116,12 +132,12 @@ public class CarController : MonoBehaviour
         if (_carSirenOn)
         {
             _carSirenOn = false;
-            CarSiren.GetComponent<Animator>().enabled = false;
+            CarSirenAudioSource.Stop();
         }
         else
         {
             _carSirenOn = true;
-            CarSiren.GetComponent<Animator>().enabled = true;
+            CarSirenAudioSource.Play();
         }
     }
 
@@ -133,10 +149,12 @@ public class CarController : MonoBehaviour
             if (item.SeatNum == 1 && item.SeatOccupied)
             {
                 _isDrivable = true;
+                _carRb.drag = 0;
             }
             else if (item.SeatNum == 1 && !item.SeatOccupied)
             {
                 _isDrivable = false;
+                _carRb.drag = 10;
             }
         }
     }
