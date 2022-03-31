@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class TrolleyController : MonoBehaviour
+public class GurneyController : MonoBehaviour
 {
     public bool TakeOutBed;
     public bool Folded;
     public bool HasPatient;
     public GameObject Patient;
     public GameObject Player;
-    public GameObject TrolleyLegs;
+    public GameObject GurneyUnFolded, GurneyFolded, GurneyGFX;
     public GameObject InteractionsBar;
     public Transform PatientPosOnBed;
     public Transform PatientPosOffBed;
-    public Transform TrolleyPosInCar;
+    public Transform GurneyPosInCar, GurneyPosOutCar;
     public TextMeshProUGUI _TakeReturnText, FollowUnfollowText, PlaceRemovePatientText;
 
     private bool _isFollowingPlayer;
-    private bool _isFacingTrolley = false;
+    //private bool _isFacingTrolley = false;
     private bool _inCar;
 
     // Start is called before the first frame update
@@ -38,10 +38,12 @@ public class TrolleyController : MonoBehaviour
         // In Car
         if (_inCar)
         {
+            GurneyGFX.GetComponent<BoxCollider>().isTrigger = true;
             Folded = true;
         }
         else if (!_inCar)
         {
+            GurneyGFX.GetComponent<BoxCollider>().isTrigger = false;
             Folded = false;
         }
 
@@ -83,17 +85,19 @@ public class TrolleyController : MonoBehaviour
     {
         if (Folded)
         {
-            TrolleyLegs.SetActive(false);
+            GurneyUnFolded.SetActive(false);
+            GurneyFolded.SetActive(true);
         }
         else if (!Folded)
         {
-            TrolleyLegs.SetActive(true);
+            GurneyUnFolded.SetActive(true);
+            GurneyFolded.SetActive(false);
         }
     }
 
     public void FollowPlayerToggle()
     {
-        if (Player != null)
+        if (Player != null && TakeOutBed)
         {
             if (_isFollowingPlayer)
             {
@@ -112,23 +116,27 @@ public class TrolleyController : MonoBehaviour
         {
             if (_isFollowingPlayer)
             {
-                if (!_isFacingTrolley)
-                {
-                    var lookPos = transform.position - Player.transform.position;
-                    lookPos.y = 0;
-                    var rotation = Quaternion.LookRotation(lookPos);
-                    Player.transform.rotation = Quaternion.Slerp(Player.transform.rotation, rotation, Time.deltaTime * 10f);
-                    if (Player.transform.rotation == rotation)
-                    {
-                        _isFacingTrolley = true;
-                        gameObject.transform.SetParent(Player.transform);
-                        FollowUnfollowText.text = "Detach \n Bed";
-                    }
-                }
+                //if (!_isFacingTrolley)
+                //{
+                //var lookPos = transform.position - Player.transform.position;
+                //lookPos.y = 0f;
+                //var rotation = Quaternion.LookRotation(lookPos);
+                //Player.transform.rotation = Quaternion.Slerp(Player.transform.rotation, rotation, Time.deltaTime * 10f);
+                //print($"{Mathf.Abs((Player.transform.rotation.y * Mathf.Rad2Deg) - (rotation.y * Mathf.Rad2Deg))}");
+                //if (Mathf.Abs((Player.transform.rotation.y * Mathf.Rad2Deg) - (rotation.y * Mathf.Rad2Deg)) <= 2)
+                //{
+                //    _isFacingTrolley = true;
+                //    gameObject.transform.SetParent(Player.transform);
+                //    FollowUnfollowText.text = "Detach \n Bed";
+                //}
+                //}
+                Player.transform.LookAt(transform.position);
+                gameObject.transform.SetParent(Player.transform);
+                FollowUnfollowText.text = "Detach \n Bed";
             }
             else if (!_isFollowingPlayer)
             {
-                _isFacingTrolley = false;
+                //_isFacingTrolley = false;
                 gameObject.transform.SetParent(null);
                 FollowUnfollowText.text = "Attach \n Bed";
             }
@@ -159,6 +167,8 @@ public class TrolleyController : MonoBehaviour
         if (_inCar && !TakeOutBed)
         {
             TakeOutBed = true;
+            transform.position = GurneyPosOutCar.position;
+            transform.rotation = GurneyPosOutCar.rotation;
         }
         else if (_inCar && TakeOutBed)
         {
@@ -171,14 +181,13 @@ public class TrolleyController : MonoBehaviour
         if (_inCar && !TakeOutBed)
         {
             _isFollowingPlayer = false;
-            transform.position = TrolleyPosInCar.position;
-            transform.rotation = TrolleyPosInCar.rotation;
-            transform.SetParent(TrolleyPosInCar);
+            transform.position = GurneyPosInCar.position;
+            transform.rotation = GurneyPosInCar.rotation;
+            transform.SetParent(GurneyPosInCar);
             _TakeReturnText.text = "Take Out";
         }
         else if (_inCar && TakeOutBed)
         {
-            _isFollowingPlayer = true;
             _TakeReturnText.text = "Return";
         }
     }
@@ -191,7 +200,10 @@ public class TrolleyController : MonoBehaviour
         }
         if (other.CompareTag("Patient"))
         {
-            Patient = other.gameObject;
+            if (!HasPatient)
+            {
+                Patient = other.gameObject;
+            }
         }
         if (other.CompareTag("Car"))
         {
@@ -207,7 +219,10 @@ public class TrolleyController : MonoBehaviour
         }
         if (other.CompareTag("Patient"))
         {
-            Patient = null;
+            if (!HasPatient)
+            {
+                Patient = null;
+            }
         }
         if (other.CompareTag("Car"))
         {

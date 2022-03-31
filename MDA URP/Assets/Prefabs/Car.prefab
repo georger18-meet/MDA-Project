@@ -77,8 +77,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 4, z: 5}
-  m_Center: {x: -0.5, y: 0, z: -1}
+  m_Size: {x: 2, y: 4, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4189982978676314013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +372,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &229215089447026901
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2095016525587474936}
+  m_Layer: 0
+  m_Name: GurneyPosOutCar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2095016525587474936
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229215089447026901}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: -9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1726180569702070139}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &348733587807106121
 GameObject:
   m_ObjectHideFlags: 0
@@ -2558,7 +2588,7 @@ Transform:
   - {fileID: 7495587233133449052}
   - {fileID: 650017412604357983}
   - {fileID: 8972751043287862094}
-  - {fileID: 1764644082915926687}
+  - {fileID: 1726180569702070139}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2891,6 +2921,38 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &3248887364938014688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1726180569702070139}
+  m_Layer: 0
+  m_Name: GurneyPositions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1726180569702070139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3248887364938014688}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1764644082915926687}
+  - {fileID: 2095016525587474936}
+  m_Father: {fileID: 2977741042067127826}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3318665006121697173
 GameObject:
   m_ObjectHideFlags: 0
@@ -4209,7 +4271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1764644082915926687}
   m_Layer: 0
-  m_Name: TrolleyPosInCar
+  m_Name: GurneyPosInCar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4222,13 +4284,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6298768551968756268}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2, z: -3.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2977741041163562165}
-  m_Father: {fileID: 2977741042067127826}
-  m_RootOrder: 6
+  m_Father: {fileID: 1726180569702070139}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6324678134966348379
 GameObject:
@@ -5399,6 +5461,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 1764644082915926687}
     m_Modifications:
     - target: {fileID: 1291643038897957686, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
+      propertyPath: GurneyPosInCar
+      value: 
+      objectReference: {fileID: 1764644082915926687}
+    - target: {fileID: 1291643038897957686, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
+      propertyPath: GurneyPosOutCar
+      value: 
+      objectReference: {fileID: 2095016525587474936}
+    - target: {fileID: 1291643038897957686, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
       propertyPath: TrolleyPosInCar
       value: 
       objectReference: {fileID: 1764644082915926687}
@@ -5448,11 +5518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1291643038897957688, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
       propertyPath: m_Name
-      value: Trolley
-      objectReference: {fileID: 0}
-    - target: {fileID: 5345940138227642626, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 1
+      value: Gurney
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}

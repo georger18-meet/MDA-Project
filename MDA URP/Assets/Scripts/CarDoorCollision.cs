@@ -38,7 +38,7 @@ public class CarDoorCollision : MonoBehaviour
         }
     }
 
-    private void EnterExitVehicle()
+    public void EnterExitVehicle()
     {
         if (CollidedPlayer != null)
         {
@@ -51,7 +51,7 @@ public class CarDoorCollision : MonoBehaviour
                     CollidedPlayer.GetComponent<PlayerMovement>().InControl = false;
                     CollidedPlayer.GetComponent<PlayerMovement>().SetPOV("1st");
                 }
-                else if (Input.GetKeyDown(KeyCode.E) && SeatOccupied)
+                else if (SeatOccupied)
                 {
                     SeatOccupied = false;
                     CollidedPlayer.transform.position = gameObject.transform.position;
