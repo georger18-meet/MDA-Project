@@ -37,7 +37,7 @@ public class GPSNavagation : MonoBehaviour
         _destinationMarkerPrefab.transform.SetParent(_destination);
         _destinationMarkerPrefab.transform.position = _destination.position + new Vector3(0f, 4f, 0f);
         _agent.SetDestination(_destination.position);
-        _agent.Stop();
+        _agent.isStopped = true;
         _reachedDestination = false;
     }
 
