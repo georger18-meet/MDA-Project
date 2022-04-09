@@ -45,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float FPSMouseSensitivity = 100f;
     private float _yHeadRotation = 0f;
+    private bool _isCursorFree;
 
     //--------------------------------
     // Main Unity Methods
@@ -306,7 +307,7 @@ public class PlayerMovement : MonoBehaviour
         {
             RaycastHit raycastHit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out raycastHit, 100f, InteractableMask))
+            if (Physics.Raycast(ray, out raycastHit, 10f, InteractableMask))
             {
                 //Our custom method. 
                 Debug.Log("Object Hit: " + raycastHit.transform.gameObject.name);
@@ -321,13 +322,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
+            _isCursorFree = true;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            Cam.GetComponent<CinemachineBrain>().enabled = false;
         }
         if (Input.GetKeyUp(KeyCode.LeftAlt))
         {
+            _isCursorFree = false;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            Cam.GetComponent<CinemachineBrain>().enabled = true;
         }
     }
 

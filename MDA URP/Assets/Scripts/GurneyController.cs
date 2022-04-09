@@ -107,6 +107,7 @@ public class GurneyController : MonoBehaviour
             {
                 _isFollowingPlayer = true;
             }
+            InteractionsBar.SetActive(false);
         }
     }
 
@@ -160,6 +161,7 @@ public class GurneyController : MonoBehaviour
             Patient.transform.SetParent(null);
             PlaceRemovePatientText.text = "Place \n Patient";
         }
+        InteractionsBar.SetActive(false);
     }
 
     public void TakeOutReturnBedToggle()
@@ -175,6 +177,7 @@ public class GurneyController : MonoBehaviour
         {
             TakeOutBed = false;
         }
+        InteractionsBar.SetActive(false);
     }
 
     private void TakeOutReturnBed()
@@ -217,6 +220,7 @@ public class GurneyController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Player = null;
+            InteractionsBar.SetActive(false);
         }
         if (other.CompareTag("Patient"))
         {
