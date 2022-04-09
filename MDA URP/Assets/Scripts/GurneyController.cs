@@ -12,6 +12,7 @@ public class GurneyController : MonoBehaviour
     public GameObject Player;
     public GameObject GurneyUnFolded, GurneyFolded, GurneyGFX;
     public GameObject InteractionsBar;
+    public Transform PlayerHoldPos;
     public Transform PatientPosOnBed;
     public Transform PatientPosOffBed;
     public Transform GurneyPosInCar, GurneyPosOutCar;
@@ -117,6 +118,7 @@ public class GurneyController : MonoBehaviour
         {
             if (_isFollowingPlayer)
             {
+                Player.transform.position = PlayerHoldPos.position;
                 //if (!_isFacingTrolley)
                 //{
                 //var lookPos = transform.position - Player.transform.position;

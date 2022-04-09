@@ -223,6 +223,7 @@ MonoBehaviour:
   GurneyFolded: {fileID: 3712923758372835524}
   GurneyGFX: {fileID: 3571387682613812123}
   InteractionsBar: {fileID: 5630251327905330897}
+  PlayerHoldPos: {fileID: 5424467342941879032}
   PatientPosOnBed: {fileID: 1291643039644672934}
   PatientPosOffBed: {fileID: 1291643039861025405}
   GurneyPosInCar: {fileID: 0}

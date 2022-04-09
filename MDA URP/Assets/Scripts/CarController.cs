@@ -37,6 +37,8 @@ public class CarController : MonoBehaviour
 
     public List<CarDoorCollision> CarDoorCollisions;
 
+    public GameObject CarDashboardUI;
+
     private void Start()
     {
         _carRb = GetComponent<Rigidbody>();
@@ -150,11 +152,13 @@ public class CarController : MonoBehaviour
             {
                 _isDrivable = true;
                 _carRb.drag = 0;
+                CarDashboardUI.SetActive(true);
             }
             else if (item.SeatNum == 1 && !item.SeatOccupied)
             {
                 _isDrivable = false;
                 _carRb.drag = 10;
+                CarDashboardUI.SetActive(false);
             }
         }
     }
