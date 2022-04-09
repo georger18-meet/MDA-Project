@@ -21,6 +21,7 @@ public class CarDoorCollision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GetComponent<Collider>().enabled = DoorOpen;
         EnterExitVehicle();
     }
 
@@ -35,35 +36,42 @@ public class CarDoorCollision : MonoBehaviour
         {
             DoorOpen = true;
             _doorAnimator.SetBool("IsDoorOpen", true);
+            if (SeatOccupied)
+            {
+                EnterExitToggle();
+            }
         }
     }
 
-    public void EnterExitVehicle()
+    private void EnterExitVehicle()
     {
         if (CollidedPlayer != null)
         {
-            if (DoorOpen)
-            {
-                if (Input.GetKeyDown(KeyCode.E) && !SeatOccupied)
-                {
-                    OpenCloseDoorToggle();
-                    SeatOccupied = true;
-                    CollidedPlayer.GetComponent<PlayerMovement>().InControl = false;
-                    CollidedPlayer.GetComponent<PlayerMovement>().SetPOV("1st");
-                }
-                else if (SeatOccupied)
-                {
-                    SeatOccupied = false;
-                    CollidedPlayer.transform.position = gameObject.transform.position;
-                    CollidedPlayer.GetComponent<PlayerMovement>().InControl = true;
-                    CollidedPlayer.GetComponent<PlayerMovement>().SetPOV("3rd");
-                }
-            }
-
             if (SeatOccupied)
             {
                 CollidedPlayer.transform.position = SeatPos.position;
                 CollidedPlayer.transform.rotation = SeatPos.rotation;
+            }
+        }
+    }
+
+    public void EnterExitToggle()
+    {
+        if (DoorOpen && CollidedPlayer != null)
+        {
+            if (!SeatOccupied)
+            {
+                OpenCloseDoorToggle();
+                SeatOccupied = true;
+                CollidedPlayer.GetComponent<PlayerMovement>().InControl = false;
+                CollidedPlayer.GetComponent<PlayerMovement>().SetPOV("1st");
+            }
+            else if (SeatOccupied)
+            {
+                SeatOccupied = false;
+                CollidedPlayer.transform.position = gameObject.transform.position;
+                CollidedPlayer.GetComponent<PlayerMovement>().InControl = true;
+                CollidedPlayer.GetComponent<PlayerMovement>().SetPOV("3rd");
             }
         }
     }

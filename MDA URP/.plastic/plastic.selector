@@ -1,0 +1,3 @@
+rep "MDA URP@GeoRushMDATeam@cloud"
+  path "/"
+    smartbranch "/main"

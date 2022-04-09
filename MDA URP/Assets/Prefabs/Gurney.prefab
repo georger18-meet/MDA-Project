@@ -89,9 +89,11 @@ MonoBehaviour:
   GurneyFolded: {fileID: 3712923758372835524}
   GurneyGFX: {fileID: 3571387682613812123}
   InteractionsBar: {fileID: 1291643038686524780}
+  PlayerHoldPos: {fileID: 5424467342941879032}
   PatientPosOnBed: {fileID: 1291643039644672934}
   PatientPosOffBed: {fileID: 1291643039861025405}
   GurneyPosInCar: {fileID: 0}
+  GurneyPosOutCar: {fileID: 0}
   _TakeReturnText: {fileID: 7148970734175020526}
   FollowUnfollowText: {fileID: 3416071607896871001}
   PlaceRemovePatientText: {fileID: 5569612193846935933}
@@ -639,6 +641,7 @@ Transform:
   m_Children:
   - {fileID: 1291643039644672934}
   - {fileID: 1291643039861025405}
+  - {fileID: 5424467342941879032}
   - {fileID: 445110518264385858}
   - {fileID: 4092968115969428094}
   m_Father: {fileID: 1291643038897957687}
@@ -700,6 +703,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &4348543556932344377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5424467342941879032}
+  m_Layer: 0
+  m_Name: PlayerHoldingPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5424467342941879032
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4348543556932344377}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
+  m_LocalScale: {x: 1.25, y: 4.5, z: 0.25}
+  m_Children: []
+  m_Father: {fileID: 4005563711684476316}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &119311120720541353
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -709,7 +742,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 48b22d388cb265f459ea693656175db7, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 48b22d388cb265f459ea693656175db7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1072,7 +1105,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: d63dba21dfed27042a4a623fc2288922, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d63dba21dfed27042a4a623fc2288922, type: 3}
       propertyPath: m_LocalScale.x

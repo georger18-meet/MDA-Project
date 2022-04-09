@@ -169,6 +169,7 @@ public class GurneyController : MonoBehaviour
             TakeOutBed = true;
             transform.position = GurneyPosOutCar.position;
             transform.rotation = GurneyPosOutCar.rotation;
+            FollowPlayerToggle();
         }
         else if (_inCar && TakeOutBed)
         {
