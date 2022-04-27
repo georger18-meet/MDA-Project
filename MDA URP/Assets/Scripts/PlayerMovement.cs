@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private AudioSource _indicatorSound;
+    [SerializeField] private GameObject _indicatorIcon;
+
     public Transform Cam;
     public Transform Cam1stPersonTempHead;
     public GameObject VC3rdPerson;
@@ -30,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public bool EnableCrouch = true;
     public bool EnableFly = false;
     public bool IsFPS = false;
+    public bool GamingStyleMovement = true;
 
     private float _rotationSmoothVelocity;
     private Vector3 _velocity;
@@ -61,11 +65,17 @@ public class PlayerMovement : MonoBehaviour
         _standingOffset = _characterController.center;
         _crouchHeight = _standingHeight / 2;
         _crouchOffset.y = -(_crouchHeight / 2);
+
+        if (!GamingStyleMovement)
+        {
+            _isCursorFree = true;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        FreeCursorToggle();
         FreeCursor();
 
         if (InControl)
@@ -147,7 +157,15 @@ public class PlayerMovement : MonoBehaviour
                 // Rotate Player to Direction of Movement
                 // *(The "+ Cam.eulerAngles.y" Makes the Player Face Look Direction)
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Cam.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, RotationSmoothTime);
+                float angle;
+                if (GamingStyleMovement)
+                {
+                    angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, RotationSmoothTime);
+                }
+                else
+                {
+                    angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, RotationSmoothTime * 4);
+                }
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
                 // Move Towards Look Direction
@@ -303,36 +321,90 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckInteraction()
     {
-        if (Input.GetMouseButtonDown(0))
+        RaycastHit raycastHit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out raycastHit, 10f, InteractableMask))
         {
-            RaycastHit raycastHit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out raycastHit, 10f, InteractableMask))
+            _indicatorIcon.SetActive(true);
+            if (Input.GetMouseButtonDown(0))
             {
                 //Our custom method. 
                 Debug.Log("Object Hit: " + raycastHit.transform.gameObject.name);
                 Vector3 pointToLook = ray.GetPoint(Vector3.Distance(ray.origin, raycastHit.transform.position));
                 Debug.DrawLine(ray.origin, pointToLook, Color.cyan, 5f);
+                _indicatorSound.Play();
                 raycastHit.transform.gameObject.GetComponent<MakeItAButton>().EventToCall.Invoke();
+            }
+        }
+        else
+        {
+            _indicatorIcon.SetActive(false);
+        }
+    }
+
+    private void FreeCursorToggle()
+    {
+        if (!GamingStyleMovement)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                _isCursorFree = false;
+            }
+            if (Input.GetMouseButtonUp(1))
+            {
+                _isCursorFree = true;
+            }
+        }
+        else
+        {
+            if (Input.GetKeyUp(KeyCode.LeftAlt))
+            {
+                _isCursorFree = false;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftAlt))
+            {
+                _isCursorFree = true;
             }
         }
     }
 
     private void FreeCursor()
     {
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        if (!GamingStyleMovement)
         {
-            _isCursorFree = true;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            Cam.GetComponent<CinemachineBrain>().enabled = false;
+            if (!_isCursorFree)
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cam.GetComponent<CinemachineBrain>().enabled = true;
+
+                float targetAngle = Cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, RotationSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            }
+            else
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                Cam.GetComponent<CinemachineBrain>().enabled = false;
+            }
         }
-        if (Input.GetKeyUp(KeyCode.LeftAlt))
+        else
         {
-            _isCursorFree = false;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cam.GetComponent<CinemachineBrain>().enabled = true;
+            if (!_isCursorFree)
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cam.GetComponent<CinemachineBrain>().enabled = true;
+
+            }
+            else
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                Cam.GetComponent<CinemachineBrain>().enabled = false;
+            }
         }
     }
 

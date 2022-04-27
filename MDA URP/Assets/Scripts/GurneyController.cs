@@ -103,12 +103,13 @@ public class GurneyController : MonoBehaviour
             if (_isFollowingPlayer)
             {
                 _isFollowingPlayer = false;
+                InteractionsBar.SetActive(false);
             }
             else if (!_isFollowingPlayer)
             {
                 _isFollowingPlayer = true;
+                InteractionsBar.SetActive(true);
             }
-            InteractionsBar.SetActive(false);
         }
     }
 
@@ -171,6 +172,7 @@ public class GurneyController : MonoBehaviour
         if (_inCar && !TakeOutBed)
         {
             TakeOutBed = true;
+            InteractionsBar.SetActive(true);
             transform.position = GurneyPosOutCar.position;
             transform.rotation = GurneyPosOutCar.rotation;
             FollowPlayerToggle();
@@ -178,8 +180,9 @@ public class GurneyController : MonoBehaviour
         else if (_inCar && TakeOutBed)
         {
             TakeOutBed = false;
+            InteractionsBar.SetActive(false);
         }
-        InteractionsBar.SetActive(false);
+        
     }
 
     private void TakeOutReturnBed()
@@ -222,7 +225,7 @@ public class GurneyController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Player = null;
-            InteractionsBar.SetActive(false);
+            //InteractionsBar.SetActive(false);
         }
         if (other.CompareTag("Patient"))
         {
