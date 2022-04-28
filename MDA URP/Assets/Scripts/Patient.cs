@@ -12,8 +12,8 @@ public class Patient : MonoBehaviour
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _operatingCheckPanel, _patientMenu;
 
-    [SerializeField] private List<int> _operatingCrews = new List<int>();
     [SerializeField] private List<string> _operatingUsers = new List<string>();
+    [SerializeField] private List<int> _operatingCrews = new List<int>();
     #endregion
 
     #region private fields
@@ -37,6 +37,7 @@ public class Patient : MonoBehaviour
         _operatingCheckPanel.SetActive(false);
     }
 
+    // Triggered upon Clicking on the Patient
     public void SetOperatingCrewCheck()
     {
         if (_player == null)
@@ -47,26 +48,10 @@ public class Patient : MonoBehaviour
         {
             _operatingCheckPanel.SetActive(true);
         }
-
-        //if (_operatingUsers != null)
-        //{
-        //    bool userMatch = false;
-        //    foreach (var operatingUser in _operatingUsers)
-        //    {
-        //        if (operatingUser == _player.GetComponent<CrewMember>().UserName)
-        //        {
-        //            userMatch = true;
-        //        }
-        //    }
-        //    if (!userMatch)
-        //    {
-        //        _operatingCheckPanel.SetActive(true);
-        //    }
-        //}
-        //else
-        //{
-        //    _operatingCheckPanel.SetActive(true);
-        //}
+        else if (_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
+        {
+            _patientMenu.SetActive(true);
+        }
     }
 
 
@@ -77,10 +62,13 @@ public class Patient : MonoBehaviour
         {
             // need to verify that set operating crew is setting an empty group of maximum 4 and insitialize it with current player
             SetOperatingCrew();
+            _operatingCheckPanel.SetActive(false);
+            _patientMenu.SetActive(true);
         }
-
-        _operatingCheckPanel.SetActive(false);
-        _patientMenu.SetActive(true);
+        else
+        {
+            _operatingCheckPanel.SetActive(false);
+        }
     }
 
     // clost menu
@@ -96,10 +84,21 @@ public class Patient : MonoBehaviour
     {
         if (_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
         {
+            for (int i = 0; i < _operatingUsers.Count; i++)
+            {
+                if (_operatingUsers[i]  == _player.GetComponent<CrewMember>().UserName)
+                {
+                    _operatingUsers.RemoveAt(i);
+                    _operatingCrews.RemoveAt(i);
+                }
+            }
+
             _operatingUserCrew.Remove(_player.GetComponent<CrewMember>().UserName);
         }
 
         print("Leave Patient");
+
+        ClosePatientMenu();
     }
 
     // open up a form that follows this reference: https://drive.google.com/file/d/1EScLHzpHT_YOk02lS_jzjErDfSGRWj2x/view?usp=sharing
@@ -131,51 +130,24 @@ public class Patient : MonoBehaviour
         if (!_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
         {
             _operatingUserCrew.Add(_player.GetComponent<CrewMember>().UserName, _player.GetComponent<CrewMember>().CrewNumber);
+            DisplayDictionary();
         }
 
 
-        //if (_operatingCrews != null)
-        //{
-        //    bool crewMatch = false;
-        //    foreach (var operatingCrew in _operatingCrews)
-        //    {
-        //        if (operatingCrew == _player.GetComponent<CrewMember>().CrewNumber)
-        //        {
-        //            crewMatch = true;
-        //        }
-        //    }
-        //    if (!crewMatch)
-        //    {
-        //        _operatingCrews.Add(_player.GetComponent<CrewMember>().CrewNumber);
-        //    }
-        //}
-        //else
-        //{
-        //    _operatingCrews.Add(_player.GetComponent<CrewMember>().CrewNumber);
-        //}
-
-        //if (_operatingUsers != null)
-        //{
-
-        //    bool userMatch = false;
-        //    foreach (var operatingUser in _operatingUsers)
-        //    {
-        //        if (operatingUser == _player.GetComponent<CrewMember>().UserName)
-        //        {
-        //            userMatch = true;
-        //        }
-        //    }
-        //    if (!userMatch)
-        //    {
-        //        _operatingUsers.Add(_player.GetComponent<CrewMember>().UserName);
-        //    }
-        //}
-        //else
-        //{
-        //    _operatingUsers.Add(_player.GetComponent<CrewMember>().UserName);
-        //}
-
         _isOperated = true;
+    }
+
+    private void DisplayDictionary()
+    {
+        _operatingUsers.Clear();
+        _operatingCrews.Clear();
+
+        foreach (KeyValuePair<string, int> diction in _operatingUserCrew)
+        {
+            Debug.Log("Key = {" + diction.Key + "} " + "Value = {" + diction.Value + "}");
+            _operatingUsers.Add(diction.Key);
+            _operatingCrews.Add(diction.Value);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
