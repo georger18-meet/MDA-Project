@@ -1,16 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine;
+using TMPro;
 //using System.Linq;
 
 public class Patient : MonoBehaviour
 {
+    #region private serialized fields
     [SerializeField] private GameObject _player;
-    [SerializeField] private GameObject _operatingCheckPanel;
+    [SerializeField] private GameObject _operatingCheckPanel, _patientMenu;
+
+    [SerializeField] private List<int> _operatingCrews = new List<int>();
+    [SerializeField] private List<string> _operatingUsers = new List<string>();
+    #endregion
+
+    #region private fields
+    [SerializeField]
     private Dictionary<string, int> _operatingUserCrew = new Dictionary<string, int>();
-    private List<int> _operatingCrews = new List<int>();
-    private List<string> _operatingUsers = new List<string>();
+
     private bool _isOperated;
+    #endregion
+
+    #region Patient Menu Fields
+    [SerializeField]
+    private string _sureName, _lastName, _adress, _insuranceCompany, _incidentAdress, _complaint;
+
+    [SerializeField]
+    private int _telNumber;
+    #endregion // will be transmuted into scriptableObject
 
     // Start is called before the first frame update
     void Start()
@@ -18,15 +37,13 @@ public class Patient : MonoBehaviour
         _operatingCheckPanel.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void SetOperatingCrewCheck()
     {
-        if (!_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
+        if (_player == null)
+        {
+            return;
+        }
+        else if (!_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
         {
             _operatingCheckPanel.SetActive(true);
         }
@@ -52,20 +69,68 @@ public class Patient : MonoBehaviour
         //}
     }
 
+
+    // triggered upon pressing "yes" in patient Join pop-up
     public void ConfirmOperation(bool confirm)
     {
         if (confirm)
         {
+            // need to verify that set operating crew is setting an empty group of maximum 4 and insitialize it with current player
             SetOperatingCrew();
         }
+
         _operatingCheckPanel.SetActive(false);
+        _patientMenu.SetActive(true);
+    }
+
+    // clost menu
+    public void ClosePatientMenu()
+    {
+        _patientMenu.SetActive(false);
+
+        print("Close Patient Menu");
+    }
+
+    // take current player out of their crew's list
+    public void LeavePatient()
+    {
+        if (_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
+        {
+            _operatingUserCrew.Remove(_player.GetComponent<CrewMember>().UserName);
+        }
+
+        print("Leave Patient");
+    }
+
+    // open up a form that follows this reference: https://drive.google.com/file/d/1EScLHzpHT_YOk02lS_jzjErDfSGRWj2x/view?usp=sharing
+    public void TagMiun()
+    {
+        print("Tag Miun");
+    }
+
+    // list of actions done on the patient by players, aranged by time stamp
+    public void Log()
+    {
+        print("Log Window");
+    }
+
+    // paitent background info: name, weghit, gender, adress...
+    public void PatientInfo()
+    {
+        print("Patient Information");
+    }
+
+    // possibly removed later on
+    public void Anamnesis()
+    {
+        print("Anamnesis Drop Down Menu");
     }
 
     private void SetOperatingCrew()
     {
         if (!_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
         {
-            _operatingUserCrew.Add(_player.GetComponent<CrewMember>().UserName, _player.GetComponent<CrewMember>().CrewNumber);            
+            _operatingUserCrew.Add(_player.GetComponent<CrewMember>().UserName, _player.GetComponent<CrewMember>().CrewNumber);
         }
 
 
