@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a20cba67d54e1b74d9e60e77683edf0d, type: 3}
+  m_Name: Patient1
+  m_EditorClassIdentifier: 
+  fullName: "\u05E5\u05DB \u05DD\u05EA\u05D5\u05E8"
+  gender: "\u05D4\u05D1\u05E7\u05E0"
+  addressLocation: "\u05E7\u05E8\u05D1-\u05D9\u05E0\u05D1 28 \u05D0\u05D1\u05D9\u05E7\u05E2
+    \u05D9\u05D1\u05E8"
+  medicalCompany: "\u05EA\u05D9\u05DC\u05DC\u05DB"
+  eventPlace: "\u05DD\u05D9\u05DC\u05E9\u05D5\u05E8\u05D9 \u05DF\u05D5\u05D9\u05E0\u05E7"
+  complaint: "\u05D4\u05D3\u05E8\u05D7 \u05E3\u05E7\u05EA\u05D4"
+  idNumber: 111111111
+  age: 88
+  phoneNumber: 541111111

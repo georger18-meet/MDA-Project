@@ -10,7 +10,8 @@ public class Patient : MonoBehaviour
 {
     #region private serialized fields
     [SerializeField] private GameObject _player;
-    [SerializeField] private GameObject _operatingCheckPanel, _patientMenu;
+    [SerializeField] private GameObject _operatingCheckPanel, _patientMenu,_patientInfoPanel;
+    [SerializeField] private PaitentBaseInfoSO paitentInfo;
 
     [SerializeField] private List<string> _operatingUsers = new List<string>();
     [SerializeField] private List<int> _operatingCrews = new List<int>();
@@ -25,7 +26,7 @@ public class Patient : MonoBehaviour
 
     #region Patient Menu Fields
     [SerializeField]
-    private string _sureName, _lastName, _adress, _insuranceCompany, _incidentAdress, _complaint;
+    private TMP_Text _sureName, _gender, _adress, _insuranceCompany, _incidentAdress, _complaint,_idNumber,_age,_phoneNumber;
 
     [SerializeField]
     private int _telNumber;
@@ -35,6 +36,7 @@ public class Patient : MonoBehaviour
     void Start()
     {
         _operatingCheckPanel.SetActive(false);
+        //PatientInfo();
     }
 
     // Triggered upon Clicking on the Patient
@@ -64,6 +66,8 @@ public class Patient : MonoBehaviour
             SetOperatingCrew();
             _operatingCheckPanel.SetActive(false);
             _patientMenu.SetActive(true);
+            _patientInfoPanel.SetActive(false);
+
         }
         else
         {
@@ -116,6 +120,22 @@ public class Patient : MonoBehaviour
     // paitent background info: name, weghit, gender, adress...
     public void PatientInfo()
     {
+       
+        _patientInfoPanel.SetActive(true);
+
+        _sureName.text = paitentInfo.fullName;
+        _gender.text = paitentInfo.gender;
+        _adress.text = paitentInfo.addressLocation;
+        _insuranceCompany.text = paitentInfo.medicalCompany;
+        _incidentAdress.text = paitentInfo.eventPlace;
+        _complaint.text = paitentInfo.complaint;
+
+        _age.text = paitentInfo.age.ToString();
+        _idNumber.text = paitentInfo.idNumber.ToString();
+        _phoneNumber.text = paitentInfo.phoneNumber.ToString();
+
+
+
         print("Patient Information");
     }
 
