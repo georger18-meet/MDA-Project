@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a20cba67d54e1b74d9e60e77683edf0d, type: 3}
-  m_Name: Patient1
+  m_Name: Patient2
   m_EditorClassIdentifier: 
-  fullName: Rotem Cohen
-  gender: Female
-  addressLocation: Ibn Gabirol 18 Tel Aviv
-  medicalCompany: Clalit
-  eventPlace: Azrieli Center Tel Aviv
-  complaint: Chest Pain
-  idNumber: 254141111
-  age: 49
-  phoneNumber: 542265856
+  fullName: Tomer Gad
+  gender: Male
+  addressLocation: Sokolov 60 Bat Yam
+  medicalCompany: Meuhedet
+  eventPlace: Sharonim Kfar Saba
+  complaint: Panic  Attack
+  idNumber: 542005258
+  age: 28
+  phoneNumber: 548856258

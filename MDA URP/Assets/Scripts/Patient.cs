@@ -11,7 +11,7 @@ public class Patient : MonoBehaviour
     #region private serialized fields
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _operatingCheckPanel, _patientMenu,_patientInfoPanel;
-    [SerializeField] private PaitentBaseInfoSO paitentInfo;
+   // [SerializeField] private PaitentBaseInfoSO paitentInfo;
 
     [SerializeField] private List<string> _operatingUsers = new List<string>();
     [SerializeField] private List<int> _operatingCrews = new List<int>();
@@ -118,7 +118,7 @@ public class Patient : MonoBehaviour
     }
 
     // paitent background info: name, weghit, gender, adress...
-    public void PatientInfo()
+    public void PatientInfo(PaitentBaseInfoSO paitentInfo)
     {
        
         _patientInfoPanel.SetActive(true);
@@ -131,7 +131,7 @@ public class Patient : MonoBehaviour
         _complaint.text = paitentInfo.complaint;
 
         _age.text = paitentInfo.age.ToString();
-        _idNumber.text = paitentInfo.idNumber.ToString();
+        _idNumber.text = paitentInfo.idNumber.ToString("0");
         _phoneNumber.text = paitentInfo.phoneNumber.ToString();
 
 
