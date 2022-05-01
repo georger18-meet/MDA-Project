@@ -9,6 +9,7 @@ using TMPro;
 public class Patient : MonoBehaviour
 {
     #region private serialized fields
+    [SerializeField] private PaitentBaseInfoSO _patientInfo;
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _operatingCheckPanel, _patientMenu,_patientInfoPanel;
    // [SerializeField] private PaitentBaseInfoSO paitentInfo;
@@ -26,7 +27,7 @@ public class Patient : MonoBehaviour
 
     #region Patient Menu Fields
     [SerializeField]
-    private TMP_Text _sureName, _gender, _adress, _insuranceCompany, _incidentAdress, _complaint,_idNumber,_age,_phoneNumber;
+    private TextMeshProUGUI _sureName, _gender, _adress, _insuranceCompany, _incidentAdress, _complaint, _idNumber, _age, _phoneNumber;
 
     [SerializeField]
     private int _telNumber;
@@ -36,6 +37,9 @@ public class Patient : MonoBehaviour
     void Start()
     {
         _operatingCheckPanel.SetActive(false);
+        //*/ new method
+        SetPatientMenu();
+
         //PatientInfo();
     }
 
@@ -53,9 +57,10 @@ public class Patient : MonoBehaviour
         else if (_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
         {
             _patientMenu.SetActive(true);
+            //*/ new method
+            ShowPatientMenu();
         }
     }
-
 
     // triggered upon pressing "yes" in patient Join pop-up
     public void ConfirmOperation(bool confirm)
@@ -65,8 +70,12 @@ public class Patient : MonoBehaviour
             // need to verify that set operating crew is setting an empty group of maximum 4 and insitialize it with current player
             SetOperatingCrew();
             _operatingCheckPanel.SetActive(false);
-            _patientMenu.SetActive(true);
             _patientInfoPanel.SetActive(false);
+            //*/ new method
+            ShowPatientMenu();
+
+            // new line
+            _player.GetComponent<PlayerData>().JoinedPatients.Add(name);
 
         }
         else
@@ -74,6 +83,22 @@ public class Patient : MonoBehaviour
             _operatingCheckPanel.SetActive(false);
         }
     }
+
+
+    //*/ new method
+    private void ShowPatientMenu()
+    {
+        _patientInfo.PatientManu.SetActive(true);
+        _patientInfo.HeartRatePanel.SetActive(true);
+    }
+
+    private void SetPatientMenu()
+    {
+        _patientInfo.HeartRateText.text = _patientInfo.HeartRate.ToString();
+        _patientInfo.BreathingText.text = "Unknown";
+        _patientInfo.PainMeterText.text = "Unknown";
+    }
+    //*/
 
     // clost menu
     public void ClosePatientMenu()
@@ -97,6 +122,8 @@ public class Patient : MonoBehaviour
                 }
             }
 
+            // new line
+            _player.GetComponent<PlayerData>().JoinedPatients.Remove(name);
             _operatingUserCrew.Remove(_player.GetComponent<CrewMember>().UserName);
         }
 

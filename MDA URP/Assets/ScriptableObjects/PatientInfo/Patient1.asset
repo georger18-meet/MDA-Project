@@ -21,3 +21,12 @@ MonoBehaviour:
   idNumber: 254141111
   age: 49
   phoneNumber: 542265856
+  PatientManu: {fileID: 2053897095337931287, guid: d765211b447c64b46b08aa0207735317, type: 3}
+  HeartRatePanel: {fileID: 0}
+  HeartRateText: {fileID: 0}
+  PainMeterText: {fileID: 0}
+  BreathingText: {fileID: 0}
+  HeartRate: 65
+  PainMeter: 0
+  Breathing: 12
+  PainPlaceholderAnswer: 8
