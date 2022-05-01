@@ -21,3 +21,5 @@ MonoBehaviour:
   idNumber: 254141111
   age: 49
   phoneNumber: 542265856
+  HeartRate: 80
+  PainLevel: 4
