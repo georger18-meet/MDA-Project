@@ -9,9 +9,8 @@ using TMPro;
 public class Patient : MonoBehaviour
 {
     #region private serialized fields
-    public PaitentBaseInfoSO PatientInfoSO;
     [SerializeField] private GameObject _player;
-    [SerializeField] private GameObject _operatingCheckPanel, _patientMenu,_patientInfoPanel;
+    [SerializeField] private GameObject _operatingCheckPanel, _patientMenu, _patientLogCanvas, _patientInfoPanel;
    // [SerializeField] private PaitentBaseInfoSO paitentInfo;
 
     [SerializeField] private List<string> _operatingUsers = new List<string>();
@@ -21,13 +20,11 @@ public class Patient : MonoBehaviour
     #region private fields
     [SerializeField]
     private Dictionary<string, int> _operatingUserCrew = new Dictionary<string, int>();
-
-    private bool _isOperated;
     #endregion
 
     #region Patient Menu Fields
     [SerializeField]
-    private TextMeshProUGUI _sureName, _gender, _adress, _insuranceCompany, _incidentAdress, _complaint, _idNumber, _age, _phoneNumber;
+    private TMP_Text _sureName, _gender, _adress, _insuranceCompany, _incidentAdress, _complaint,_idNumber,_age,_phoneNumber;
 
     [SerializeField]
     private int _telNumber;
@@ -37,10 +34,8 @@ public class Patient : MonoBehaviour
     void Start()
     {
         _operatingCheckPanel.SetActive(false);
-        //*/ new method
-        //SetPatientMenu();
-
-        //*PatientInfo();
+        _patientLogCanvas.SetActive(false);
+        _patientInfoPanel.SetActive(false);
     }
 
     // Triggered upon Clicking on the Patient
@@ -53,15 +48,13 @@ public class Patient : MonoBehaviour
         else if (!_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
         {
             _operatingCheckPanel.SetActive(true);
-            //SetPatientMenu();
         }
         else if (_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
         {
             _patientMenu.SetActive(true);
-            //*/ new method
-            ShowPatientMenu();
         }
     }
+
 
     // triggered upon pressing "yes" in patient Join pop-up
     public void ConfirmOperation(bool confirm)
@@ -71,12 +64,8 @@ public class Patient : MonoBehaviour
             // need to verify that set operating crew is setting an empty group of maximum 4 and insitialize it with current player
             SetOperatingCrew();
             _operatingCheckPanel.SetActive(false);
+            _patientMenu.SetActive(true);
             _patientInfoPanel.SetActive(false);
-            //*/ new method
-            ShowPatientMenu();
-
-            // new line
-            _player.GetComponent<PlayerData>().JoinedPatients.Add(name);
 
         }
         else
@@ -85,26 +74,11 @@ public class Patient : MonoBehaviour
         }
     }
 
-
-    //*/ new method
-    private void ShowPatientMenu()
-    {
-        _player.GetComponent<PlayerActions>().SetPatient(gameObject);//
-        PatientInfoSO.PatientManu.SetActive(true);
-        PatientInfoSO.HeartRatePanel.SetActive(true);
-    }
-
-    private void SetPatientMenu()
-    {
-        PatientInfoSO.HeartRateText.text = PatientInfoSO.HeartRate.ToString();
-        PatientInfoSO.BreathingText.text = "Unknown";
-        PatientInfoSO.PainMeterText.text = "Unknown";
-    }
-    //*/
-
     // clost menu
     public void ClosePatientMenu()
     {
+        _patientLogCanvas.SetActive(false);
+        _patientInfoPanel.SetActive(false);
         _patientMenu.SetActive(false);
 
         print("Close Patient Menu");
@@ -124,8 +98,6 @@ public class Patient : MonoBehaviour
                 }
             }
 
-            // new line
-            _player.GetComponent<PlayerData>().JoinedPatients.Remove(name);
             _operatingUserCrew.Remove(_player.GetComponent<CrewMember>().UserName);
         }
 
@@ -143,6 +115,7 @@ public class Patient : MonoBehaviour
     // list of actions done on the patient by players, aranged by time stamp
     public void Log()
     {
+        _patientLogCanvas.SetActive(true);
         print("Log Window");
     }
 
@@ -168,6 +141,12 @@ public class Patient : MonoBehaviour
         print("Patient Information");
     }
 
+    // possibly removed later on
+    public void Anamnesis()
+    {
+        print("Anamnesis Drop Down Menu");
+    }
+
     private void SetOperatingCrew()
     {
         if (!_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
@@ -175,9 +154,6 @@ public class Patient : MonoBehaviour
             _operatingUserCrew.Add(_player.GetComponent<CrewMember>().UserName, _player.GetComponent<CrewMember>().CrewNumber);
             DisplayDictionary();
         }
-
-
-        _isOperated = true;
     }
 
     private void DisplayDictionary()
