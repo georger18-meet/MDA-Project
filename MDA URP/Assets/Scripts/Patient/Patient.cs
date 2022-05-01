@@ -10,7 +10,7 @@ public class Patient : MonoBehaviour
 {
     #region private serialized fields
     [SerializeField] private GameObject _player;
-    [SerializeField] private GameObject _operatingCheckPanel, _patientMenu,_patientInfoPanel;
+    [SerializeField] private GameObject _operatingCheckPanel, _patientMenu, _patientLogCanvas, _patientInfoPanel;
    // [SerializeField] private PaitentBaseInfoSO paitentInfo;
 
     [SerializeField] private List<string> _operatingUsers = new List<string>();
@@ -34,7 +34,8 @@ public class Patient : MonoBehaviour
     void Start()
     {
         _operatingCheckPanel.SetActive(false);
-        //PatientInfo();
+        _patientLogCanvas.SetActive(false);
+        _patientInfoPanel.SetActive(false);
     }
 
     // Triggered upon Clicking on the Patient
@@ -76,6 +77,8 @@ public class Patient : MonoBehaviour
     // clost menu
     public void ClosePatientMenu()
     {
+        _patientLogCanvas.SetActive(false);
+        _patientInfoPanel.SetActive(false);
         _patientMenu.SetActive(false);
 
         print("Close Patient Menu");
@@ -112,6 +115,7 @@ public class Patient : MonoBehaviour
     // list of actions done on the patient by players, aranged by time stamp
     public void Log()
     {
+        _patientLogCanvas.SetActive(true);
         print("Log Window");
     }
 

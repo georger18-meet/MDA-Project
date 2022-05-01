@@ -152,6 +152,7 @@ public class GurneyController : MonoBehaviour
         if (Patient != null && !HasPatient)
         {
             HasPatient = true;
+            Patient.GetComponent<BoxCollider>().enabled = false;
             Patient.transform.position = PatientPosOnBed.position;
             Patient.transform.rotation = PatientPosOnBed.rotation;
             Patient.transform.SetParent(this.transform);
@@ -160,6 +161,7 @@ public class GurneyController : MonoBehaviour
         else if (Patient != null && HasPatient && !_inCar)
         {
             HasPatient = false;
+            Patient.GetComponent<BoxCollider>().enabled = true;
             Patient.transform.position = PatientPosOffBed.position;
             Patient.transform.SetParent(null);
             PlaceRemovePatientText.text = "Place \n Patient";
