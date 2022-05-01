@@ -40,7 +40,7 @@ public class PlayerActions : MonoBehaviour
         if (_playerData.CheckPatientIsJoined(patient.name))
         {
             // get patient info
-            _patientInfo = patient.GetComponent<Patient>().PatientInfoSO;
+            //_patientInfo = patient.GetComponent<Patient>().PatientInfoSO;
             _patientTr = patient.transform;
         }
 
