@@ -9,7 +9,7 @@ using TMPro;
 public class Patient : MonoBehaviour
 {
     #region private serialized fields
-    [SerializeField] private PaitentBaseInfoSO _patientInfo;
+    public PaitentBaseInfoSO PatientInfoSO;
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _operatingCheckPanel, _patientMenu,_patientInfoPanel;
    // [SerializeField] private PaitentBaseInfoSO paitentInfo;
@@ -38,9 +38,9 @@ public class Patient : MonoBehaviour
     {
         _operatingCheckPanel.SetActive(false);
         //*/ new method
-        SetPatientMenu();
+        //SetPatientMenu();
 
-        //PatientInfo();
+        //*PatientInfo();
     }
 
     // Triggered upon Clicking on the Patient
@@ -53,6 +53,7 @@ public class Patient : MonoBehaviour
         else if (!_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
         {
             _operatingCheckPanel.SetActive(true);
+            //SetPatientMenu();
         }
         else if (_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
         {
@@ -88,15 +89,16 @@ public class Patient : MonoBehaviour
     //*/ new method
     private void ShowPatientMenu()
     {
-        _patientInfo.PatientManu.SetActive(true);
-        _patientInfo.HeartRatePanel.SetActive(true);
+        _player.GetComponent<PlayerActions>().SetPatient(gameObject);//
+        PatientInfoSO.PatientManu.SetActive(true);
+        PatientInfoSO.HeartRatePanel.SetActive(true);
     }
 
     private void SetPatientMenu()
     {
-        _patientInfo.HeartRateText.text = _patientInfo.HeartRate.ToString();
-        _patientInfo.BreathingText.text = "Unknown";
-        _patientInfo.PainMeterText.text = "Unknown";
+        PatientInfoSO.HeartRateText.text = PatientInfoSO.HeartRate.ToString();
+        PatientInfoSO.BreathingText.text = "Unknown";
+        PatientInfoSO.PainMeterText.text = "Unknown";
     }
     //*/
 
@@ -164,12 +166,6 @@ public class Patient : MonoBehaviour
 
 
         print("Patient Information");
-    }
-
-    // possibly removed later on
-    public void Anamnesis()
-    {
-        print("Anamnesis Drop Down Menu");
     }
 
     private void SetOperatingCrew()
