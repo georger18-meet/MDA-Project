@@ -17,9 +17,4 @@ public class PaitentBaseInfoSO : ScriptableObject
     public int idNumber;
     public int age;
     public int phoneNumber;
-
-
-
-
-    
 }

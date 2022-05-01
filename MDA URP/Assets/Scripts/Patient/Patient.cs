@@ -20,8 +20,6 @@ public class Patient : MonoBehaviour
     #region private fields
     [SerializeField]
     private Dictionary<string, int> _operatingUserCrew = new Dictionary<string, int>();
-
-    private bool _isOperated;
     #endregion
 
     #region Patient Menu Fields
@@ -152,9 +150,6 @@ public class Patient : MonoBehaviour
             _operatingUserCrew.Add(_player.GetComponent<CrewMember>().UserName, _player.GetComponent<CrewMember>().CrewNumber);
             DisplayDictionary();
         }
-
-
-        _isOperated = true;
     }
 
     private void DisplayDictionary()
