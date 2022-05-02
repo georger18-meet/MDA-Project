@@ -11,7 +11,7 @@ public class Patient : MonoBehaviour
     #region private serialized fields
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _operatingCheckPanel, _patientMenu, _patientLogCanvas, _patientInfoPanel;
-   // [SerializeField] private PaitentBaseInfoSO paitentInfo;
+    public PaitentBaseInfoSO PatientInfoSO;
 
     [SerializeField] private List<string> _operatingUsers = new List<string>();
     [SerializeField] private List<int> _operatingCrews = new List<int>();
@@ -24,7 +24,7 @@ public class Patient : MonoBehaviour
 
     #region Patient Menu Fields
     [SerializeField]
-    private TMP_Text _sureName, _gender, _adress, _insuranceCompany, _incidentAdress, _complaint,_idNumber,_age,_phoneNumber;
+    private TMP_Text _sureName, _gender, _adress, _insuranceCompany, _incidentAdress, _complaint, _idNumber, _age, _phoneNumber;
 
     [SerializeField]
     private int _telNumber;
@@ -36,6 +36,7 @@ public class Patient : MonoBehaviour
         _operatingCheckPanel.SetActive(false);
         _patientLogCanvas.SetActive(false);
         _patientInfoPanel.SetActive(false);
+        SetupPatientInfo();
     }
 
     // Triggered upon Clicking on the Patient
@@ -91,7 +92,7 @@ public class Patient : MonoBehaviour
         {
             for (int i = 0; i < _operatingUsers.Count; i++)
             {
-                if (_operatingUsers[i]  == _player.GetComponent<CrewMember>().UserName)
+                if (_operatingUsers[i] == _player.GetComponent<CrewMember>().UserName)
                 {
                     _operatingUsers.RemoveAt(i);
                     _operatingCrews.RemoveAt(i);
@@ -120,31 +121,24 @@ public class Patient : MonoBehaviour
     }
 
     // paitent background info: name, weghit, gender, adress...
-    public void PatientInfo(PaitentBaseInfoSO paitentInfo)
+    public void PatientInfo()
     {
-       
         _patientInfoPanel.SetActive(true);
-
-        _sureName.text = paitentInfo.fullName;
-        _gender.text = paitentInfo.gender;
-        _adress.text = paitentInfo.addressLocation;
-        _insuranceCompany.text = paitentInfo.medicalCompany;
-        _incidentAdress.text = paitentInfo.eventPlace;
-        _complaint.text = paitentInfo.complaint;
-
-        _age.text = paitentInfo.age.ToString();
-        _idNumber.text = paitentInfo.idNumber.ToString("0");
-        _phoneNumber.text = paitentInfo.phoneNumber.ToString();
-
-
-
         print("Patient Information");
     }
 
-    // possibly removed later on
-    public void Anamnesis()
+    private void SetupPatientInfo()
     {
-        print("Anamnesis Drop Down Menu");
+        _sureName.text = PatientInfoSO.fullName;
+        _gender.text = PatientInfoSO.gender;
+        _adress.text = PatientInfoSO.addressLocation;
+        _insuranceCompany.text = PatientInfoSO.medicalCompany;
+        _incidentAdress.text = PatientInfoSO.eventPlace;
+        _complaint.text = PatientInfoSO.complaint;
+
+        _age.text = PatientInfoSO.age.ToString();
+        _idNumber.text = PatientInfoSO.idNumber.ToString("0");
+        _phoneNumber.text = PatientInfoSO.phoneNumber.ToString();
     }
 
     private void SetOperatingCrew()
@@ -186,5 +180,20 @@ public class Patient : MonoBehaviour
         {
             _player = null;
         }
+    }
+
+
+    // For Use Externally
+    public bool CheckIfPlayerJoined()
+    {
+        bool playerIsJoined = false;
+        if (_player != null)
+        {
+            if (_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
+            {
+                playerIsJoined = true;
+            }
+        }
+        return playerIsJoined;
     }
 }

@@ -21,3 +21,5 @@ MonoBehaviour:
   idNumber: 542005258
   age: 28
   phoneNumber: 548856258
+  HeartRate: 70
+  PainLevel: 2

@@ -21,12 +21,5 @@ MonoBehaviour:
   idNumber: 254141111
   age: 49
   phoneNumber: 542265856
-  PatientManu: {fileID: 2053897095337931287, guid: d765211b447c64b46b08aa0207735317, type: 3}
-  HeartRatePanel: {fileID: 1298418258808599041, guid: 277fe1ddfd132b447811dcd3d4c136e7, type: 3}
-  HeartRateText: {fileID: 695585917864095891, guid: 3efae22bf42282c489f15e32fe0d1d09, type: 3}
-  PainMeterText: {fileID: 6045294116988214443, guid: 6754a2a5acd7f5845b76882629661445, type: 3}
-  BreathingText: {fileID: 8112895937484678751, guid: 7c9be7ba3d5f24e4c954e3dc7e341d32, type: 3}
-  HeartRate: 65
-  PainMeter: 0
-  Breathing: 12
-  PainPlaceholderAnswer: 8
+  HeartRate: 80
+  PainLevel: 4
