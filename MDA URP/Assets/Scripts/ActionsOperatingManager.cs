@@ -154,6 +154,31 @@ public class ActionsOperatingManager : MonoBehaviour
         print("Close Patient Menu");
     }
 
+
+    // paitent background info: name, weghit, gender, adress...
+    public void PatientInfo()
+    {
+        if (!_patientInfoPanel.activeInHierarchy)
+            _patientInfoPanel.SetActive(true);
+        else
+            _patientInfoPanel.SetActive(false);
+
+        print("Patient Information");
+    }
+
+    // list of actions done on the patient by players, aranged by time stamp
+    public void Log()
+    {
+        _actionLog.SetActive(true);
+        print("Log Window");
+    }
+
+    // open up a form that follows this reference: https://drive.google.com/file/d/1EScLHzpHT_YOk02lS_jzjErDfSGRWj2x/view?usp=sharing
+    public void TagMiun()
+    {
+        print("Tag Miun");
+    }
+
     // take current player out of their crew's list
     public void LeavePatient()
     {
@@ -176,30 +201,6 @@ public class ActionsOperatingManager : MonoBehaviour
 
         ClosePatientMenu();
     }
-
-    // open up a form that follows this reference: https://drive.google.com/file/d/1EScLHzpHT_YOk02lS_jzjErDfSGRWj2x/view?usp=sharing
-    public void TagMiun()
-    {
-        print("Tag Miun");
-    }
-
-    // list of actions done on the patient by players, aranged by time stamp
-    public void Log()
-    {
-        _actionLog.SetActive(true);
-        print("Log Window");
-    }
-
-    // paitent background info: name, weghit, gender, adress...
-    public void PatientInfo()
-    {
-        if (!_patientInfoPanel.activeInHierarchy)
-            _patientInfoPanel.SetActive(true);
-        else
-            _patientInfoPanel.SetActive(false);
-
-        print("Patient Information");
-    }
     #endregion
 
     #region Player Action Events
@@ -219,25 +220,6 @@ public class ActionsOperatingManager : MonoBehaviour
 
     // refactor for player to do on patient
     #region getting patient data
-    private void OnTriggerEnter(Collider other)
-    {
-        if (_player == null)
-        {
-            if (other.CompareTag("Player"))
-            {
-                _player = other.gameObject;
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            _player = null;
-        }
-    }
-
     private void GetPatientInfo()
     {
         if (CheckIfPlayerJoined())
@@ -252,8 +234,7 @@ public class ActionsOperatingManager : MonoBehaviour
         }
     }
 
-    /* patient
-    //
+    //patient
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Patient"))
@@ -273,6 +254,6 @@ public class ActionsOperatingManager : MonoBehaviour
             _patientInfoSO = null;
         }
     }
-    */
+    
     #endregion
 }

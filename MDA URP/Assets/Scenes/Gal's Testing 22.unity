@@ -1946,6 +1946,58 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1949531884524011638, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
   m_PrefabInstance: {fileID: 5907449909125349543}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5401322901793046738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5401322901793046737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5242308325d4a9c4bb31aec1866f0403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <UserName>k__BackingField: Snir Fainstein
+  <CrewName>k__BackingField: CloverByte
+  <UserIndexInCrew>k__BackingField: 0
+  <CrewIndex>k__BackingField: 0
+  JoinedPatients: []
+--- !u!114 &5401322901793046739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5401322901793046737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d155056b5caa866489f5a8232a38907d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _patientInfoSO: {fileID: 11400000, guid: 2e147dc502027de448e6a807f719a868, type: 2}
+  _playerData: {fileID: 5401322901793046738}
+  _currentPatientScript: {fileID: 0}
+  _player: {fileID: 5401322901793046737}
+  _joinPatientPopUp: {fileID: 0}
+  _patientMenu: {fileID: 0}
+  _patientInfoPanel: {fileID: 0}
+  _actionLog: {fileID: 0}
+  _sureName: {fileID: 0}
+  _lastName: {fileID: 0}
+  _id: {fileID: 0}
+  _age: {fileID: 0}
+  _gender: {fileID: 0}
+  _phoneNumber: {fileID: 0}
+  _insuranceCompany: {fileID: 0}
+  _adress: {fileID: 0}
+  _complaint: {fileID: 0}
+  AmbulanceActionPanel: {fileID: 0}
+  NoBagActionMenu: {fileID: 0}
+  UserName: 
+  CrewName: 
+  UserIndexInCrew: 0
+  CrewIndex: 0
 --- !u!1001 &5907449909125349543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1954,9 +2006,69 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _id
+      value: 
+      objectReference: {fileID: 582429283}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _age
+      value: 
+      objectReference: {fileID: 527256380}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _adress
+      value: 
+      objectReference: {fileID: 1864897311}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _gender
+      value: 
+      objectReference: {fileID: 720775820}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 5401322901793046737}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _lastName
+      value: 
+      objectReference: {fileID: 374203282}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _sureName
+      value: 
+      objectReference: {fileID: 679788394}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _actionLog
+      value: 
+      objectReference: {fileID: 449292907}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _complaint
+      value: 
+      objectReference: {fileID: 1782185958}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _playerData
+      value: 
+      objectReference: {fileID: 5401322901793046738}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _patientMenu
+      value: 
+      objectReference: {fileID: 1353571081}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _phoneNumber
+      value: 
+      objectReference: {fileID: 731529207}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
       propertyPath: NoBagActionMenu
       value: 
       objectReference: {fileID: 293931074}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _insuranceCompany
+      value: 
+      objectReference: {fileID: 1711539267}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _joinPatientPopUp
+      value: 
+      objectReference: {fileID: 1430143008}
+    - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
+      propertyPath: _patientInfoPanel
+      value: 
+      objectReference: {fileID: 805153074}
     - target: {fileID: 1266019504893717832, guid: d0900c23b9985dc48af85e8e352d3071, type: 3}
       propertyPath: AmbulanceActionPanel
       value: 
