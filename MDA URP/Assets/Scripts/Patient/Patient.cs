@@ -13,203 +13,115 @@ public class Patient : MonoBehaviour
     public PaitentBaseInfoSO PatientInfoSO;
     #endregion
 
-    #region Prefab References
-    [Header("Prefabs")]
-    [SerializeField] private GameObject _player;
-    #endregion
-
-    #region Patient UI // will be transmuted into scriptableObject
-    [Header("Patient UI Parents")]
-
-    [SerializeField] private GameObject _joinPatientPopUp;
-    [SerializeField] private GameObject _patientMenu, _patientInfoPanel, _actionLog;
-
-    [Header("Patient UI Texts")]
-    [SerializeField] private TextMeshProUGUI _sureName;
-    [SerializeField] private TextMeshProUGUI _lastName, _id, _age, _gender, _phoneNumber, _insuranceCompany, _adress, _complaint; /*_incidentAdress*/
-
-    #endregion
-
     #region private fields
     [SerializeField]
-    private Dictionary<string, int> _operatingUserCrew = new Dictionary<string, int>();
+    public Dictionary<string, int> OperatingUserCrew = new Dictionary<string, int>();
     #endregion
 
     #region private serialized fields
     [Header("Joined Crews & Players Lists")]
-    [SerializeField] private List<string> _operatingUsers = new List<string>();
-    [SerializeField] private List<int> _operatingCrews = new List<int>();
+    [SerializeField] public List<string> OperatingUsers = new List<string>();
+    [SerializeField] public List<int> OperatingCrews = new List<int>();
     #endregion
 
-    // Start is called before the first frame update
-    void Start()
+    public void DisplayDictionary()
     {
-        _joinPatientPopUp.SetActive(false);
-        _actionLog.SetActive(false);
-        _patientInfoPanel.SetActive(false);
-        SetupPatientInfo();
-    }
+        OperatingUsers.Clear();
+        OperatingCrews.Clear();
 
-    // Triggered upon Clicking on the Patient
-    public void SetOperatingCrewCheck()
-    {
-        if (_player == null)
-        {
-            return;
-        }
-        else if (!_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
-        {
-            _joinPatientPopUp.SetActive(true);
-        }
-        else if (_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
-        {
-            _patientMenu.SetActive(true);
-        }
-    }
-
-
-    // triggered upon pressing "yes" in patient Join pop-up
-    public void ConfirmOperation(bool confirm)
-    {
-        if (confirm)
-        {
-            // need to verify that set operating crew is setting an empty group of maximum 4 and insitialize it with current player
-            SetOperatingCrew();
-            _joinPatientPopUp.SetActive(false);
-            _patientMenu.SetActive(true);
-            _patientInfoPanel.SetActive(false);
-
-        }
-        else
-        {
-            _joinPatientPopUp.SetActive(false);
-        }
-    }
-
-    // clost menu
-    public void ClosePatientMenu()
-    {
-        _actionLog.SetActive(false);
-        _patientInfoPanel.SetActive(false);
-        _patientMenu.SetActive(false);
-
-        print("Close Patient Menu");
-    }
-
-    // take current player out of their crew's list
-    public void LeavePatient()
-    {
-        if (_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
-        {
-            for (int i = 0; i < _operatingUsers.Count; i++)
-            {
-                if (_operatingUsers[i] == _player.GetComponent<CrewMember>().UserName)
-                {
-                    _operatingUsers.RemoveAt(i);
-                    _operatingCrews.RemoveAt(i);
-                }
-            }
-
-            _operatingUserCrew.Remove(_player.GetComponent<CrewMember>().UserName);
-        }
-
-        print("Leave Patient");
-
-        ClosePatientMenu();
-    }
-
-    // open up a form that follows this reference: https://drive.google.com/file/d/1EScLHzpHT_YOk02lS_jzjErDfSGRWj2x/view?usp=sharing
-    public void TagMiun()
-    {
-        print("Tag Miun");
-    }
-
-    // list of actions done on the patient by players, aranged by time stamp
-    public void Log()
-    {
-        _actionLog.SetActive(true);
-        print("Log Window");
-    }
-
-    // paitent background info: name, weghit, gender, adress...
-    public void PatientInfo()
-    {
-        if (!_patientInfoPanel.activeInHierarchy)
-            _patientInfoPanel.SetActive(true);
-        else
-            _patientInfoPanel.SetActive(false);
-
-        print("Patient Information");
-    }
-
-    private void SetupPatientInfo()
-    {
-        _sureName.text = PatientInfoSO.SureName;
-        _sureName.text = PatientInfoSO.SureName;
-        _gender.text = PatientInfoSO.Gender;
-        _adress.text = PatientInfoSO.AddressLocation;
-        _insuranceCompany.text = PatientInfoSO.MedicalCompany;
-        _complaint.text = PatientInfoSO.Complaint;
-        //_incidentAdress.text = PatientInfoSO.eventPlace;
-
-        _age.text = PatientInfoSO.Age.ToString();
-        _id.text = PatientInfoSO.Id.ToString();
-        _phoneNumber.text = PatientInfoSO.PhoneNumber.ToString();
-    }
-
-    private void SetOperatingCrew()
-    {
-        if (!_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
-        {
-            _operatingUserCrew.Add(_player.GetComponent<CrewMember>().UserName, _player.GetComponent<CrewMember>().CrewNumber);
-            DisplayDictionary();
-        }
-    }
-
-    private void DisplayDictionary()
-    {
-        _operatingUsers.Clear();
-        _operatingCrews.Clear();
-
-        foreach (KeyValuePair<string, int> diction in _operatingUserCrew)
+        foreach (KeyValuePair<string, int> diction in OperatingUserCrew)
         {
             Debug.Log("Key = {" + diction.Key + "} " + "Value = {" + diction.Value + "}");
-            _operatingUsers.Add(diction.Key);
-            _operatingCrews.Add(diction.Value);
+            OperatingUsers.Add(diction.Key);
+            OperatingCrews.Add(diction.Value);
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (_player == null)
-        {
-            if (other.CompareTag("Player"))
-            {
-                _player = other.gameObject;
-            }
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (_player == null)
+    //    {
+    //        if (other.CompareTag("Player"))
+    //        {
+    //            _player = other.gameObject;
+    //        }
+    //    }
+    //}
+    //
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        _player = null;
+    //    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            _player = null;
-        }
-    }
+    // refactor for player to do on patient
+    #region getting patient data
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (_player == null)
+    //    {
+    //        if (other.CompareTag("Player"))
+    //        {
+    //            _player = other.gameObject;
+    //        }
+    //    }
+    //}
 
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        _player = null;
+    //    }
+    //}
 
-    // For Use Externally
-    public bool CheckIfPlayerJoined()
-    {
-        bool playerIsJoined = false;
-        if (_player != null)
-        {
-            if (_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
-            {
-                playerIsJoined = true;
-            }
-        }
-        return playerIsJoined;
-    }
+    //private void GetPatientInfo()
+    //{
+    //    if (_currentPatientScript.CheckIfPlayerJoined())
+    //    {
+    //        AmbulanceActionPanel.SetActive(true);
+    //        _patientInfoSO = _currentPatientScript.PatientInfoSO;
+    //    }
+    //    else
+    //    {
+    //        AmbulanceActionPanel.SetActive(false);
+    //        _patientInfoSO = null;
+    //    }
+    //}
+
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("Patient"))
+    //    {
+    //        _currentPatientScript = other.gameObject.GetComponent<Patient>();
+    //        GetPatientInfo();
+    //    }
+    //}
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("Patient"))
+    //    {
+    //        AmbulanceActionPanel.SetActive(false);
+    //        _currentPatientScript = null;
+    //        _patientInfoSO = null;
+    //    }
+    //}
+    #endregion
+
+    //// For Use Externally
+    //public bool CheckIfPlayerJoined()
+    //{
+    //    bool playerIsJoined = false;
+    //    if (_player != null)
+    //    {
+    //        if (OperatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
+    //        {
+    //            playerIsJoined = true;
+    //        }
+    //    }
+    //    return playerIsJoined;
+    //}
 }
