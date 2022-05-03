@@ -14,15 +14,17 @@ public class PaitentBaseInfoSO : ScriptableObject
     public string eventPlace;
     public string complaint;
 
-
-
     public int idNumber;
     public int age;
     public int phoneNumber;
 
-
     // Health Data
     [Header("Health Data")]
-    public int HeartRate;
-    public int PainLevel;
+    public int HeartRate, PainPlaceholderAnswer;
+    public string PainLevel;
+
+    // gal's additions (playerActions related)
+    // public GameObject PatientManu, HeartRatePanel;
+    // public TextMeshProUGUI HeartRateText, PainMeterText, BreathingText;
+    // public int HeartRate, PainMeter, Breathing, PainPlaceholderAnswer;
 }

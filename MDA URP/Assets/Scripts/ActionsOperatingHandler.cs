@@ -25,6 +25,7 @@ public class ActionsOperatingHandler : MonoBehaviour
     // Pain Level
     public void GetPainLevel(Patient patient)
     {
+        patient.PatientInfoSO.PainLevel = patient.PatientInfoSO.PainPlaceholderAnswer.ToString();
         Debug.Log(patient.name + "'s Pain Level: " + patient.PatientInfoSO.PainLevel);
     }
 

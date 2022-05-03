@@ -69,7 +69,7 @@ public class PlayerActions : MonoBehaviour
                 break;
 
             case "pain question":
-                _patientInfo.PainMeterText.text = _patientInfo.PainPlaceholderAnswer.ToString();
+                //_patientInfo.PainMeterText.text = _patientInfo.PainPlaceholderAnswer.ToString();
                 print($"8");
                 break;
 
