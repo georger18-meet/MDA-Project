@@ -92,7 +92,7 @@ public class ActionsOperatingManager : MonoBehaviour
         if (confirm)
         {
             // need to verify that set operating crew is setting an empty group of maximum 4 and insitialize it with current player
-            SetOperatingCrew();
+            SetOperatingCrew(_currentPatientScript.OperatingUserCrew);
             _joinPatientPopUp.SetActive(false);
             _patientMenu.SetActive(true);
             _patientInfoPanel.SetActive(false);
@@ -104,7 +104,7 @@ public class ActionsOperatingManager : MonoBehaviour
         }
     }
 
-    private void SetOperatingCrew(List<int> operatingUserCrew)
+    private void SetOperatingCrew(Dictionary<string, int> operatingUserCrew)
     {
         if (!_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
         {
@@ -240,7 +240,7 @@ public class ActionsOperatingManager : MonoBehaviour
 
     private void GetPatientInfo()
     {
-        if (_currentPatientScript.CheckIfPlayerJoined())
+        if (CheckIfPlayerJoined())
         {
             AmbulanceActionPanel.SetActive(true);
             _patientInfoSO = _currentPatientScript.PatientInfoSO;
