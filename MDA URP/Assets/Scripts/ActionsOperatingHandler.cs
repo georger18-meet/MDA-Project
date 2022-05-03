@@ -2,8 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionsOperatingHandler : MonoBehaviour
+public class ActionsOperatingHandler
 {
+    public void OpenNoBagActionMenu(GameObject noBagActionMenu)
+    {
+        if (!noBagActionMenu.activeInHierarchy)
+            noBagActionMenu.SetActive(true);
+        else
+            noBagActionMenu.SetActive(false);
+    }
+
     public void RunAction(int actionIndex, Patient patient)
     {
         switch (actionIndex)
@@ -25,7 +33,7 @@ public class ActionsOperatingHandler : MonoBehaviour
     // Pain Level
     public void GetPainLevel(Patient patient)
     {
-        patient.PatientInfoSO.PainLevel = patient.PatientInfoSO.PainPlaceholderAnswer.ToString();
+        patient.PatientInfoSO.PainLevel = patient.PatientInfoSO.PainPlaceholderAnswer;
         Debug.Log(patient.name + "'s Pain Level: " + patient.PatientInfoSO.PainLevel);
     }
 

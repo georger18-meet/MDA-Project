@@ -6,14 +6,14 @@ public class ActionsOperatingManager : MonoBehaviour
 {
     public Patient CurrentPatient;
     public PaitentBaseInfoSO _patientInfoSORef;
-    public GameObject ActionPanel;
+    public GameObject AmbulanceActionPanel /*, NatanActionPanel*/, NoBagActionMenu;
 
     private ActionsOperatingHandler _actionsOperatingHandler;
 
     // Start is called before the first frame update
     void Start()
     {
-        ActionPanel.SetActive(false);
+        AmbulanceActionPanel.SetActive(false);
         _actionsOperatingHandler = new ActionsOperatingHandler();
     }
 
@@ -21,6 +21,11 @@ public class ActionsOperatingManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void OpenNoBagActionMenu()
+    {
+        _actionsOperatingHandler.OpenNoBagActionMenu(NoBagActionMenu);
     }
 
     public void CallAction(int actionNumInList)
@@ -36,12 +41,12 @@ public class ActionsOperatingManager : MonoBehaviour
     {
         if (CurrentPatient.CheckIfPlayerJoined())
         {
-            ActionPanel.SetActive(true);
+            AmbulanceActionPanel.SetActive(true);
             _patientInfoSORef = CurrentPatient.PatientInfoSO;
         }
         else
         {
-            ActionPanel.SetActive(false);
+            AmbulanceActionPanel.SetActive(false);
             _patientInfoSORef = null;
         }
     }
@@ -59,7 +64,7 @@ public class ActionsOperatingManager : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Patient"))
         {
-            ActionPanel.SetActive(false);
+            AmbulanceActionPanel.SetActive(false);
             CurrentPatient = null;
             _patientInfoSORef = null;
         }

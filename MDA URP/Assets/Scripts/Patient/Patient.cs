@@ -8,13 +8,26 @@ using TMPro;
 
 public class Patient : MonoBehaviour
 {
-    #region private serialized fields
-    [SerializeField] private GameObject _player;
-    [SerializeField] private GameObject _operatingCheckPanel, _patientMenu, _patientLogCanvas, _patientInfoPanel;
+    #region Script References
+    [Header("Data & Scripts")]
     public PaitentBaseInfoSO PatientInfoSO;
+    #endregion
 
-    [SerializeField] private List<string> _operatingUsers = new List<string>();
-    [SerializeField] private List<int> _operatingCrews = new List<int>();
+    #region Prefab References
+    [Header("Prefabs")]
+    [SerializeField] private GameObject _player;
+    #endregion
+
+    #region Patient UI // will be transmuted into scriptableObject
+    [Header("Patient UI Parents")]
+
+    [SerializeField] private GameObject _joinPatientPopUp;
+    [SerializeField] private GameObject _patientMenu, _patientInfoPanel, _actionLog;
+
+    [Header("Patient UI Texts")]
+    [SerializeField] private TextMeshProUGUI _sureName;
+    [SerializeField] private TextMeshProUGUI _lastName, _id, _age, _gender, _phoneNumber, _insuranceCompany, _adress, _complaint; /*_incidentAdress*/
+
     #endregion
 
     #region private fields
@@ -22,19 +35,17 @@ public class Patient : MonoBehaviour
     private Dictionary<string, int> _operatingUserCrew = new Dictionary<string, int>();
     #endregion
 
-    #region Patient Menu Fields
-    [SerializeField]
-    private TMP_Text _sureName, _gender, _adress, _insuranceCompany, _incidentAdress, _complaint, _idNumber, _age, _phoneNumber;
-
-    [SerializeField]
-    private int _telNumber;
-    #endregion // will be transmuted into scriptableObject
+    #region private serialized fields
+    [Header("Joined Crews & Players Lists")]
+    [SerializeField] private List<string> _operatingUsers = new List<string>();
+    [SerializeField] private List<int> _operatingCrews = new List<int>();
+    #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        _operatingCheckPanel.SetActive(false);
-        _patientLogCanvas.SetActive(false);
+        _joinPatientPopUp.SetActive(false);
+        _actionLog.SetActive(false);
         _patientInfoPanel.SetActive(false);
         SetupPatientInfo();
     }
@@ -48,7 +59,7 @@ public class Patient : MonoBehaviour
         }
         else if (!_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
         {
-            _operatingCheckPanel.SetActive(true);
+            _joinPatientPopUp.SetActive(true);
         }
         else if (_operatingUserCrew.ContainsKey(_player.GetComponent<CrewMember>().UserName))
         {
@@ -64,21 +75,21 @@ public class Patient : MonoBehaviour
         {
             // need to verify that set operating crew is setting an empty group of maximum 4 and insitialize it with current player
             SetOperatingCrew();
-            _operatingCheckPanel.SetActive(false);
+            _joinPatientPopUp.SetActive(false);
             _patientMenu.SetActive(true);
             _patientInfoPanel.SetActive(false);
 
         }
         else
         {
-            _operatingCheckPanel.SetActive(false);
+            _joinPatientPopUp.SetActive(false);
         }
     }
 
     // clost menu
     public void ClosePatientMenu()
     {
-        _patientLogCanvas.SetActive(false);
+        _actionLog.SetActive(false);
         _patientInfoPanel.SetActive(false);
         _patientMenu.SetActive(false);
 
@@ -116,29 +127,34 @@ public class Patient : MonoBehaviour
     // list of actions done on the patient by players, aranged by time stamp
     public void Log()
     {
-        _patientLogCanvas.SetActive(true);
+        _actionLog.SetActive(true);
         print("Log Window");
     }
 
     // paitent background info: name, weghit, gender, adress...
     public void PatientInfo()
     {
-        _patientInfoPanel.SetActive(true);
+        if (!_patientInfoPanel.activeInHierarchy)
+            _patientInfoPanel.SetActive(true);
+        else
+            _patientInfoPanel.SetActive(false);
+
         print("Patient Information");
     }
 
     private void SetupPatientInfo()
     {
-        _sureName.text = PatientInfoSO.fullName;
-        _gender.text = PatientInfoSO.gender;
-        _adress.text = PatientInfoSO.addressLocation;
-        _insuranceCompany.text = PatientInfoSO.medicalCompany;
-        _incidentAdress.text = PatientInfoSO.eventPlace;
-        _complaint.text = PatientInfoSO.complaint;
+        _sureName.text = PatientInfoSO.SureName;
+        _sureName.text = PatientInfoSO.SureName;
+        _gender.text = PatientInfoSO.Gender;
+        _adress.text = PatientInfoSO.AddressLocation;
+        _insuranceCompany.text = PatientInfoSO.MedicalCompany;
+        _complaint.text = PatientInfoSO.Complaint;
+        //_incidentAdress.text = PatientInfoSO.eventPlace;
 
-        _age.text = PatientInfoSO.age.ToString();
-        _idNumber.text = PatientInfoSO.idNumber.ToString("0");
-        _phoneNumber.text = PatientInfoSO.phoneNumber.ToString();
+        _age.text = PatientInfoSO.Age.ToString();
+        _id.text = PatientInfoSO.Id.ToString();
+        _phoneNumber.text = PatientInfoSO.PhoneNumber.ToString();
     }
 
     private void SetOperatingCrew()

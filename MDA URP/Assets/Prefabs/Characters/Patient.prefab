@@ -2071,24 +2071,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b0e86cd43a99747acb2a5e348eefd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
-  _operatingCheckPanel: {fileID: 4516001197536941460}
-  _patientMenu: {fileID: 3325385647032720193}
-  _patientLogCanvas: {fileID: 4128831316775634360}
-  _patientInfoPanel: {fileID: 834768453}
   PatientInfoSO: {fileID: 11400000, guid: 2e147dc502027de448e6a807f719a868, type: 2}
-  _operatingUsers: []
-  _operatingCrews: 
+  _player: {fileID: 0}
+  _joinPatientPopUp: {fileID: 0}
+  _patientMenu: {fileID: 3325385647032720193}
+  _actionLog: {fileID: 0}
+  _patientInfoPanel: {fileID: 834768453}
   _sureName: {fileID: 191365862}
+  _lastName: {fileID: 0}
+  _id: {fileID: 0}
+  _age: {fileID: 1576787582}
   _gender: {fileID: 1559267279}
+  _phoneNumber: {fileID: 1015166161}
   _adress: {fileID: 1736954802}
   _insuranceCompany: {fileID: 1184356574}
-  _incidentAdress: {fileID: 128789303}
   _complaint: {fileID: 386482672}
-  _idNumber: {fileID: 410745241}
-  _age: {fileID: 1576787582}
-  _phoneNumber: {fileID: 1015166161}
-  _telNumber: 0
+  _operatingUsers: []
+  _operatingCrews: 
 --- !u!114 &3461369332203536419
 MonoBehaviour:
   m_ObjectHideFlags: 0
