@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 951539b0972067a4883f909625d49fdc
   - enabled: 1
+    path: Assets/Scenes/Gal's Testing 22.unity
+    guid: 20caa237ad2777a4f8df50424d2b3e50
+  - enabled: 0
     path: Assets/Scenes/Chen's Testing.unity
     guid: 56af418316b69f34ea692a598b513823
   - enabled: 0
