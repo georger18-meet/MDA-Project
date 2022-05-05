@@ -6,9 +6,11 @@ using TMPro;
 
 public class ActionsOperatingManager : MonoBehaviour
 {
+    private ActionsOperatingHandler _actionsOperatingHandler;
+
     #region Script References
     [Header("Data & Scripts")]
-    [SerializeField] private PaitentBaseInfoSO _patientInfoSO;
+    [SerializeField] private PaitentBaseInfoSO _currentPatientInfoSo;
     [SerializeField] private PlayerData _playerData;
     [SerializeField] private Patient _currentPatientScript;
     #endregion
@@ -16,11 +18,13 @@ public class ActionsOperatingManager : MonoBehaviour
     #region Prefab References
     [Header("Prefabs")]
     [SerializeField] private GameObject _player;
+    [SerializeField] private GameObject _monitor;
     #endregion
 
     #region Player UI
     [Header("Player UI Parents")]
-    //[SerializeField] private GameObject
+    [SerializeField] private GameObject _ambulanceActionBarParent;
+    [SerializeField] private GameObject _natanActionBarParent, _basicActionMenuParent;
     //[SerializeField] private GameObject
 
     [Header("Player UI Texts")]
@@ -32,16 +36,16 @@ public class ActionsOperatingManager : MonoBehaviour
     // will be transmuted into scriptableObject
     [Header("Patient UI Parents")]
     [SerializeField] private GameObject _joinPatientPopUp;
-    [SerializeField] private GameObject _patientMenu, _patientInfoPanel, _actionLog;
+    [SerializeField] private GameObject _patientMenuParent, _patientInfoParent, _actionLogParent;
 
     [Header("Patient UI Texts")]
     [SerializeField] private TextMeshProUGUI _sureName;
     [SerializeField] private TextMeshProUGUI _lastName, _id, _age, _gender, _phoneNumber, _insuranceCompany, _adress, _complaint; /*_incidentAdress*/
+
+    [Header("Patient Fixed Treatment Positions")]
+    public Transform PlayerTreatingTr;
+    public Transform PatientEquipmentTr;
     #endregion
-
-    public GameObject AmbulanceActionPanel /*, NatanActionPanel*/, NoBagActionMenu;
-
-    private ActionsOperatingHandler _actionsOperatingHandler;
 
     // may be removed or changed to decouple
     [field: SerializeField]
@@ -50,39 +54,47 @@ public class ActionsOperatingManager : MonoBehaviour
     [field: SerializeField]
     public int UserIndexInCrew, CrewIndex;
 
+    [SerializeField] private List<GameObject> _ambulanceActionBtnParents, _natanActionBtnParents;
+
     #region MonoBehaviour Callbacks
     private void Start()
     {
-        AmbulanceActionPanel.SetActive(false);
+        foreach (GameObject btnParent in _ambulanceActionBtnParents)
+            btnParent.SetActive(false);
+
         _actionsOperatingHandler = new ActionsOperatingHandler();
 
         // from patient scripts
         _joinPatientPopUp.SetActive(false);
-        _actionLog.SetActive(false);
-        _patientInfoPanel.SetActive(false);
-    }
-
-    private void Update()
-    {
-        SetupPatientMenu();
+        _actionLogParent.SetActive(false);
+        _patientInfoParent.SetActive(false);
     }
     #endregion
 
     #region Assignment
     // Triggered upon Clicking on the Patient
-    public void SetOperatingCrewCheck()
+    public void SetOperatingCrewCheck(GameObject patient)
     {
+        //if (_currentPatientInfoSo == null && patient.CompareTag("Patient"))
+        //{
+        //    _currentPatientScript = patient.GetComponent<Patient>();
+        //    _currentPatientInfoSo = _currentPatientScript.PatientInfoSO;
+        //    GetPatientInfo();
+        //}
+
         if (_player == null)
         {
             return;
         }
         else if (!_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
         {
+            SetupPatientInfoDisplay();
             _joinPatientPopUp.SetActive(true);
         }
         else if (_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
         {
-            _patientMenu.SetActive(true);
+            SetupPatientInfoDisplay();
+            _patientMenuParent.SetActive(true);
         }
     }
 
@@ -94,8 +106,8 @@ public class ActionsOperatingManager : MonoBehaviour
             // need to verify that set operating crew is setting an empty group of maximum 4 and insitialize it with current player
             SetOperatingCrew(_currentPatientScript.OperatingUserCrew);
             _joinPatientPopUp.SetActive(false);
-            _patientMenu.SetActive(true);
-            _patientInfoPanel.SetActive(false);
+            _patientMenuParent.SetActive(true);
+            _patientInfoParent.SetActive(false);
 
         }
         else
@@ -113,19 +125,19 @@ public class ActionsOperatingManager : MonoBehaviour
         }
     }
 
-    private void SetupPatientMenu()
+    private void SetupPatientInfoDisplay()
     {
-        _sureName.text = _patientInfoSO.SureName;
-        _sureName.text = _patientInfoSO.SureName;
-        _gender.text = _patientInfoSO.Gender;
-        _adress.text = _patientInfoSO.AddressLocation;
-        _insuranceCompany.text = _patientInfoSO.MedicalCompany;
-        _complaint.text = _patientInfoSO.Complaint;
+        _sureName.text = _currentPatientInfoSo.SureName;
+        _sureName.text = _currentPatientInfoSo.SureName;
+        _gender.text = _currentPatientInfoSo.Gender;
+        _adress.text = _currentPatientInfoSo.AddressLocation;
+        _insuranceCompany.text = _currentPatientInfoSo.MedicalCompany;
+        _complaint.text = _currentPatientInfoSo.Complaint;
         //_incidentAdress.text = PatientInfoSO.eventPlace;
 
-        _age.text = _patientInfoSO.Age.ToString();
-        _id.text = _patientInfoSO.Id.ToString();
-        _phoneNumber.text = _patientInfoSO.PhoneNumber.ToString();
+        _age.text = _currentPatientInfoSo.Age.ToString();
+        _id.text = _currentPatientInfoSo.Id.ToString();
+        _phoneNumber.text = _currentPatientInfoSo.PhoneNumber.ToString();
     }
 
     // For Use Externally
@@ -145,11 +157,12 @@ public class ActionsOperatingManager : MonoBehaviour
 
     #region Patient Menu Events
     // clost menu
-    public void ClosePatientMenu()
+    public void OpenCloseMenu(GameObject menu)
     {
-        _actionLog.SetActive(false);
-        _patientInfoPanel.SetActive(false);
-        _patientMenu.SetActive(false);
+        if (menu.activeInHierarchy)
+            menu.SetActive(false);
+        else
+            menu.SetActive(true);
 
         print("Close Patient Menu");
     }
@@ -158,10 +171,7 @@ public class ActionsOperatingManager : MonoBehaviour
     // paitent background info: name, weghit, gender, adress...
     public void PatientInfo()
     {
-        if (!_patientInfoPanel.activeInHierarchy)
-            _patientInfoPanel.SetActive(true);
-        else
-            _patientInfoPanel.SetActive(false);
+        OpenCloseMenu(_patientInfoParent);
 
         print("Patient Information");
     }
@@ -169,7 +179,7 @@ public class ActionsOperatingManager : MonoBehaviour
     // list of actions done on the patient by players, aranged by time stamp
     public void Log()
     {
-        _actionLog.SetActive(true);
+        OpenCloseMenu(_actionLogParent);
         print("Log Window");
     }
 
@@ -182,6 +192,7 @@ public class ActionsOperatingManager : MonoBehaviour
     // take current player out of their crew's list
     public void LeavePatient()
     {
+        OpenCloseMenu(_patientMenuParent);
         
         if (_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
         {
@@ -198,60 +209,49 @@ public class ActionsOperatingManager : MonoBehaviour
         }
 
         print("Leave Patient");
-
-        ClosePatientMenu();
     }
     #endregion
 
     #region Player Action Events
     public void OpenNoBagActionMenu()
     {
-        _actionsOperatingHandler.OpenNoBagActionMenu(NoBagActionMenu);
+        _actionsOperatingHandler.OpenNoBagActionMenu(_basicActionMenuParent);
     }
 
     public void CallAction(int actionNumInList)
     {
-        if (_patientInfoSO != null)
-        {
-            _actionsOperatingHandler.RunAction(actionNumInList, _currentPatientScript);
-        }
+        if (_currentPatientInfoSo != null)
+            _actionsOperatingHandler.RunAction(this, _currentPatientScript, _player, _monitor, actionNumInList);
     }
     #endregion
 
-    // refactor for player to do on patient
-    #region getting patient data
-    private void GetPatientInfo()
-    {
-        if (CheckIfPlayerJoined())
-        {
-            AmbulanceActionPanel.SetActive(true);
-            _patientInfoSO = _currentPatientScript.PatientInfoSO;
-        }
-        else
-        {
-            AmbulanceActionPanel.SetActive(false);
-            _patientInfoSO = null;
-        }
-    }
-
-    //patient
-    private void OnTriggerStay(Collider other)
+    #region Get Patient Data
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Patient"))
         {
+            for (int i = 0; i < _ambulanceActionBtnParents.Count; i++)
+            {
+                if (true)
+                    _ambulanceActionBtnParents[i].SetActive(true);
+                else
+                    _ambulanceActionBtnParents[i].SetActive(false);
+            }
+
             _currentPatientScript = other.gameObject.GetComponent<Patient>();
-            GetPatientInfo();
+            _currentPatientInfoSo = _currentPatientScript.PatientInfoSO;
         }
     }
 
-    //patient
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Patient"))
         {
-            AmbulanceActionPanel.SetActive(false);
+            foreach (GameObject btnParent in _ambulanceActionBtnParents)
+                btnParent.SetActive(false);
+
             _currentPatientScript = null;
-            _patientInfoSO = null;
+            _currentPatientInfoSo = null;
         }
     }
     
