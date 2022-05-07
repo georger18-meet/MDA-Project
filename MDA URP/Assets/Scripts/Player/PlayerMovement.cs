@@ -319,7 +319,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void CheckInteraction()
+    public RaycastHit CheckInteraction()
     {
         RaycastHit raycastHit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -340,6 +340,8 @@ public class PlayerMovement : MonoBehaviour
         {
             _indicatorIcon.SetActive(false);
         }
+
+        return raycastHit;
     }
 
     private void FreeCursorToggle()

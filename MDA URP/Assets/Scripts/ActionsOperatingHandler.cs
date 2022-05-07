@@ -2,20 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionsOperatingHandler : MonoBehaviour
+public class ActionsOperatingHandler
 {
-    public void RunAction(int actionIndex, Patient patient)
+    public void OpenNoBagActionMenu(GameObject noBagActionMenu)
+    {
+        if (!noBagActionMenu.activeInHierarchy)
+            noBagActionMenu.SetActive(true);
+        else
+            noBagActionMenu.SetActive(false);
+    }
+
+    public void RunAction(ActionsOperatingManager AOM, Patient patient, GameObject player, GameObject monitor, int actionIndex)
     {
         switch (actionIndex)
         {
             case 0:
-                GetPainLevel(patient);
+                AskPainLevel(AOM, patient);
                 break;
             case 1:
-                DoHeartMassage(patient);
+                DoHeartMassage(AOM, patient, player);
                 break;
             case 2:
-                Defibrillator(patient);
+                Defibrillation(AOM, patient, player, monitor);
                 break;
             default:
                 break;
@@ -23,20 +31,38 @@ public class ActionsOperatingHandler : MonoBehaviour
     }
 
     // Pain Level
-    public void GetPainLevel(Patient patient)
+    public void AskPainLevel(ActionsOperatingManager AOM, Patient patient)
     {
+        if (!AOM.CheckIfPlayerJoined())
+            return;
+        else
+            patient.PatientInfoSO.PainLevel = patient.PatientInfoSO.PainPlaceholderAnswer;
+
         Debug.Log(patient.name + "'s Pain Level: " + patient.PatientInfoSO.PainLevel);
     }
 
     // Heart Massage
-    public void DoHeartMassage(Patient patient)
+    public void DoHeartMassage(ActionsOperatingManager AOM, Patient patient, GameObject player)
     {
+        if (!AOM.CheckIfPlayerJoined())
+            return;
+        else
+            player.transform.position = AOM.PlayerTreatingTr.position;
+
         Debug.Log("Operating Heart Massage On " + patient.name);
     }
 
     // Defibrillator
-    public void Defibrillator(Patient patient)
+    public void Defibrillation(ActionsOperatingManager AOM, Patient patient, GameObject player, GameObject monitor)
     {
+        if (!AOM.CheckIfPlayerJoined())
+            return;
+        else
+        {
+            player.transform.position = AOM.PlayerTreatingTr.position;
+            MonoBehaviour.Instantiate(monitor, AOM.PatientEquipmentTr.position, Quaternion.identity);
+        }
+
         Debug.Log("CLEAR!!! Defibrillator On " + patient.name);
     }
 }

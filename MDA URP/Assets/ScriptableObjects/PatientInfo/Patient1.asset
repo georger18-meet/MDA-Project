@@ -22,4 +22,5 @@ MonoBehaviour:
   age: 49
   phoneNumber: 542265856
   HeartRate: 80
-  PainLevel: 4
+  PainPlaceholderAnswer: 7
+  PainLevel: Unkown

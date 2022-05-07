@@ -6,23 +6,20 @@ using UnityEngine;
 public class PaitentBaseInfoSO : ScriptableObject
 {
     // General Info
-    [Header("General Info")]
-    public string fullName;
-    public string gender;
-    public string addressLocation;
-    public string medicalCompany;
-    public string eventPlace;
-    public string complaint;
-
-
-
-    public int idNumber;
-    public int age;
-    public int phoneNumber;
-
+    [Header("Patient Informaion")]
+    public string SureName, LastName;
+    public int Id, Age;
+    public string Gender;
+    public int PhoneNumber;
+    public string MedicalCompany, AddressLocation, Complaint;
+    //public string eventPlace;
 
     // Health Data
-    [Header("Health Data")]
-    public int HeartRate;
-    public int PainLevel;
+    [Header("Measurments")]
+    public int HeartRate, PainLevel, PainPlaceholderAnswer;
+
+    // gal's additions (playerActions related)
+    // public GameObject PatientManu, HeartRatePanel;
+    // public TextMeshProUGUI HeartRateText, PainMeterText, BreathingText;
+    // public int HeartRate, PainMeter, Breathing, PainPlaceholderAnswer;
 }
