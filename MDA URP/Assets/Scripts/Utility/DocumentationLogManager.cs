@@ -74,6 +74,28 @@ public class DocumentationLogManager : MonoBehaviour
         }
     }
 
+    public void LogThisText(string text)
+    {
+        myLog = text;
+        string newString = myLog + "\n----------------------------------------\n";
+        Enqueue(newString);
+        myLog = string.Empty;
+        if (!InfiniteList)
+        {
+            foreach (string mylog in _queueArray)
+            {
+                myLog += mylog;
+            }
+        }
+        else
+        {
+            foreach (string mylog in _queueList)
+            {
+                myLog += mylog;
+            }
+        }
+    }
+
     void RefreshText()
     {
         string text = "";
