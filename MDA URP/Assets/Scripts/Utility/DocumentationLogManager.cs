@@ -7,18 +7,34 @@ using UnityEngine.UI;
 public class DocumentationLogManager : MonoBehaviour
 {
     public TextMeshProUGUI UIDisplayer;
+    public int LogsToDisplayAtOnce = 5;
+    public bool InfiniteList;
     private string myLog;
-    private string[] _queueArray = new string[6];
+    private string[] _queueArray;
+    private List<string> _queueList = new List<string>();
     private int _queueIndex = 0;
+
+    private void Awake()
+    {
+        _queueArray = new string[LogsToDisplayAtOnce + 1];
+        _queueList.Add("");
+    }
 
     //// Update is called once per frame
     void Update()
     {
-        if (_queueArray[5] != null)
+        if (!InfiniteList)
         {
-            Dequeue();
+            if (_queueArray[LogsToDisplayAtOnce] != null)
+            {
+                Dequeue();
+            }
+            RefreshText();
         }
-        UIDisplayer.text = _queueArray[0] + _queueArray[1] + _queueArray[2] + _queueArray[3] + _queueArray[4];
+        else
+        {
+            RefreshText();
+        }
     }
 
     void OnEnable()
@@ -42,17 +58,64 @@ public class DocumentationLogManager : MonoBehaviour
             Enqueue(newString);
         }
         myLog = string.Empty;
-        foreach (string mylog in _queueArray)
+        if (!InfiniteList)
         {
-            myLog += mylog;
+            foreach (string mylog in _queueArray)
+            {
+                myLog += mylog;
+            }
         }
+        else
+        {
+            foreach (string mylog in _queueList)
+            {
+                myLog += mylog;
+            }
+        }
+    }
+
+    void RefreshText()
+    {
+        string text = "";
+
+        if (!InfiniteList)
+        {
+            for (int i = 0; i < _queueArray.Length; i++)
+            {
+                text += _queueArray[i];
+            }
+        }
+        else
+        {
+            for (int i = 0; i < _queueList.Count; i++)
+            {
+                text += _queueList[i];
+            }
+        }
+
+        UIDisplayer.text = text;
     }
 
     public void Enqueue(string word)
     {
-        if (_queueIndex < _queueArray.Length)
+        if (!InfiniteList)
         {
-            _queueArray[_queueIndex] = word;
+            if (_queueIndex < _queueArray.Length)
+            {
+                _queueArray[_queueIndex] = word;
+                _queueIndex++;
+            }
+        }
+        else
+        {
+            if (_queueIndex == 0)
+            {
+                _queueList[0] = word;
+            }
+            else
+            {
+                _queueList.Add(word);
+            }
             _queueIndex++;
         }
     }
