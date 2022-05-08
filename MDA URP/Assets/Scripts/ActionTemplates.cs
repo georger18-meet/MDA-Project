@@ -25,7 +25,7 @@ public class ActionTemplates : MonoBehaviour
         print($"Updated {oldText} in {window.name} to {text}");
     }
 
-    public void ChaneMeasurement(int currentValue, int newValue)
+    public void ChangeMeasurement(int currentValue, int newValue)
     {
         currentValue = newValue;
 
@@ -64,6 +64,11 @@ public class ActionTemplates : MonoBehaviour
         currentTexture = newTexture;
 
         print($"Changed Textures: {newTexture} instead of {currentTexture}");
+    }
+
+    public void UpdatePatientLog(string textToLog)
+    {
+
     }
     #endregion
 
