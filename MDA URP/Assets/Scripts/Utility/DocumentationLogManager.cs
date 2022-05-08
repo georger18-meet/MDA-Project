@@ -20,8 +20,7 @@ public class DocumentationLogManager : MonoBehaviour
         _queueList.Add("");
     }
 
-    //// Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!InfiniteList)
         {
@@ -37,17 +36,17 @@ public class DocumentationLogManager : MonoBehaviour
         }
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         Application.logMessageReceived += HandleLog;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         Application.logMessageReceived -= HandleLog;
     }
 
-    void HandleLog(string logString, string stackTrace, LogType type)
+    private void HandleLog(string logString, string stackTrace, LogType type)
     {
         myLog = logString;
         string newString = "[" + type + "]: " + myLog + "\n----------------------------------------\n";
@@ -74,7 +73,7 @@ public class DocumentationLogManager : MonoBehaviour
         }
     }
 
-    void RefreshText()
+    private void RefreshText()
     {
         string text = "";
 

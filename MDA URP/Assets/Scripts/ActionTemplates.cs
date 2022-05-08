@@ -6,6 +6,8 @@ using TMPro;
 
 public class ActionTemplates : MonoBehaviour
 {
+    [SerializeField] private DocumentationLogManager _docLog;
+
     #region Most Basic Tools
     public void OpenDisplayWindow(GameObject window)
     {
@@ -68,7 +70,7 @@ public class ActionTemplates : MonoBehaviour
 
     public void UpdatePatientLog(string textToLog)
     {
-
+        //_docLog.
     }
     #endregion
 

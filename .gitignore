@@ -59,3 +59,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+*.wktree
+MDA URP/.plastic/plastic.changes
+MDA URP/.plastic/plastic.wktree
