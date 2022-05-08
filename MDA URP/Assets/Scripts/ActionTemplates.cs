@@ -7,6 +7,7 @@ using TMPro;
 public class ActionTemplates : MonoBehaviour
 {
     [SerializeField] private DocumentationLogManager _docLog;
+    [SerializeField] private float _alertTimer;
 
     #region Most Basic Tools
     public void OpenDisplayWindow(GameObject window)
@@ -25,6 +26,15 @@ public class ActionTemplates : MonoBehaviour
         text.text = newValue.ToString();
 
         print($"Updated {oldText} in {window.name} to {text}");
+    }
+
+    public void ShowAlertWindow(GameObject window, TextMeshProUGUI text, int newValue)
+    {
+        _alertTimer = 0;
+        OpenDisplayWindow(window);
+
+        if (_alertTimer > 2)
+            window.SetActive(false);
     }
 
     public void ChangeMeasurement(int currentValue, int newValue)
@@ -70,7 +80,15 @@ public class ActionTemplates : MonoBehaviour
 
     public void UpdatePatientLog(string textToLog)
     {
-        //_docLog.
+        _docLog.LogThisText(textToLog);
+    }
+
+    public bool IsPlayerJoined(ActionsOperatingManager AOM)
+    {
+        if (AOM.CheckIfPlayerJoined())
+            return true;
+        else
+            return false;
     }
     #endregion
 
@@ -78,5 +96,10 @@ public class ActionTemplates : MonoBehaviour
     public void CheckStatus(bool isConscious, bool isPatientConscious)
     {
 
+    }
+
+    private void Update()
+    {
+        _alertTimer += Time.deltaTime;
     }
 }

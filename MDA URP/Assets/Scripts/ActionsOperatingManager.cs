@@ -10,7 +10,7 @@ public class ActionsOperatingManager : MonoBehaviour
 
     #region Script References
     [Header("Data & Scripts")]
-    [SerializeField] private PlayerData _playerData;
+    [field: SerializeField] public PlayerData _playerData;
     [SerializeField] private PaitentBaseInfoSO _currentPatientInfoSo;
     [SerializeField] private Patient _currentPatientScript;
     #endregion

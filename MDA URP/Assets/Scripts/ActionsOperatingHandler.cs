@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ActionsOperatingHandler
 {
+    private ActionTemplates _actionTemplates;
     public void OpenNoBagActionMenu(GameObject noBagActionMenu)
     {
         if (!noBagActionMenu.activeInHierarchy)
@@ -47,7 +48,13 @@ public class ActionsOperatingHandler
         if (!AOM.CheckIfPlayerJoined())
             return;
         else
-            player.transform.position = AOM.PlayerTreatingTr.position;
+        {
+            _actionTemplates.MoveCharacter(player.transform, AOM.PlayerTreatingTr);
+            _actionTemplates.PlayAnimationOnCharacter(player.transform, AOM._playerData.PlayerAnimation);
+            _actionTemplates.PlayAnimationOnCharacter(patient.transform, patient.PatientAnimation);
+            //_actionTemplates.ChangeMeasurement();
+            //_actionTemplates.ShowAlertWindow();
+        }
 
         Debug.Log("Operating Heart Massage On " + patient.name);
     }

@@ -13,9 +13,10 @@ public class Patient : MonoBehaviour
     public PaitentBaseInfoSO PatientInfoSO;
     #endregion
 
-    #region private fields
+    #region Public fields
     [SerializeField]
     public Dictionary<string, int> OperatingUserCrew = new Dictionary<string, int>();
+    public Animation PatientAnimation;
     #endregion
 
     #region private serialized fields
