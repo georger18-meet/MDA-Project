@@ -10,8 +10,8 @@ public class ActionsOperatingManager : MonoBehaviour
 
     #region Script References
     [Header("Data & Scripts")]
-    [SerializeField] private PaitentBaseInfoSO _currentPatientInfoSo;
     [SerializeField] private PlayerData _playerData;
+    [SerializeField] private PaitentBaseInfoSO _currentPatientInfoSo;
     [SerializeField] private Patient _currentPatientScript;
     #endregion
 
@@ -27,7 +27,7 @@ public class ActionsOperatingManager : MonoBehaviour
     [SerializeField] private GameObject _natanActionBarParent, _basicActionMenuParent;
     //[SerializeField] private GameObject
 
-    [Header("Player UI Texts")]
+    //[Header("Player UI Texts")]
     //[SerializeField] private TextMeshProUGUI
     //[SerializeField] private TextMeshProUGUI
     #endregion
@@ -167,6 +167,14 @@ public class ActionsOperatingManager : MonoBehaviour
         print("Close Patient Menu");
     }
 
+    public void CloseAllWindows()
+    {
+        _joinPatientPopUp.SetActive(false);
+        _patientMenuParent.SetActive(false);
+        _patientInfoParent.SetActive(false);
+        _actionLogParent.SetActive(false);
+    }
+
 
     // paitent background info: name, weghit, gender, adress...
     public void PatientInfo()
@@ -192,8 +200,7 @@ public class ActionsOperatingManager : MonoBehaviour
     // take current player out of their crew's list
     public void LeavePatient()
     {
-        OpenCloseMenu(_patientMenuParent);
-        
+        CloseAllWindows();        
         if (_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
         {
             for (int i = 0; i < _currentPatientScript.OperatingUsers.Count; i++)
