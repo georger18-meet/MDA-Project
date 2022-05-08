@@ -75,13 +75,6 @@ public class ActionsOperatingManager : MonoBehaviour
     // Triggered upon Clicking on the Patient
     public void SetOperatingCrewCheck(GameObject patient)
     {
-        //if (_currentPatientInfoSo == null && patient.CompareTag("Patient"))
-        //{
-        //    _currentPatientScript = patient.GetComponent<Patient>();
-        //    _currentPatientInfoSo = _currentPatientScript.PatientInfoSO;
-        //    GetPatientInfo();
-        //}
-
         if (_player == null)
         {
             return;
