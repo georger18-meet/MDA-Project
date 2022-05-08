@@ -17,17 +17,25 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !GameMenuOpen)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseToggle();
+        }
+    }
+
+    public void PauseToggle()
+    {
+        if (!GameMenuOpen)
         {
             OnEscape(true);
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && GameMenuOpen)
+        else if (GameMenuOpen)
         {
             OnEscape(false);
         }
     }
 
-    public void OnEscape(bool paused)
+    private void OnEscape(bool paused)
     {
         ChangeCursorMode(paused);
         GameMenuMode(paused);
