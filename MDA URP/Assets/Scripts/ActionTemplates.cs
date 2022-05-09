@@ -28,13 +28,16 @@ public class ActionTemplates : MonoBehaviour
         print($"Updated {oldText} in {window.name} to {text}");
     }
 
-    public void ShowAlertWindow(GameObject window, TextMeshProUGUI text, int newValue)
+    public void ShowAlertWindow(GameObject playerUI, GameObject window, TextMeshProUGUI alertTitle, TextMeshProUGUI alertText, int value)
     {
         _alertTimer = 0;
-        OpenDisplayWindow(window);
+        Instantiate(window, playerUI.transform);
+        //OpenDisplayWindow(window);
 
-        if (_alertTimer > 2)
-            window.SetActive(false);
+        alertText.text = value.ToString();
+
+        if (_alertTimer > 3)
+            Destroy(window);
     }
 
     public void ChangeMeasurement(int currentValue, int newValue)
@@ -81,7 +84,7 @@ public class ActionTemplates : MonoBehaviour
     public void UpdatePatientLog(string textToLog)
     {
         _docLog.LogThisText(textToLog);
-    }
+    } 
 
     public bool IsPlayerJoined(ActionsOperatingManager AOM)
     {
@@ -92,7 +95,7 @@ public class ActionTemplates : MonoBehaviour
     }
     #endregion
 
-    // not sure about this
+    // not sure about this - patient bool - isConsious vs if is currently conscious
     public void CheckStatus(bool isConscious, bool isPatientConscious)
     {
 
@@ -102,4 +105,16 @@ public class ActionTemplates : MonoBehaviour
     {
         _alertTimer += Time.deltaTime;
     }
+
+    #region Actions Components
+    public void CheckMeasurement(PaitentBaseInfoSO PatientInfo, GameObject playerUI, GameObject window, TextMeshProUGUI alertTitle, TextMeshProUGUI alertText, string measurementTitle, int measurement)
+    {
+        alertTitle.text = measurementTitle;
+        ShowAlertWindow(playerUI, window, alertTitle, alertText, measurement);
+
+        UpdatePatientLog($"Patient's {measurementTitle} is {measurement}");
+    }
+
+    public void 
+    #endregion
 }
