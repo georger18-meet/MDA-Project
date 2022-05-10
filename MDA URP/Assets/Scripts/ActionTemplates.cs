@@ -114,7 +114,5 @@ public class ActionTemplates : MonoBehaviour
 
         UpdatePatientLog($"Patient's {measurementTitle} is {measurement}");
     }
-
-    public void 
     #endregion
 }
