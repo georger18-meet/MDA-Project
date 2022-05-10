@@ -107,7 +107,8 @@ public class ActionTemplates : MonoBehaviour
     }
 
     #region Actions Components
-    public void CheckMeasurement(PaitentBaseInfoSO PatientInfo, GameObject playerUI, GameObject window, TextMeshProUGUI alertTitle, TextMeshProUGUI alertText, string measurementTitle, int measurement)
+    public void CheckMeasurement(PaitentBaseInfoSO PatientInfo, GameObject playerUI, GameObject window,
+        TextMeshProUGUI alertTitle, TextMeshProUGUI alertText, string measurementTitle, int measurement)
     {
         alertTitle.text = measurementTitle;
         ShowAlertWindow(playerUI, window, alertTitle, alertText, measurement);
