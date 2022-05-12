@@ -228,7 +228,10 @@ public class ActionsOperatingManager : MonoBehaviour
     public void CallAction(int actionNumInList)
     {
         if (_currentPatientInfoSo != null)
-            _actionsOperatingHandler.RunAction(this, _currentPatientScript, _player, _monitor, actionNumInList);
+        {
+
+            _actionsOperatingHandler.RunAction(this, _currentPatientScript, _player, _monitor, _playerData.UserRole, actionNumInList);
+        }
     }
     #endregion
 
