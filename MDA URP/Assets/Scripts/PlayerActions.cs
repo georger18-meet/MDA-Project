@@ -9,7 +9,7 @@ public class PlayerActions : MonoBehaviour
     private Transform _playerTr, _patientTr;
 
     [SerializeField]
-    private PaitentBaseInfoSO _patientInfo;
+    private PatientData _patientInfo;
 
     [SerializeField]
     private PlayerData _playerData;
@@ -63,8 +63,8 @@ public class PlayerActions : MonoBehaviour
         switch (action.ToLower())
         {
             case "heart massage":
-                if (_patientInfo.HeartRate == 0)
-                _patientInfo.HeartRate = 65;
+                if (_patientInfo.BPM == 0)
+                _patientInfo.BPM = 65;
                 // show heartbeat
                 break;
 

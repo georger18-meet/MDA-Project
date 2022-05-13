@@ -10,14 +10,14 @@ public class ActionTemplates : MonoBehaviour
     [SerializeField] private float _alertTimer;
 
     #region Most Basic Tools
-    public void OpenDisplayWindow(GameObject window)
+    public void OpenCloseDisplayWindow(GameObject window)
     {
         if (window.activeInHierarchy)
             window.SetActive(false);
         else
             window.SetActive(true);
 
-        print($"Closed {window.name}");
+        print($"Opend /Closed {window.name}");
     }
 
     public void UpdateDisplayWindow(GameObject window, TextMeshProUGUI text, int newValue)
@@ -28,16 +28,18 @@ public class ActionTemplates : MonoBehaviour
         print($"Updated {oldText} in {window.name} to {text}");
     }
 
-    public void ShowAlertWindow(GameObject playerUI, GameObject window, TextMeshProUGUI alertTitle, TextMeshProUGUI alertText, int value)
+    public void ShowAlertWindow(GameObject alertWindow, TextMeshProUGUI alertTitle, TextMeshProUGUI alertText, string valueName, string valueText)
     {
+        
         _alertTimer = 0;
-        Instantiate(window, playerUI.transform);
+        alertWindow.SetActive(true);
         //OpenDisplayWindow(window);
 
-        alertText.text = value.ToString();
+        alertTitle.text = valueName;
+        alertText.text = valueText;
 
         if (_alertTimer > 3)
-            Destroy(window);
+            alertWindow.SetActive(false);
     }
 
     public void ChangeMeasurement(int currentValue, int newValue)
@@ -107,11 +109,57 @@ public class ActionTemplates : MonoBehaviour
     }
 
     #region Actions Components
-    public void CheckMeasurement(PaitentBaseInfoSO PatientInfo, GameObject playerUI, GameObject window,
-        TextMeshProUGUI alertTitle, TextMeshProUGUI alertText, string measurementTitle, int measurement)
+    public void CheckMeasurement(PatientData patientData, GameObject alertWindow,
+        TextMeshProUGUI alertTitle, TextMeshProUGUI alertText, string measurementTitle, string measurement)
     {
         alertTitle.text = measurementTitle;
-        ShowAlertWindow(playerUI, window, alertTitle, alertText, measurement);
+
+        switch (measurement.ToLower())
+        {
+            case "bpm":
+                measurementTitle = "??? ??";
+                measurement = patientData.BPM.ToString();
+                break;
+
+            case "pain level":
+                measurementTitle = "??? ???";
+                measurement = patientData.PainLevel.ToString();
+                break;
+
+            case "respiratory rate":
+                measurementTitle = "??? ?????";
+                measurement = patientData.RespiratoryRate.ToString();
+                break;
+
+            case "cincinnati level":
+                measurementTitle = "???? ????????";
+                measurement = patientData.CincinnatiLevel.ToString();
+                break;
+
+            case "blood suger":
+                measurementTitle = "???? ???";
+                measurement = patientData.BloodSuger.ToString();
+                break;
+
+            case "blood pressure":
+                measurementTitle = "??? ??";
+                measurement = patientData.BloodPressure.ToString();
+                break;
+
+            case "oxygen saturation":
+                measurementTitle = "???????";
+                measurement = patientData.OxygenSaturation.ToString();
+                break;
+
+            case "etco2":
+                measurementTitle = "ETCO2";
+                measurement = patientData.ETCO2.ToString();
+                break;
+
+            default:
+                break;
+        }
+        ShowAlertWindow(alertWindow, alertTitle, alertText, measurementTitle, measurement);
 
         UpdatePatientLog($"Patient's {measurementTitle} is {measurement}");
     }

@@ -10,7 +10,7 @@ public class Patient : MonoBehaviour
 {
     #region Script References
     [Header("Data & Scripts")]
-    public PaitentBaseInfoSO PatientInfoSO;
+    public PatientData PatientInfoSO;
     #endregion
 
     #region Public fields
@@ -58,6 +58,7 @@ public class Patient : MonoBehaviour
     //}
 
     // refactor for player to do on patient
+
     #region getting patient data
     //private void OnTriggerEnter(Collider other)
     //{

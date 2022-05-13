@@ -35,6 +35,7 @@ public struct ActionData
 public class ActionsOperatingHandler
 {
     public List<Action<ActionData>> ActionsList = new List<Action<ActionData>>();
+    private ActionTemplates aT;
 
     public ActionsOperatingHandler()
     {
@@ -70,7 +71,8 @@ public class ActionsOperatingHandler
         if (!actionData.AOM.CheckIfPlayerJoined())
             return;
         else
-            actionData.Patient.PatientInfoSO.PainLevel = actionData.Patient.PatientInfoSO.PainPlaceholderAnswer;
+            //aT.CheckMeasurement();
+            //actionData.Patient.PatientInfoSO.PainLevel = actionData.Patient.PatientInfoSO.PainPlaceholderAnswer;
 
         Debug.Log(actionData.Patient.name + "'s Pain Level: " + actionData.Patient.PatientInfoSO.PainLevel);
     }

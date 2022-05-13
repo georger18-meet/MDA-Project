@@ -11,7 +11,7 @@ public class ActionsOperatingManager : MonoBehaviour
     #region Script References
     [Header("Data & Scripts")]
     [field: SerializeField] public PlayerData _playerData;
-    [SerializeField] private PaitentBaseInfoSO _currentPatientInfoSo;
+    [SerializeField] private PatientData _currentPatientInfoSo;
     [SerializeField] private Patient _currentPatientScript;
     #endregion
 
@@ -60,7 +60,7 @@ public class ActionsOperatingManager : MonoBehaviour
     private void Start()
     {
         foreach (GameObject btnParent in _ambulanceActionBtnParents)
-            btnParent.SetActive(false);
+            btnParent.GetComponentInChildren<Button>().interactable = false;
 
         _actionsOperatingHandler = new ActionsOperatingHandler();
 
@@ -88,7 +88,6 @@ public class ActionsOperatingManager : MonoBehaviour
         }
         else if (!_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
         {
-            SetupPatientInfoDisplay();
             _joinPatientPopUp.SetActive(true);
         }
         else if (_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
@@ -105,6 +104,7 @@ public class ActionsOperatingManager : MonoBehaviour
         {
             // need to verify that set operating crew is setting an empty group of maximum 4 and insitialize it with current player
             SetOperatingCrew(_currentPatientScript.OperatingUserCrew);
+            SetupPatientInfoDisplay();
             _joinPatientPopUp.SetActive(false);
             _patientMenuParent.SetActive(true);
             _patientInfoParent.SetActive(false);
@@ -242,10 +242,7 @@ public class ActionsOperatingManager : MonoBehaviour
         {
             for (int i = 0; i < _ambulanceActionBtnParents.Count; i++)
             {
-                if (true)
-                    _ambulanceActionBtnParents[i].SetActive(true);
-                else
-                    _ambulanceActionBtnParents[i].SetActive(false);
+                _ambulanceActionBtnParents[i].GetComponentInChildren<Button>().interactable = true;
             }
 
             _currentPatientScript = other.gameObject.GetComponent<Patient>();
@@ -258,7 +255,7 @@ public class ActionsOperatingManager : MonoBehaviour
         if (other.gameObject.CompareTag("Patient"))
         {
             foreach (GameObject btnParent in _ambulanceActionBtnParents)
-                btnParent.SetActive(false);
+                btnParent.GetComponentInChildren<Button>().interactable = false;
 
             _currentPatientScript = null;
             _currentPatientInfoSo = null;
