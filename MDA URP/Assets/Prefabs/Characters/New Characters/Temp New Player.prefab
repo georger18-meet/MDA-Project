@@ -1823,6 +1823,8 @@ MonoBehaviour:
   _complaint: {fileID: 2605720217661638272}
   PlayerTreatingTr: {fileID: 0}
   PatientEquipmentTr: {fileID: 0}
+  _mapWindow: {fileID: 0}
+  _contentPanel: {fileID: 0}
   UserName: 
   CrewName: 
   UserIndexInCrew: 0
