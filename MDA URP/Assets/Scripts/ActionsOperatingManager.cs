@@ -47,6 +47,11 @@ public class ActionsOperatingManager : MonoBehaviour
     public Transform PatientEquipmentTr;
     #endregion
 
+    #region PauseMenu
+    [SerializeField]
+    private GameObject _mapWindow, _contentPanel;
+    #endregion
+
     // may be removed or changed to decouple
     [field: SerializeField]
     public string UserName, CrewName;
@@ -167,7 +172,7 @@ public class ActionsOperatingManager : MonoBehaviour
         print("Close Patient Menu");
     }
 
-    public void CloseAllWindows()
+    public void CloseAllPatientWindows()
     {
         _joinPatientPopUp.SetActive(false);
         _patientMenuParent.SetActive(false);
@@ -175,6 +180,11 @@ public class ActionsOperatingManager : MonoBehaviour
         _actionLogParent.SetActive(false);
     }
 
+    public void PauseHomeBtn()
+    {
+        _mapWindow.SetActive(false);
+        _contentPanel.SetActive(true);
+    }
 
     // paitent background info: name, weghit, gender, adress...
     public void PatientInfo()
@@ -200,7 +210,7 @@ public class ActionsOperatingManager : MonoBehaviour
     // take current player out of their crew's list
     public void LeavePatient()
     {
-        CloseAllWindows();        
+        CloseAllPatientWindows();        
         if (_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
         {
             for (int i = 0; i < _currentPatientScript.OperatingUsers.Count; i++)
