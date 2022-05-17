@@ -1701,7 +1701,7 @@ GameObject:
   - component: {fileID: 3683898050386502805}
   - component: {fileID: 5401322901793046738}
   m_Layer: 0
-  m_Name: Temp New Player
+  m_Name: Player_V2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
