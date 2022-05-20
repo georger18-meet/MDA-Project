@@ -2150,7 +2150,7 @@ GameObject:
   - component: {fileID: 276888625313076944}
   - component: {fileID: 8952050516523694589}
   m_Layer: 0
-  m_Name: CarSimple_V2
+  m_Name: AmbulanceCarSimple_V2
   m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
