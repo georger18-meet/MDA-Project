@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 397309089840598922}
   - component: {fileID: 1496187619874361617}
   m_Layer: 0
-  m_Name: U_HOVESH
+  m_Name: PM_Hovesh_V1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
