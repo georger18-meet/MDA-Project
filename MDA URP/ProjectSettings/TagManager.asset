@@ -3,21 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Patient
-  - Car
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
-  - Map
-  - Interactable
-  - MapWithView
-  - Road
-  - Patient
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
