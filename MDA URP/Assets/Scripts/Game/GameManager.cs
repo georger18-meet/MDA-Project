@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject GameMenuCanvas;
+    //public GameObject GameMenuCanvas;
     public bool GameMenuOpen = false;
 
     // Start is called before the first frame update
@@ -19,41 +19,41 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PauseToggle();
+            //PauseToggle();
         }
     }
 
-    public void PauseToggle()
-    {
-        if (!GameMenuOpen)
-        {
-            OnEscape(true);
-        }
-        else if (GameMenuOpen)
-        {
-            OnEscape(false);
-        }
-    }
+    //public void PauseToggle()
+    //{
+    //    if (!GameMenuOpen)
+    //    {
+    //        OnEscape(true);
+    //    }
+    //    else if (GameMenuOpen)
+    //    {
+    //        OnEscape(false);
+    //    }
+    //}
 
     private void OnEscape(bool paused)
     {
         ChangeCursorMode(paused);
-        GameMenuMode(paused);
+        //GameMenuMode(paused);
     }
 
-    private void GameMenuMode(bool mode)
-    {
-        if (mode)
-        {
-            GameMenuCanvas.gameObject.SetActive(true);
-            GameMenuOpen = true;
-        }
-        else
-        {
-            GameMenuCanvas.gameObject.SetActive(false);
-            GameMenuOpen = false;
-        }
-    }
+    //private void GameMenuMode(bool mode)
+    //{
+    //    if (mode)
+    //    {
+    //        GameMenuCanvas.gameObject.SetActive(true);
+    //        GameMenuOpen = true;
+    //    }
+    //    else
+    //    {
+    //        GameMenuCanvas.gameObject.SetActive(false);
+    //        GameMenuOpen = false;
+    //    }
+    //}
 
     private void ChangeCursorMode(bool unlocked)
     {

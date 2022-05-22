@@ -8,11 +8,14 @@ public class ActionsOperatingManager : MonoBehaviour
 {
     private ActionsOperatingHandler _actionsOperatingHandler;
 
-    #region Script References
+    #region Data References
     [Header("Data & Scripts")]
-    [SerializeField] private PlayerData _playerData;
-    [SerializeField] private PaitentBaseInfoSO _currentPatientInfoSo;
-    [SerializeField] private Patient _currentPatientScript;
+    [field: SerializeField] public PlayerData _playerData;
+    
+    private Patient _currentPatientScript;
+    private PatientData _currentPatientData;
+
+    public PatientData CurrentPatientData { get => _currentPatientData; }
     #endregion
 
     #region Prefab References
@@ -47,6 +50,11 @@ public class ActionsOperatingManager : MonoBehaviour
     public Transform PatientEquipmentTr;
     #endregion
 
+    #region PauseMenu
+    [SerializeField]
+    private GameObject _mapWindow, _contentPanel;
+    #endregion
+
     // may be removed or changed to decouple
     [field: SerializeField]
     public string UserName, CrewName;
@@ -60,7 +68,7 @@ public class ActionsOperatingManager : MonoBehaviour
     private void Start()
     {
         foreach (GameObject btnParent in _ambulanceActionBtnParents)
-            btnParent.SetActive(false);
+            btnParent.GetComponentInChildren<Button>().interactable = false;
 
         _actionsOperatingHandler = new ActionsOperatingHandler();
 
@@ -88,7 +96,6 @@ public class ActionsOperatingManager : MonoBehaviour
         }
         else if (!_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
         {
-            SetupPatientInfoDisplay();
             _joinPatientPopUp.SetActive(true);
         }
         else if (_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
@@ -105,6 +112,7 @@ public class ActionsOperatingManager : MonoBehaviour
         {
             // need to verify that set operating crew is setting an empty group of maximum 4 and insitialize it with current player
             SetOperatingCrew(_currentPatientScript.OperatingUserCrew);
+            SetupPatientInfoDisplay();
             _joinPatientPopUp.SetActive(false);
             _patientMenuParent.SetActive(true);
             _patientInfoParent.SetActive(false);
@@ -127,17 +135,17 @@ public class ActionsOperatingManager : MonoBehaviour
 
     private void SetupPatientInfoDisplay()
     {
-        _sureName.text = _currentPatientInfoSo.SureName;
-        _sureName.text = _currentPatientInfoSo.SureName;
-        _gender.text = _currentPatientInfoSo.Gender;
-        _adress.text = _currentPatientInfoSo.AddressLocation;
-        _insuranceCompany.text = _currentPatientInfoSo.MedicalCompany;
-        _complaint.text = _currentPatientInfoSo.Complaint;
+        _sureName.text = _currentPatientData.SureName;
+        _sureName.text = _currentPatientData.SureName;
+        _gender.text = _currentPatientData.Gender;
+        _adress.text = _currentPatientData.AddressLocation;
+        _insuranceCompany.text = _currentPatientData.MedicalCompany;
+        _complaint.text = _currentPatientData.Complaint;
         //_incidentAdress.text = PatientInfoSO.eventPlace;
 
-        _age.text = _currentPatientInfoSo.Age.ToString();
-        _id.text = _currentPatientInfoSo.Id.ToString();
-        _phoneNumber.text = _currentPatientInfoSo.PhoneNumber.ToString();
+        _age.text = _currentPatientData.Age.ToString();
+        _id.text = _currentPatientData.Id.ToString();
+        _phoneNumber.text = _currentPatientData.PhoneNumber.ToString();
     }
 
     // For Use Externally
@@ -167,7 +175,7 @@ public class ActionsOperatingManager : MonoBehaviour
         print("Close Patient Menu");
     }
 
-    public void CloseAllWindows()
+    public void CloseAllPatientWindows()
     {
         _joinPatientPopUp.SetActive(false);
         _patientMenuParent.SetActive(false);
@@ -175,6 +183,11 @@ public class ActionsOperatingManager : MonoBehaviour
         _actionLogParent.SetActive(false);
     }
 
+    public void PauseHomeBtn()
+    {
+        _mapWindow.SetActive(false);
+        _contentPanel.SetActive(true);
+    }
 
     // paitent background info: name, weghit, gender, adress...
     public void PatientInfo()
@@ -200,7 +213,7 @@ public class ActionsOperatingManager : MonoBehaviour
     // take current player out of their crew's list
     public void LeavePatient()
     {
-        CloseAllWindows();        
+        CloseAllPatientWindows();        
         if (_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
         {
             for (int i = 0; i < _currentPatientScript.OperatingUsers.Count; i++)
@@ -227,7 +240,7 @@ public class ActionsOperatingManager : MonoBehaviour
 
     public void CallAction(int actionNumInList)
     {
-        if (_currentPatientInfoSo != null)
+        if (_currentPatientData != null)
         {
 
             _actionsOperatingHandler.RunAction(this, _currentPatientScript, _player, _monitor, _playerData.UserRole, actionNumInList);
@@ -242,14 +255,11 @@ public class ActionsOperatingManager : MonoBehaviour
         {
             for (int i = 0; i < _ambulanceActionBtnParents.Count; i++)
             {
-                if (true)
-                    _ambulanceActionBtnParents[i].SetActive(true);
-                else
-                    _ambulanceActionBtnParents[i].SetActive(false);
+                _ambulanceActionBtnParents[i].GetComponentInChildren<Button>().interactable = true;
             }
 
             _currentPatientScript = other.gameObject.GetComponent<Patient>();
-            _currentPatientInfoSo = _currentPatientScript.PatientInfoSO;
+            _currentPatientData = _currentPatientScript.PatientInfoSO;
         }
     }
 
@@ -258,10 +268,10 @@ public class ActionsOperatingManager : MonoBehaviour
         if (other.gameObject.CompareTag("Patient"))
         {
             foreach (GameObject btnParent in _ambulanceActionBtnParents)
-                btnParent.SetActive(false);
+                btnParent.GetComponentInChildren<Button>().interactable = false;
 
             _currentPatientScript = null;
-            _currentPatientInfoSo = null;
+            _currentPatientData = null;
         }
     }
     
