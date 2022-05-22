@@ -23,6 +23,7 @@ public class ConnectingMonitor : MonoBehaviour
             MonoBehaviour.Instantiate(_monitor, _AOM.PatientEquipmentTr.position, Quaternion.identity);
         }
 
+        _actionTemplates.UpdatePatientLog($"Connected Defibrilator to Patient");
         Debug.Log("CLEAR!!! Defibrillator On " /*+ _AOM.Patient.name*/);
     }
 }

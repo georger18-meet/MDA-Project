@@ -16,6 +16,7 @@ public class HeartMassages : MonoBehaviour
         else
             _player.transform.position = _AOM.PlayerTreatingTr.position;
 
+        _actionTemplates.UpdatePatientLog($"Performed Heart Massages");
         Debug.Log("Operating Heart Massage On " /*+ _actionData.Patient.name*/);
     }
 
