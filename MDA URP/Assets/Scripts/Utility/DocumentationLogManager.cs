@@ -9,6 +9,7 @@ public class DocumentationLogManager : MonoBehaviour
     public TextMeshProUGUI UIDisplayer;
     public int LogsToDisplayAtOnce = 5;
     public bool InfiniteList;
+    public bool DisplayAllLog;
     private string myLog;
     private string[] _queueArray;
     private List<string> _queueList = new List<string>();
@@ -38,37 +39,40 @@ public class DocumentationLogManager : MonoBehaviour
 
     void OnEnable()
     {
-        //Application.logMessageReceived += HandleLog;
+        Application.logMessageReceived += HandleLog;
     }
 
     void OnDisable()
     {
-        //Application.logMessageReceived -= HandleLog;
+        Application.logMessageReceived -= HandleLog;
     }
 
     void HandleLog(string logString, string stackTrace, LogType type)
     {
-        myLog = logString;
-        string newString = "[" + type + "]: " + myLog + "\n----------------------------------------\n";
-        Enqueue(newString);
-        if (type == LogType.Exception)
+        if (DisplayAllLog)
         {
-            newString = "\n" + stackTrace;
+            myLog = logString;
+            string newString = "[" + type + "]: " + myLog + "\n----------------------------------------\n";
             Enqueue(newString);
-        }
-        myLog = string.Empty;
-        if (!InfiniteList)
-        {
-            foreach (string mylog in _queueArray)
+            if (type == LogType.Exception)
             {
-                myLog += mylog;
+                newString = "\n" + stackTrace;
+                Enqueue(newString);
             }
-        }
-        else
-        {
-            foreach (string mylog in _queueList)
+            myLog = string.Empty;
+            if (!InfiniteList)
             {
-                myLog += mylog;
+                foreach (string mylog in _queueArray)
+                {
+                    myLog += mylog;
+                }
+            }
+            else
+            {
+                foreach (string mylog in _queueList)
+                {
+                    myLog += mylog;
+                }
             }
         }
     }

@@ -15322,7 +15322,7 @@ GameObject:
   - component: {fileID: 6203948680302712272}
   m_Layer: 3
   m_Name: EvacuationGoal
-  m_TagString: Untagged
+  m_TagString: Evac
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15356,8 +15356,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4, y: 2, z: 4}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Size: {x: 4, y: 4, z: 4}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!114 &6203948680302712272
 MonoBehaviour:
   m_ObjectHideFlags: 0
