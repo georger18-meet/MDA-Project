@@ -103,13 +103,12 @@ public class GurneyController : MonoBehaviour
             if (_isFollowingPlayer)
             {
                 _isFollowingPlayer = false;
-                InteractionsBar.SetActive(false);
             }
             else if (!_isFollowingPlayer)
             {
                 _isFollowingPlayer = true;
-                InteractionsBar.SetActive(true);
             }
+            InteractionsBar.SetActive(false);
         }
     }
 
@@ -157,6 +156,7 @@ public class GurneyController : MonoBehaviour
             Patient.transform.rotation = PatientPosOnBed.rotation;
             Patient.transform.SetParent(this.transform);
             PlaceRemovePatientText.text = "Drop \n Patient";
+            InteractionsBar.SetActive(false);
         }
         else if (Patient != null && HasPatient && !_inCar)
         {
@@ -165,8 +165,8 @@ public class GurneyController : MonoBehaviour
             Patient.transform.position = PatientPosOffBed.position;
             Patient.transform.SetParent(null);
             PlaceRemovePatientText.text = "Place \n Patient";
+            InteractionsBar.SetActive(false);
         }
-        InteractionsBar.SetActive(false);
     }
 
     public void TakeOutReturnBedToggle()
@@ -184,7 +184,6 @@ public class GurneyController : MonoBehaviour
             TakeOutBed = false;
             InteractionsBar.SetActive(false);
         }
-        
     }
 
     private void TakeOutReturnBed()
@@ -220,6 +219,10 @@ public class GurneyController : MonoBehaviour
         {
             _inCar = true;
         }
+        if (other.CompareTag("Evac"))
+        {
+            Patient.GetComponent<BoxCollider>().enabled = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -239,6 +242,10 @@ public class GurneyController : MonoBehaviour
         if (other.CompareTag("Car"))
         {
             _inCar = false;
+        }
+        if (other.CompareTag("Evac"))
+        {
+            Patient.GetComponent<BoxCollider>().enabled = false;
         }
     }
 }

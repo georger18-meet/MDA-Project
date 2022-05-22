@@ -12,9 +12,11 @@ public class ChangeClothing : MonoBehaviour
     [SerializeField] private Texture _newTextures;
     [SerializeField] private string _textureToChange, _alertContent;
 
-
     public void CheckMeasurementAction()
     {
+        if (!AOM.CheckIfPlayerJoined())
+            return;
+
         switch (_textureToChange.ToLower())
         {
             case "upper":

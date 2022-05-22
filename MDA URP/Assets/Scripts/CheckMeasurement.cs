@@ -17,10 +17,13 @@ public class CheckMeasurement : MonoBehaviour
 
     public void CheckMeasurementAction()
     {
+        if (!AOM.CheckIfPlayerJoined())
+            return;
+        
         switch (_measurementTitle.ToLower())
         {
             case "bpm":
-                _measurementTitle = "bpm:";
+                _measurementTitle = "Heart Rate:";
                 _measurement = AOM.CurrentPatientData.BPM;
                 break;
 
