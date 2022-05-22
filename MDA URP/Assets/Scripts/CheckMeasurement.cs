@@ -7,7 +7,7 @@ using TMPro;
 public class CheckMeasurement : MonoBehaviour
 {
     [Header("Scripts")]
-    [SerializeField] private ActionsOperatingManager AOM;
+    [SerializeField] private ActionsManager AOM;
     [SerializeField] private ActionTemplates _actionTemplates;
 
     [Header("Component's Data")]

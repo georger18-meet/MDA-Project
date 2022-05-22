@@ -5,7 +5,7 @@ using UnityEngine;
 public class HeartMassages : MonoBehaviour
 {
     [Header("Scripts")]
-    [SerializeField] private ActionsOperatingManager _AOM;
+    [SerializeField] private ActionsManager _AOM;
     [SerializeField] private ActionTemplates _actionTemplates;
     [SerializeField] private GameObject _player;
 

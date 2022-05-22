@@ -101,7 +101,7 @@ public class ActionTemplates : MonoBehaviour
         _docLog.LogThisText(textToLog);
     } 
 
-    public bool IsPlayerJoined(ActionsOperatingManager AOM)
+    public bool IsPlayerJoined(ActionsManager AOM)
     {
         if (AOM.CheckIfPlayerJoined())
             return true;

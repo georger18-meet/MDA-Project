@@ -4,9 +4,10 @@ using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 
-public class ActionsOperatingManager : MonoBehaviour
+public class ActionsManager : MonoBehaviour
 {
-    private ActionsOperatingHandler _actionsOperatingHandler;
+    private ActionTemplates _actionTemplates;
+    private ActionsHandler _actionsHandler;
 
     #region Data References
     [Header("Data & Scripts")]
@@ -70,7 +71,7 @@ public class ActionsOperatingManager : MonoBehaviour
         foreach (GameObject btnParent in _ambulanceActionBtnParents)
             btnParent.GetComponentInChildren<Button>().interactable = false;
 
-        _actionsOperatingHandler = new ActionsOperatingHandler();
+        _actionsHandler = new ActionsHandler();
 
         // from patient scripts
         _joinPatientPopUp.SetActive(false);
@@ -164,15 +165,15 @@ public class ActionsOperatingManager : MonoBehaviour
     #endregion
 
     #region Patient Menu Events
-    // clost menu
+    // close menu
     public void OpenCloseMenu(GameObject menu)
     {
         if (menu.activeInHierarchy)
             menu.SetActive(false);
         else
             menu.SetActive(true);
-
-        print("Close Patient Menu");
+    
+        print("Open / Close Menu from AM");
     }
 
     public void CloseAllPatientWindows()
@@ -193,6 +194,16 @@ public class ActionsOperatingManager : MonoBehaviour
     public void PatientInfo()
     {
         OpenCloseMenu(_patientInfoParent);
+
+        _sureName.text = _currentPatientData.SureName;
+        _lastName.text = _currentPatientData.LastName;
+        _id.text = _currentPatientData.Id.ToString();
+        _age.text = _currentPatientData.Age.ToString();
+        _gender.text = _currentPatientData.Gender;
+        _phoneNumber.text = _currentPatientData.PhoneNumber.ToString();
+        _insuranceCompany.text = _currentPatientData.MedicalCompany;
+        _adress.text = _currentPatientData.AddressLocation;
+        _complaint.text = _currentPatientData.Complaint;
 
         print("Patient Information");
     }
@@ -235,14 +246,14 @@ public class ActionsOperatingManager : MonoBehaviour
     #region Player Action Events
     public void OpenNoBagActionMenu()
     {
-        _actionsOperatingHandler.OpenNoBagActionMenu(_basicActionMenuParent);
+        _actionsHandler.OpenNoBagActionMenu(_basicActionMenuParent);
     }
 
     public void CallAction(int actionNumInList)
     {
         if (_currentPatientData != null)
         {
-            _actionsOperatingHandler.RunAction(this, _currentPatientScript, _player, _monitor, _playerData.UserRole, actionNumInList);
+            _actionsHandler.RunAction(this, _currentPatientScript, _player, _monitor, _playerData.UserRole, actionNumInList);
         }
     }
     #endregion

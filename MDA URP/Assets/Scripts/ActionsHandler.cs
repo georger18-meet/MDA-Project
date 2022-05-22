@@ -15,13 +15,13 @@ public enum Roles
 
 public struct ActionData
 {
-    public ActionsOperatingManager AOM;
+    public ActionsManager AOM;
     public Patient Patient;
     public GameObject Player;
     public GameObject Monitor;
     public Roles RolesAD;
 
-    public ActionData(ActionsOperatingManager aom, Patient patient, GameObject player, GameObject monitor, Roles roles)
+    public ActionData(ActionsManager aom, Patient patient, GameObject player, GameObject monitor, Roles roles)
     {
         AOM = aom;
         Patient = patient;
@@ -31,12 +31,12 @@ public struct ActionData
     }
 }
 
-public class ActionsOperatingHandler
+public class ActionsHandler
 {
     public List<Action<ActionData>> ActionsList = new List<Action<ActionData>>();
     private ActionTemplates aT;
 
-    public ActionsOperatingHandler()
+    public ActionsHandler()
     {
         AddActionsToList();
     }
@@ -57,7 +57,7 @@ public class ActionsOperatingHandler
         ActionsList.Add(Defibrillation);
     }
 
-    public void RunAction(ActionsOperatingManager aom, Patient patient, GameObject player, GameObject monitor, Roles roles, int actionIndex)
+    public void RunAction(ActionsManager aom, Patient patient, GameObject player, GameObject monitor, Roles roles, int actionIndex)
     {
         ActionData actionData = new ActionData(aom, patient, player, monitor, roles);
 

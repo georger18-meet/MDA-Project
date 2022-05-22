@@ -5,7 +5,7 @@ using UnityEngine;
 public class ApplyMedicine : MonoBehaviour
 {
     [Header("Scripts")]
-    [SerializeField] private ActionsOperatingManager AOM;
+    [SerializeField] private ActionsManager AOM;
     [SerializeField] private ActionTemplates _actionTemplates;
 
     [Header("Component's Data")]
