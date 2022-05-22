@@ -15,6 +15,9 @@ public class ChangeClothing : MonoBehaviour
 
     public void CheckMeasurementAction()
     {
+        if (!AOM.CheckIfPlayerJoined())
+            return;
+
         switch (_textureToChange.ToLower())
         {
             case "upper":

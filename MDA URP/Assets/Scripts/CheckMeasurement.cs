@@ -17,6 +17,9 @@ public class CheckMeasurement : MonoBehaviour
 
     public void CheckMeasurementAction()
     {
+        if (!AOM.CheckIfPlayerJoined())
+            return;
+        
         switch (_measurementTitle.ToLower())
         {
             case "bpm":
