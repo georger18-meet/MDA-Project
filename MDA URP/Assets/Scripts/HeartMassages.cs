@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class HeartMassages : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Scripts")]
+    [SerializeField] private ActionsOperatingManager _AOM;
+    [SerializeField] private ActionTemplates _actionTemplates;
+    [SerializeField] private GameObject _player;
+
+    public void DoHeartMassage()
     {
-        
+        if (!_AOM.CheckIfPlayerJoined())
+            return;
+        else
+            _player.transform.position = _AOM.PlayerTreatingTr.position;
+
+        Debug.Log("Operating Heart Massage On " /*+ _actionData.Patient.name*/);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //public void DoHeartMassage(ActionData actionData)
+    //{
+    //    if (!actionData.AOM.CheckIfPlayerJoined())
+    //        return;
+    //    else
+    //        actionData.Player.transform.position = actionData.AOM.PlayerTreatingTr.position;
+    //
+    //    Debug.Log("Operating Heart Massage On " + actionData.Patient.name);
+    //}
 }

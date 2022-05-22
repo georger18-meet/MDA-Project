@@ -242,7 +242,6 @@ public class ActionsOperatingManager : MonoBehaviour
     {
         if (_currentPatientData != null)
         {
-
             _actionsOperatingHandler.RunAction(this, _currentPatientScript, _player, _monitor, _playerData.UserRole, actionNumInList);
         }
     }

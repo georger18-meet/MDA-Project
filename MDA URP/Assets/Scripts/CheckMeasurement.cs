@@ -23,7 +23,7 @@ public class CheckMeasurement : MonoBehaviour
         switch (_measurementTitle.ToLower())
         {
             case "bpm":
-                _measurementTitle = "bpm:";
+                _measurementTitle = "Heart Rate:";
                 _measurement = AOM.CurrentPatientData.BPM;
                 break;
 

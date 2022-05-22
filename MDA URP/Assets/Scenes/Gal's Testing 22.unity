@@ -123,71 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &12
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8489877794896869450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23f92e1db60d1f44cbab9b2cf984124d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AOM: {fileID: 4641720744092593647}
-  _actionTemplates: {fileID: 5907449908772072294}
-  _measurementTitle: BPM
---- !u!114 &20
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8489877794896869450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: deed03d602e7cd14090024a922832780, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AOM: {fileID: 0}
-  _actionTemplates: {fileID: 0}
-  _medicineToApply: 
-  _measurementTitle: 
-  _newMeasurement: 0
---- !u!114 &21
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8489877794896869450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 225e366e83c2e3f4699bb9c5a90ffa06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AOM: {fileID: 0}
-  _actionTemplates: {fileID: 0}
-  _newTextures: {fileID: 0}
-  _textureToChange: 
-  _alertContent: 
---- !u!114 &22
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8489877794896869450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df38b2ee9b76e144cb51afda3d505640, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AOM: {fileID: 0}
-  _actionTemplates: {fileID: 0}
-  _measurementTitle: 
-  _newMeasurement: 0
 --- !u!1 &7514835
 GameObject:
   m_ObjectHideFlags: 0
@@ -25110,8 +25045,9 @@ GameObject:
   - component: {fileID: 8489877794778041405}
   - component: {fileID: 8489877794778041402}
   - component: {fileID: 8489877794778041403}
+  - component: {fileID: 8489877794778041406}
   m_Layer: 5
-  m_Name: SomethingAction Btn (3)
+  m_Name: Defibrilation Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25190,7 +25126,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8489877794778041402}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8489877794778041406}
+        m_TargetAssemblyTypeName: ConnectingMonitor, Assembly-CSharp
+        m_MethodName: Defibrillation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &8489877794778041405
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -25199,6 +25147,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8489877794778041401}
   m_CullTransparentMesh: 1
+--- !u!114 &8489877794778041406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8489877794778041401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b39daf3c96d674f8bd3269cae2d5ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _AOM: {fileID: 4641720744092593647}
+  _actionTemplates: {fileID: 5907449908772072294}
+  _player: {fileID: 5401322901793046737}
+  _monitor: {fileID: 7768556592622960602, guid: 6d8258cf993f8fb43ab4f71cf3c04abc, type: 3}
 --- !u!224 &8489877794790062392
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29351,12 +29315,9 @@ GameObject:
   - component: {fileID: 8489877794896869454}
   - component: {fileID: 8489877794896869455}
   - component: {fileID: 8489877794896869452}
-  - component: {fileID: 12}
-  - component: {fileID: 22}
-  - component: {fileID: 21}
-  - component: {fileID: 20}
+  - component: {fileID: 8489877794896869456}
   m_Layer: 5
-  m_Name: SomethingAction Btn (1)
+  m_Name: ApplyInsulin Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29406,9 +29367,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 12}
-        m_TargetAssemblyTypeName: CheckMeasurement, Assembly-CSharp
-        m_MethodName: CheckMeasurementAction
+      - m_Target: {fileID: 8489877794896869456}
+        m_TargetAssemblyTypeName: ApplyMeasurement, Assembly-CSharp
+        m_MethodName: ApplyMeasurementAction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -29477,6 +29438,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8489877794896869456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8489877794896869450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df38b2ee9b76e144cb51afda3d505640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AOM: {fileID: 4641720744092593647}
+  _actionTemplates: {fileID: 5907449908772072294}
+  _measurementTitle: Blood Suger
+  _newMeasurement: 80
 --- !u!224 &8489877794898861282
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33688,7 +33665,7 @@ GameObject:
   - component: {fileID: 8489877795094962777}
   - component: {fileID: 8489877795094962774}
   m_Layer: 5
-  m_Name: SomethingAction Txt
+  m_Name: CheckHearyRate Txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33714,7 +33691,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u05DB\u05E4\u05EA\u05D5\u05E8"
+  m_text: "\u05E7\u05E6\u05D1 \u05DC\u05D1"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -44670,8 +44647,9 @@ GameObject:
   - component: {fileID: 8489877795427093436}
   - component: {fileID: 8489877795427093437}
   - component: {fileID: 8489877795427093434}
+  - component: {fileID: 8489877795427093438}
   m_Layer: 5
-  m_Name: SomethingAction Btn (2)
+  m_Name: HeartMassages Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44721,10 +44699,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4641720744092593647}
-        m_TargetAssemblyTypeName: ActionsOperatingManager, Assembly-CSharp
-        m_MethodName: CallAction
-        m_Mode: 3
+      - m_Target: {fileID: 8489877795427093438}
+        m_TargetAssemblyTypeName: HeartMassages, Assembly-CSharp
+        m_MethodName: DoHeartMassage
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -44792,6 +44770,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8489877795427093438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8489877795427093432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a442caa1ea7256847a39593c0c5b2f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _AOM: {fileID: 4641720744092593647}
+  _actionTemplates: {fileID: 5907449908772072294}
+  _player: {fileID: 5401322901793046737}
 --- !u!1 &8489877795437014498
 GameObject:
   m_ObjectHideFlags: 0
@@ -49266,8 +49259,9 @@ GameObject:
   - component: {fileID: 8489877795590285755}
   - component: {fileID: 8489877795590285752}
   - component: {fileID: 8489877795590285753}
+  - component: {fileID: 8489877795590285756}
   m_Layer: 5
-  m_Name: SomethingAction Btn
+  m_Name: CheckHeartRate Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49347,10 +49341,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4641720744092593647}
-        m_TargetAssemblyTypeName: ActionsOperatingManager, Assembly-CSharp
-        m_MethodName: CallAction
-        m_Mode: 3
+      - m_Target: {fileID: 8489877795590285756}
+        m_TargetAssemblyTypeName: CheckMeasurement, Assembly-CSharp
+        m_MethodName: CheckMeasurementAction
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -49367,6 +49361,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8489877795590285751}
   m_CullTransparentMesh: 1
+--- !u!114 &8489877795590285756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8489877795590285751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f92e1db60d1f44cbab9b2cf984124d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AOM: {fileID: 4641720744092593647}
+  _actionTemplates: {fileID: 5907449908772072294}
+  _measurementTitle: BPM
 --- !u!224 &8489877795592123022
 RectTransform:
   m_ObjectHideFlags: 0
@@ -55612,7 +55621,7 @@ GameObject:
   - component: {fileID: 8489877795837446654}
   - component: {fileID: 8489877795837446655}
   m_Layer: 5
-  m_Name: SomethingAction Txt
+  m_Name: HeartMassages Txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55646,7 +55655,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u05DB\u05E4\u05EA\u05D5\u05E8"
+  m_text: "\u05E2\u05D9\u05E1\u05D5\u05D9\u05D9 \u05DC\u05D1"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -57122,7 +57131,7 @@ GameObject:
   - component: {fileID: 8489877795882947440}
   - component: {fileID: 8489877795882947441}
   m_Layer: 5
-  m_Name: SomethingAction Txt
+  m_Name: Defibrilation Txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57156,7 +57165,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u05DB\u05E4\u05EA\u05D5\u05E8"
+  m_text: "\u05D3\u05E4\u05D9\u05D1\u05E8\u05D9\u05DC\u05E6\u05D9\u05D4"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -77592,7 +77601,7 @@ GameObject:
   - component: {fileID: 8489877796567147935}
   - component: {fileID: 8489877796567147932}
   m_Layer: 5
-  m_Name: SomethingAction Txt
+  m_Name: ApplyInsulin Txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77618,7 +77627,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u05DB\u05E4\u05EA\u05D5\u05E8"
+  m_text: "\u05D0\u05D9\u05E0\u05E1\u05D5\u05DC\u05D9\u05DF"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

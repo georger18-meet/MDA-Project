@@ -13,7 +13,6 @@ public enum Roles
     Doctor
 }
 
-
 public struct ActionData
 {
     public ActionsOperatingManager AOM;
