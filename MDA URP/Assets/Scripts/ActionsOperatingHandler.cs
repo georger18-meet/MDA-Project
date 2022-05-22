@@ -1,9 +1,48 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum Roles
+{
+    CFR, 
+    Medic, 
+    SeniorMedic, 
+    Paramedic, 
+    Doctor
+}
+
+
+public struct ActionData
+{
+    public ActionsOperatingManager AOM;
+    public Patient Patient;
+    public GameObject Player;
+    public GameObject Monitor;
+    public Roles RolesAD;
+
+    public ActionData(ActionsOperatingManager aom, Patient patient, GameObject player, GameObject monitor, Roles roles)
+    {
+        AOM = aom;
+        Patient = patient;
+        Player = player;
+        Monitor = monitor;
+        RolesAD = roles;
+    }
+}
+
 public class ActionsOperatingHandler
 {
+    public List<Action<ActionData>> ActionsList = new List<Action<ActionData>>();
+    private ActionTemplates aT;
+
+    public ActionsOperatingHandler()
+    {
+        AddActionsToList();
+    }
+
+
     public void OpenNoBagActionMenu(GameObject noBagActionMenu)
     {
         if (!noBagActionMenu.activeInHierarchy)
@@ -12,57 +51,57 @@ public class ActionsOperatingHandler
             noBagActionMenu.SetActive(false);
     }
 
-    public void RunAction(ActionsOperatingManager AOM, Patient patient, GameObject player, GameObject monitor, int actionIndex)
+    public void AddActionsToList()
     {
-        switch (actionIndex)
-        {
-            case 0:
-                AskPainLevel(AOM, patient);
-                break;
-            case 1:
-                DoHeartMassage(AOM, patient, player);
-                break;
-            case 2:
-                Defibrillation(AOM, patient, player, monitor);
-                break;
-            default:
-                break;
-        }
+        ActionsList.Add(AskPainLevel);
+        ActionsList.Add(DoHeartMassage);
+        ActionsList.Add(Defibrillation);
+    }
+
+    public void RunAction(ActionsOperatingManager aom, Patient patient, GameObject player, GameObject monitor, Roles roles, int actionIndex)
+    {
+        ActionData actionData = new ActionData(aom, patient, player, monitor, roles);
+
+        ActionsList[actionIndex].Invoke(actionData);
     }
 
     // Pain Level
-    public void AskPainLevel(ActionsOperatingManager AOM, Patient patient)
+    public void AskPainLevel(ActionData actionData)
     {
-        if (!AOM.CheckIfPlayerJoined())
+        if (!actionData.AOM.CheckIfPlayerJoined())
             return;
         else
-            patient.PatientInfoSO.PainLevel = patient.PatientInfoSO.PainPlaceholderAnswer;
+            //aT.CheckMeasurement();
+            //actionData.Patient.PatientInfoSO.PainLevel = actionData.Patient.PatientInfoSO.PainPlaceholderAnswer;
 
-        Debug.Log(patient.name + "'s Pain Level: " + patient.PatientInfoSO.PainLevel);
+        Debug.Log(actionData.Patient.name + "'s Pain Level: " + actionData.Patient.PatientInfoSO.PainLevel);
     }
 
     // Heart Massage
-    public void DoHeartMassage(ActionsOperatingManager AOM, Patient patient, GameObject player)
+    public void DoHeartMassage(ActionData actionData)
     {
-        if (!AOM.CheckIfPlayerJoined())
+        if (!actionData.AOM.CheckIfPlayerJoined())
             return;
         else
-            player.transform.position = AOM.PlayerTreatingTr.position;
+            actionData.Player.transform.position = actionData.AOM.PlayerTreatingTr.position;
 
-        Debug.Log("Operating Heart Massage On " + patient.name);
+        Debug.Log("Operating Heart Massage On " + actionData.Patient.name);
     }
 
     // Defibrillator
-    public void Defibrillation(ActionsOperatingManager AOM, Patient patient, GameObject player, GameObject monitor)
+    public void Defibrillation(ActionData actionData)
     {
-        if (!AOM.CheckIfPlayerJoined())
+        if (!actionData.AOM.CheckIfPlayerJoined() || (int)actionData.RolesAD <= 1)
+        {
+            Debug.Log("You Are NOT WORTHY!");
             return;
+        }
         else
         {
-            player.transform.position = AOM.PlayerTreatingTr.position;
-            MonoBehaviour.Instantiate(monitor, AOM.PatientEquipmentTr.position, Quaternion.identity);
+            actionData.Player.transform.position = actionData.AOM.PlayerTreatingTr.position;
+            MonoBehaviour.Instantiate(actionData.Monitor, actionData.AOM.PatientEquipmentTr.position, Quaternion.identity);
         }
 
-        Debug.Log("CLEAR!!! Defibrillator On " + patient.name);
+        Debug.Log("CLEAR!!! Defibrillator On " + actionData.Patient.name);
     }
 }

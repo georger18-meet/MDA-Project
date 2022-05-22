@@ -10,12 +10,13 @@ public class Patient : MonoBehaviour
 {
     #region Script References
     [Header("Data & Scripts")]
-    public PaitentBaseInfoSO PatientInfoSO;
+    public PatientData PatientInfoSO;
     #endregion
 
-    #region private fields
+    #region Public fields
     [SerializeField]
     public Dictionary<string, int> OperatingUserCrew = new Dictionary<string, int>();
+    public Animation PatientAnimation;
     #endregion
 
     #region private serialized fields
@@ -57,6 +58,7 @@ public class Patient : MonoBehaviour
     //}
 
     // refactor for player to do on patient
+
     #region getting patient data
     //private void OnTriggerEnter(Collider other)
     //{

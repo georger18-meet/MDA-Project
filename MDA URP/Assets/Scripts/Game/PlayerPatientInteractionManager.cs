@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerPatientInteractionManager : MonoBehaviour
 {
-    [SerializeField] private PaitentBaseInfoSO _patientData;
+    [SerializeField] private PatientData _patientData;
     [SerializeField] private Patient _patientScript;
 
     [SerializeField] private PlayerData _playerData;
