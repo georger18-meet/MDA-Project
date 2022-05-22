@@ -10,7 +10,7 @@ public class Patient : MonoBehaviour
 {
     #region Script References
     [Header("Data & Scripts")]
-    public PatientData PatientInfoSO;
+    public PatientData PatientData;
     #endregion
 
     #region Public fields

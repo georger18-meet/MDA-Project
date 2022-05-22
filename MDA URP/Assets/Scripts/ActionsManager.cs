@@ -269,7 +269,7 @@ public class ActionsManager : MonoBehaviour
             }
 
             _currentPatientScript = other.gameObject.GetComponent<Patient>();
-            _currentPatientData = _currentPatientScript.PatientInfoSO;
+            _currentPatientData = _currentPatientScript.PatientData;
         }
     }
 

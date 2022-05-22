@@ -73,7 +73,7 @@ public class ActionsHandler
             //aT.CheckMeasurement();
             //actionData.Patient.PatientInfoSO.PainLevel = actionData.Patient.PatientInfoSO.PainPlaceholderAnswer;
 
-        Debug.Log(actionData.Patient.name + "'s Pain Level: " + actionData.Patient.PatientInfoSO.PainLevel);
+        Debug.Log(actionData.Patient.name + "'s Pain Level: " + actionData.Patient.PatientData.PainLevel);
     }
 
     // Heart Massage

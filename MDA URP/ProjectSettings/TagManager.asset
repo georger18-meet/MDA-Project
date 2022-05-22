@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Patient
   - Car
-  - Evac
   layers:
   - Default
   - TransparentFX
