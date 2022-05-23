@@ -2257,7 +2257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2977741042067127826, guid: d5ee0e47180a6454b9a9b28e17b78c41, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2977741042067127826, guid: d5ee0e47180a6454b9a9b28e17b78c41, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4071,7 +4071,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1477927932
 GameObject:
@@ -4515,7 +4515,7 @@ Transform:
   - {fileID: 679522059}
   - {fileID: 1863410276}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1534991737
 GameObject:
@@ -61547,9 +61547,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f92e1db60d1f44cbab9b2cf984124d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AOM: {fileID: 4641720744092593647}
+  _actionManager: {fileID: 4641720744092593647}
   _actionTemplates: {fileID: 5907449908772072294}
   _measurementTitle: BPM
+  measurementList: 0000000001000000020000000300000004000000050000000600000007000000
 --- !u!224 &8489877795592123022
 RectTransform:
   m_ObjectHideFlags: 0

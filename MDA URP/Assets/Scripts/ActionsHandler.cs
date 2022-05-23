@@ -13,24 +13,6 @@ public enum Roles
     Doctor
 }
 
-public struct ActionData
-{
-    public ActionsManager AOM;
-    public Patient Patient;
-    public GameObject Player;
-    public GameObject Monitor;
-    public Roles RolesAD;
-
-    public ActionData(ActionsManager aom, Patient patient, GameObject player, GameObject monitor, Roles roles)
-    {
-        AOM = aom;
-        Patient = patient;
-        Player = player;
-        Monitor = monitor;
-        RolesAD = roles;
-    }
-}
-
 public class ActionsHandler
 {
     public List<Action<ActionData>> ActionsList = new List<Action<ActionData>>();

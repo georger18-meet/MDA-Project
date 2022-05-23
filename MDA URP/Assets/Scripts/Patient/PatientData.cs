@@ -22,4 +22,14 @@ public class PatientData : ScriptableObject
     // Appearance
     [Header("Appearance")]
     public Texture PatientTextures;
+
+    // Catch Measurement Name
+    private List<int> measurementName;
+
+    public int GetMeasurementName(int index)
+    {
+        measurementName = new List<int>() { BPM, PainLevel, RespiratoryRate, CincinnatiLevel, BloodSuger, BloodPressure, OxygenSaturation, ETCO2 };
+
+        return measurementName[index];
+    }
 }
