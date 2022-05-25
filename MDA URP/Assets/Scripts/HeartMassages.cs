@@ -5,28 +5,20 @@ using UnityEngine;
 public class HeartMassages : MonoBehaviour
 {
     [Header("Scripts")]
-    [SerializeField] private ActionsManager _AOM;
+    [SerializeField] private ActionsManager _actionManager;
     [SerializeField] private ActionTemplates _actionTemplates;
-    [SerializeField] private GameObject _player;
 
     public void DoHeartMassage()
     {
-        if (!_AOM.CheckIfPlayerJoined())
+        if (!_actionManager.CheckIfPlayerJoined())
             return;
-        else
-            _player.transform.position = _AOM.PlayerTreatingTr.position;
+
+        _actionManager.PlayerData.transform.position = _actionManager.PlayerTreatingTr.position;
+        // rotate to patient
+        // play cpr animation
+        // change heart rate after x seconds
 
         _actionTemplates.UpdatePatientLog($"Performed Heart Massages");
         Debug.Log("Operating Heart Massage On " /*+ _actionData.Patient.name*/);
     }
-
-    //public void DoHeartMassage(ActionData actionData)
-    //{
-    //    if (!actionData.AOM.CheckIfPlayerJoined())
-    //        return;
-    //    else
-    //        actionData.Player.transform.position = actionData.AOM.PlayerTreatingTr.position;
-    //
-    //    Debug.Log("Operating Heart Massage On " + actionData.Patient.name);
-    //}
 }

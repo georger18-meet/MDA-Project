@@ -9,9 +9,12 @@ public class ActionsManager : MonoBehaviour
     private ActionTemplates _actionTemplates;
     private ActionsHandler _actionsHandler;
 
+    public List<Measurements> MeasurementList;
+
+    [field: SerializeField] public PlayerData PlayerData { get; private set; }
+
     #region Data References
     [Header("Data & Scripts")]
-    [field: SerializeField] public PlayerData _playerData;
     
     private Patient _currentPatientScript;
     private PatientData _currentPatientData;
@@ -95,11 +98,11 @@ public class ActionsManager : MonoBehaviour
         {
             return;
         }
-        else if (!_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
+        else if (!_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
         {
             _joinPatientPopUp.SetActive(true);
         }
-        else if (_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
+        else if (_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
         {
             SetupPatientInfoDisplay();
             _patientMenuParent.SetActive(true);
@@ -127,9 +130,9 @@ public class ActionsManager : MonoBehaviour
 
     private void SetOperatingCrew(Dictionary<string, int> operatingUserCrew)
     {
-        if (!_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
+        if (!_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
         {
-            _currentPatientScript.OperatingUserCrew.Add(_playerData.UserName, _playerData.CrewIndex);
+            _currentPatientScript.OperatingUserCrew.Add(PlayerData.UserName, PlayerData.CrewIndex);
             _currentPatientScript.DisplayDictionary();
         }
     }
@@ -155,7 +158,7 @@ public class ActionsManager : MonoBehaviour
         bool playerIsJoined = false;
         if (_player != null)
         {
-            if (_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
+            if (_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
             {
                 playerIsJoined = true;
             }
@@ -225,18 +228,18 @@ public class ActionsManager : MonoBehaviour
     public void LeavePatient()
     {
         CloseAllPatientWindows();        
-        if (_currentPatientScript.OperatingUserCrew.ContainsKey(_playerData.UserName))
+        if (_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
         {
             for (int i = 0; i < _currentPatientScript.OperatingUsers.Count; i++)
             {
-                if (_currentPatientScript.OperatingUsers[i] == _playerData.UserName)
+                if (_currentPatientScript.OperatingUsers[i] == PlayerData.UserName)
                 {
                     _currentPatientScript.OperatingUsers.RemoveAt(i);
                     _currentPatientScript.OperatingCrews.RemoveAt(i);
                 }
             }
 
-            _currentPatientScript.OperatingUserCrew.Remove(_playerData.UserName);
+            _currentPatientScript.OperatingUserCrew.Remove(PlayerData.UserName);
         }
 
         print("Leave Patient");
@@ -253,7 +256,7 @@ public class ActionsManager : MonoBehaviour
     {
         if (_currentPatientData != null)
         {
-            _actionsHandler.RunAction(this, _currentPatientScript, _player, _monitor, _playerData.UserRole, actionNumInList);
+            _actionsHandler.RunAction(this, _currentPatientScript, _player, _monitor, PlayerData.UserRole, actionNumInList);
         }
     }
     #endregion

@@ -20972,7 +20972,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d155056b5caa866489f5a8232a38907d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerData: {fileID: 1949531884524011637}
+  MeasurementList: 
+  <PlayerData>k__BackingField: {fileID: 1949531884524011637}
   _player: {fileID: 5401322901793046737}
   _monitor: {fileID: 7768556592622960602, guid: 6d8258cf993f8fb43ab4f71cf3c04abc, type: 3}
   _ambulanceActionBarParent: {fileID: 8489877795653172020}
@@ -29392,7 +29393,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: New Text
-  m_isRightToLeft: 1
+  m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
@@ -41704,7 +41705,7 @@ MonoBehaviour:
       - m_Target: {fileID: 8489877794896869456}
         m_TargetAssemblyTypeName: ApplyMeasurement, Assembly-CSharp
         m_MethodName: ApplyMeasurementAction
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -41783,7 +41784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df38b2ee9b76e144cb51afda3d505640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AOM: {fileID: 4641720744092593647}
+  _actionManager: {fileID: 4641720744092593647}
   _actionTemplates: {fileID: 5907449908772072294}
   _measurementTitle: Blood Suger
   _newMeasurement: 80
@@ -56993,9 +56994,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a442caa1ea7256847a39593c0c5b2f28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _AOM: {fileID: 4641720744092593647}
+  _actionManager: {fileID: 0}
   _actionTemplates: {fileID: 5907449908772072294}
-  _player: {fileID: 5401322901793046737}
 --- !u!1 &8489877795437014498
 GameObject:
   m_ObjectHideFlags: 0
@@ -61518,7 +61518,7 @@ MonoBehaviour:
       - m_Target: {fileID: 8489877795590285756}
         m_TargetAssemblyTypeName: CheckMeasurement, Assembly-CSharp
         m_MethodName: CheckMeasurementAction
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

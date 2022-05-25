@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,8 +16,7 @@ public enum Roles
 
 public class ActionsHandler
 {
-    public List<Action<ActionData>> ActionsList = new List<Action<ActionData>>();
-    private ActionTemplates aT;
+    public List<Action<ActionsData>> ActionsList = new List<Action<ActionsData>>();
 
     public ActionsHandler()
     {
@@ -39,15 +39,15 @@ public class ActionsHandler
         ActionsList.Add(Defibrillation);
     }
 
-    public void RunAction(ActionsManager aom, Patient patient, GameObject player, GameObject monitor, Roles roles, int actionIndex)
+    public void RunAction(ActionsManager am, Patient patient, GameObject player, GameObject monitor, Roles roles, int actionIndex)
     {
-        ActionData actionData = new ActionData(aom, patient, player, monitor, roles);
+        ActionsData actionData = new ActionsData(am, patient, player, monitor, roles);
 
         ActionsList[actionIndex].Invoke(actionData);
     }
 
     // Pain Level
-    public void AskPainLevel(ActionData actionData)
+    public void AskPainLevel(ActionsData actionData)
     {
         if (!actionData.AOM.CheckIfPlayerJoined())
             return;
@@ -59,7 +59,7 @@ public class ActionsHandler
     }
 
     // Heart Massage
-    public void DoHeartMassage(ActionData actionData)
+    public void DoHeartMassage(ActionsData actionData)
     {
         if (!actionData.AOM.CheckIfPlayerJoined())
             return;
@@ -70,7 +70,7 @@ public class ActionsHandler
     }
 
     // Defibrillator
-    public void Defibrillation(ActionData actionData)
+    public void Defibrillation(ActionsData actionData)
     {
         if (!actionData.AOM.CheckIfPlayerJoined() || (int)actionData.RolesAD <= 1)
         {
