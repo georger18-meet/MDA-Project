@@ -1782,7 +1782,7 @@ RectTransform:
   - {fileID: 529610817}
   - {fileID: 1713658631}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1829,7 +1829,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6203948680302712274, guid: 437b399100bfc1c448698caaa1794f05, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6203948680302712274, guid: 437b399100bfc1c448698caaa1794f05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2257,7 +2257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2977741042067127826, guid: d5ee0e47180a6454b9a9b28e17b78c41, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 2977741042067127826, guid: d5ee0e47180a6454b9a9b28e17b78c41, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2424,7 +2424,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &705507996
 MonoBehaviour:
@@ -3421,7 +3421,7 @@ RectTransform:
   - {fileID: 1518164285}
   - {fileID: 516279690}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3665,7 +3665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2977741042067127826, guid: 242547488f918244583fee8bc3e1c569, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 2977741042067127826, guid: 242547488f918244583fee8bc3e1c569, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4010,7 +4010,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1456471300
 Transform:
@@ -4071,7 +4071,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1477927932
 GameObject:
@@ -4280,7 +4280,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1515518856}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1755028073}
@@ -4305,7 +4305,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5561349426305759274, guid: 1785f61ce13aa4e4eb219d5d53357408, type: 3}
+  - {fileID: 2100000, guid: 6005b29a5d8d98348a9fac9f5893b78b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4515,7 +4515,7 @@ Transform:
   - {fileID: 679522059}
   - {fileID: 1863410276}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1534991737
 GameObject:
@@ -4663,7 +4663,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5561349426305759274, guid: 1785f61ce13aa4e4eb219d5d53357408, type: 3}
+  - {fileID: 2100000, guid: 6005b29a5d8d98348a9fac9f5893b78b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4861,7 +4861,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1638089053
 GameObject:
@@ -5608,7 +5608,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1850169961
 GameObject:
@@ -5705,7 +5705,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1863410275
 GameObject:
@@ -6394,7 +6394,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2102142688
 GameObject:
@@ -6630,7 +6630,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2117215752
 GameObject:
@@ -9456,7 +9456,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 956096164115411848, guid: 64c7a06945f3ca944bb94b3cb66300f8, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 956096164115411848, guid: 64c7a06945f3ca944bb94b3cb66300f8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14674,7 +14674,7 @@ Transform:
   - {fileID: 1726180569476611230}
   - {fileID: 6841257196915767170}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2977741042201767873
 Transform:
@@ -20976,6 +20976,7 @@ MonoBehaviour:
   <PlayerData>k__BackingField: {fileID: 1949531884524011637}
   _player: {fileID: 5401322901793046737}
   _monitor: {fileID: 7768556592622960602, guid: 6d8258cf993f8fb43ab4f71cf3c04abc, type: 3}
+  CurrentPatient: {fileID: 0}
   _ambulanceActionBarParent: {fileID: 8489877795653172020}
   _natanActionBarParent: {fileID: 8489877796902693984}
   _basicActionMenuParent: {fileID: 8489877795619895441}
@@ -23183,7 +23184,7 @@ Transform:
   - {fileID: 4727326699697354057}
   - {fileID: 5907449908772072295}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &5401322901793047343
 CharacterController:
@@ -23889,13 +23890,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4132135079553913584}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 1.25, z: 0.72500026}
+  m_LocalRotation: {x: 0.5000003, y: -0.49999976, z: -0.49999967, w: 0.50000024}
+  m_LocalPosition: {x: 1, y: 1.2500004, z: 0.725}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8610762139696266234}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: -90}
 --- !u!33 &5536037595899033327
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -33241,6 +33242,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PatientData: {fileID: 11400000, guid: 0a22cfce45ddf3f4788ddd2a7b43e878, type: 2}
+  InitialShirt: {fileID: 2100000, guid: 4b21d49e419942944bde72d829d09924, type: 2}
+  InitialPants: {fileID: 2100000, guid: 6005b29a5d8d98348a9fac9f5893b78b, type: 2}
+  Shirt: {fileID: 1536489730}
+  Pants: {fileID: 1515518858}
   PatientAnimation: {fileID: 0}
   OperatingUsers: []
   OperatingCrews: 
@@ -35684,7 +35689,7 @@ Transform:
   - {fileID: 1415368882}
   - {fileID: 8610762139696266234}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 180}
 --- !u!1 &7736149374362169350
 GameObject:
@@ -50787,13 +50792,32 @@ GameObject:
   - component: {fileID: 8489877795235347958}
   - component: {fileID: 8489877795235347959}
   - component: {fileID: 8489877795235347956}
+  - component: {fileID: 8489877795235347955}
   m_Layer: 5
-  m_Name: SomethingAction Btn (5)
+  m_Name: ApplyMedicine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8489877795235347955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8489877795235347954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deed03d602e7cd14090024a922832780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionManager: {fileID: 4641720744092593647}
+  _actionTemplates: {fileID: 5907449908772072294}
+  _medicineToApply: Random Medicine
+  _measurementTitle: Blood Suger
+  _alertTitle: 'Applied Medicine:'
+  _newMeasurement: 15
 --- !u!114 &8489877795235347956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50837,7 +50861,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8489877795235347959}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8489877795235347955}
+        m_TargetAssemblyTypeName: ApplyMedicine, Assembly-CSharp
+        m_MethodName: ApplyMedicineAction
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &8489877795235347957
 RectTransform:
   m_ObjectHideFlags: 0
@@ -56994,7 +57030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a442caa1ea7256847a39593c0c5b2f28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actionManager: {fileID: 0}
+  _actionManager: {fileID: 4641720744092593647}
   _actionTemplates: {fileID: 5907449908772072294}
 --- !u!1 &8489877795437014498
 GameObject:
@@ -81256,13 +81292,32 @@ GameObject:
   - component: {fileID: 8489877796238759172}
   - component: {fileID: 8489877796238759173}
   - component: {fileID: 8489877796238759170}
+  - component: {fileID: 8489877796238759169}
   m_Layer: 5
-  m_Name: SomethingAction Btn (4)
+  m_Name: Strip Patient
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8489877796238759169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8489877796238759168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 225e366e83c2e3f4699bb9c5a90ffa06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionManager: {fileID: 4641720744092593647}
+  _actionTemplates: {fileID: 5907449908772072294}
+  _newShirtMaterial: {fileID: 2100000, guid: e2d90ffcf6606c04987cd2e4e39e0439, type: 2}
+  _newPantsMaterial: {fileID: 2100000, guid: a6a4d8ac56d3bcb4fb2d67bb0005288e, type: 2}
+  _textureToChange: Player's Clothing
+  _alertContent: Naked with shorts
 --- !u!114 &8489877796238759170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81306,7 +81361,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8489877796238759173}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8489877796238759169}
+        m_TargetAssemblyTypeName: ChangeClothing, Assembly-CSharp
+        m_MethodName: ChangeClothingAction
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &8489877796238759171
 RectTransform:
   m_ObjectHideFlags: 0
@@ -89142,7 +89209,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u05DB\u05E4\u05EA\u05D5\u05E8"
+  m_text: "\u05D4\u05E4\u05E9\u05D8 \u05DE\u05D8\u05D5\u05E4\u05DC"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -89897,7 +89964,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u05DB\u05E4\u05EA\u05D5\u05E8"
+  m_text: "\u05DE\u05EA\u05DF \u05EA\u05E8\u05D5\u05E4\u05D4"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

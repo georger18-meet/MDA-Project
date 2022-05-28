@@ -29,3 +29,5 @@ MonoBehaviour:
   BloodPressure: 5
   OxygenSaturation: 2
   ETCO2: 50
+  PatientShirtMaterial: {fileID: 2100000, guid: 4b21d49e419942944bde72d829d09924, type: 2}
+  PatientPantsMaterial: {fileID: 2100000, guid: 6005b29a5d8d98348a9fac9f5893b78b, type: 2}

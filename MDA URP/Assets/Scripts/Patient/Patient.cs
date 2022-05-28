@@ -13,6 +13,11 @@ public class Patient : MonoBehaviour
     public PatientData PatientData;
     #endregion
 
+    #region Material References
+    [SerializeField] private Material InitialShirt, InitialPants;
+    [SerializeField] private Renderer Shirt, Pants;
+    #endregion
+
     #region Public fields
     [SerializeField]
     public Dictionary<string, int> OperatingUserCrew = new Dictionary<string, int>();
@@ -24,6 +29,18 @@ public class Patient : MonoBehaviour
     [SerializeField] public List<string> OperatingUsers = new List<string>();
     [SerializeField] public List<int> OperatingCrews = new List<int>();
     #endregion
+
+    private void Start()
+    {
+        PatientData.PatientShirtMaterial = InitialShirt;
+        PatientData.PatientPantsMaterial = InitialPants;
+    }
+
+    private void Update()
+    {
+        Shirt.material = PatientData.PatientShirtMaterial;
+        Pants.material = PatientData.PatientPantsMaterial;
+    }
 
     public void DisplayDictionary()
     {

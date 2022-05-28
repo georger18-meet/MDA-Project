@@ -19,6 +19,7 @@ public class ActionsManager : MonoBehaviour
     private Patient _currentPatientScript;
     private PatientData _currentPatientData;
 
+    public Patient CurrentPatientScript { get => _currentPatientScript; }
     public PatientData CurrentPatientData { get => _currentPatientData; }
     #endregion
 
@@ -26,6 +27,8 @@ public class ActionsManager : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _monitor;
+
+    public GameObject CurrentPatient;
     #endregion
 
     #region Player UI
@@ -273,6 +276,7 @@ public class ActionsManager : MonoBehaviour
 
             _currentPatientScript = other.gameObject.GetComponent<Patient>();
             _currentPatientData = _currentPatientScript.PatientData;
+            CurrentPatient = other.gameObject;
         }
     }
 
@@ -285,6 +289,7 @@ public class ActionsManager : MonoBehaviour
 
             _currentPatientScript = null;
             _currentPatientData = null;
+            CurrentPatient = null;
         }
     }
     

@@ -7,6 +7,7 @@ public class HeartMassages : MonoBehaviour
     [Header("Scripts")]
     [SerializeField] private ActionsManager _actionManager;
     [SerializeField] private ActionTemplates _actionTemplates;
+    [SerializeField] private Animator _playerAnimator;
 
     public void DoHeartMassage()
     {
@@ -14,7 +15,7 @@ public class HeartMassages : MonoBehaviour
             return;
 
         _actionManager.PlayerData.transform.position = _actionManager.PlayerTreatingTr.position;
-        // rotate to patient
+        _actionManager.PlayerData.transform.rotation = _actionManager.PlayerTreatingTr.rotation;
         // play cpr animation
         // change heart rate after x seconds
 
