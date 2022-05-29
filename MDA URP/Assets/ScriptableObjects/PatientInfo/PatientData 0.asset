@@ -20,12 +20,12 @@ MonoBehaviour:
   PhoneNumber: 582256873
   MedicalCompany: klalit
   AddressLocation: Rosh Aain, Herzel street 25, Apartment 6
-  Complaint: severe stomach ache
+  Complaint: severe Headache
   BPM: 94
-  PainLevel: 10
+  PainLevel: 80
   RespiratoryRate: 14
   CincinnatiLevel: 2
-  BloodSuger: 30
+  BloodSuger: 15
   BloodPressure: 5
   OxygenSaturation: 2
   ETCO2: 50

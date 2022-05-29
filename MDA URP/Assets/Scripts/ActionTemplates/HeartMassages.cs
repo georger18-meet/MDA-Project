@@ -16,7 +16,7 @@ public class HeartMassages : MonoBehaviour
 
         _actionManager.PlayerData.transform.position = _actionManager.PlayerTreatingTr.position;
         _actionManager.PlayerData.transform.rotation = _actionManager.PlayerTreatingTr.rotation;
-        // play cpr animation
+        //_playerAnimator.Play(,)
         // change heart rate after x seconds
 
         _actionTemplates.UpdatePatientLog($"Performed Heart Massages");

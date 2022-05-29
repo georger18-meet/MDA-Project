@@ -55,6 +55,11 @@ public class Patient : MonoBehaviour
         }
     }
 
+    private void InitializePlayerData()
+    {
+
+    }
+
     //private void OnTriggerEnter(Collider other)
     //{
     //    if (_player == null)
