@@ -9,47 +9,55 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AudioSource _indicatorSound;
     [SerializeField] private GameObject _indicatorIcon;
 
-    public Transform Cam;
-    public Transform Cam1stPersonTempHead;
-    public GameObject VC3rdPerson;
-    public GameObject VC1stPerson;
-    public LayerMask InteractableMask;
-    public Transform GroundCheck;
-    public Animator PlayerAnimator;
-    public GameObject BeanModel;
-    private CharacterController _characterController;
+    [Header("Cameras")]
+    [SerializeField] private Transform _mainPlayerCamTransform;
+    [SerializeField] private Transform _playerFirstPersonCamParent;
 
-    public float MoveSpeed = 4f;
-    public float RotationSmoothTime = 0.1f;
-    public float Gravity = -9.81f;
-    public float GroundDistance = 0.5f;
-    public LayerMask GroundMask;
-    public float JumpHeight = 3f;
-    public float SprintMultiplier = 2f;
-    public float MaxFlyingHeight = 100f;
-    public bool InControl = true;
-    public bool EnableJump = true;
-    public bool EnableSprint = true;
-    public bool EnableCrouch = true;
-    public bool EnableFly = false;
-    public bool IsFPS = false;
-    public bool GamingStyleMovement = true;
-
+    [Header("Momvement")]
+    [SerializeField] private CharacterController _characterController;
+    [SerializeField] private GameObject _thirdPersonCameraScenemachine;
+    [SerializeField] private GameObject _firstPersonCameraScenemachine;
+    [SerializeField] private float _movementSpeed = 4f, _sprintMultiplier = 2f;
+    [SerializeField] private float _rotationSmootingTime = 0.1f;
+    [SerializeField] private float _jumpHeight = 3f;
+    [SerializeField] private float _maxFlyingHeight = 100f;
+    private float _headRotation = 0f;
+    public float _firstPersonCamMouseSensitivity = 100f;
+    private bool _isCursorFree;
+    private float _finalSpeed;
     private float _rotationSmoothVelocity;
-    private Vector3 _velocity;
+
+    [Header("Animation")]
+    [SerializeField] private Animator _playerAnimator;
+
+    [Header("Models")]
+    [SerializeField] private GameObject _alternativeFlyingModel;
+
+    [Header("Physics")]
+    [SerializeField] private LayerMask _interactableLayer;
+    [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private Transform _groundCheckTransform;
+    [SerializeField] private float _groundCheckRadius = 0.5f;
+    private float _gravity = Physics.gravity.y;
     private bool _isGrounded;
+
+    [Header("States")]
+    [SerializeField] private bool _isRunning = true;
+    [SerializeField] private bool _isFlying = false, _useFirstPersonCam = false, _useOldControls = true;
+    public bool IsOnFoot = true;
+
+    private Vector3 _velocity;
     private bool _isMoving;
     private bool _isSprinting;
-    private float _TotalMoveSpeed;
-    private bool _isCrouching;
-    private Vector3 _standingOffset;
-    private Vector3 _crouchOffset;
-    private float _standingHeight;
-    private float _crouchHeight;
 
-    public float FPSMouseSensitivity = 100f;
-    private float _yHeadRotation = 0f;
-    private bool _isCursorFree;
+    //[SerializeField] private bool _isJumping = true;
+    //[SerializeField] private bool _isCrouching2 = true;
+    //private bool _isCrouching;
+    //private Vector3 _standingOffset;
+    //private Vector3 _crouchOffset;
+    //private float _standingHeight;
+    //private float _crouchHeight;
+
 
     //--------------------------------
     // Main Unity Methods
@@ -61,12 +69,12 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _standingHeight = _characterController.height;
-        _standingOffset = _characterController.center;
-        _crouchHeight = _standingHeight / 2;
-        _crouchOffset.y = -(_crouchHeight / 2);
+        //_standingHeight = _characterController.height;
+        //_standingOffset = _characterController.center;
+        //_crouchHeight = _standingHeight / 2;
+        //_crouchOffset.y = -(_crouchHeight / 2);
 
-        if (!GamingStyleMovement)
+        if (!_useOldControls)
         {
             _isCursorFree = true;
         }
@@ -78,15 +86,15 @@ public class PlayerMovement : MonoBehaviour
         FreeCursorToggle();
         FreeCursor();
 
-        if (InControl)
+        if (IsOnFoot)
         {
             _characterController.enabled = true;
             MovePlayer();
             ApplyGravity();
-            Jump();
-            Crouch();
+            //Jump();
+            //Crouch();
             Fly();
-            if (!EnableFly)
+            if (!_isFlying)
             {
                 AnimationController();
             }
@@ -113,17 +121,17 @@ public class PlayerMovement : MonoBehaviour
 
     public void CameraFPSControls()
     {
-        if (InControl)
+        if (IsOnFoot)
         {
-            _yHeadRotation = 0f;
-            Cam1stPersonTempHead.localRotation = Quaternion.Euler(0f, _yHeadRotation, 0f);
+            _headRotation = 0f;
+            _playerFirstPersonCamParent.localRotation = Quaternion.Euler(0f, _headRotation, 0f);
         }
-        else if (!InControl)
+        else if (!IsOnFoot)
         {
-            float mouseX = Input.GetAxis("Mouse X") * FPSMouseSensitivity * Time.deltaTime;
-            _yHeadRotation += mouseX;
-            _yHeadRotation = Mathf.Clamp(_yHeadRotation, -90f, 90f);
-            Cam1stPersonTempHead.localRotation = Quaternion.Euler(0f, _yHeadRotation, 0f);
+            float mouseX = Input.GetAxis("Mouse X") * _firstPersonCamMouseSensitivity * Time.deltaTime;
+            _headRotation += mouseX;
+            _headRotation = Mathf.Clamp(_headRotation, -90f, 90f);
+            _playerFirstPersonCamParent.localRotation = Quaternion.Euler(0f, _headRotation, 0f);
         }
     }
 
@@ -134,9 +142,9 @@ public class PlayerMovement : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if (IsFPS)
+        if (_useFirstPersonCam)
         {
-            float mouseX = Input.GetAxis("Mouse X") * FPSMouseSensitivity * Time.deltaTime;
+            float mouseX = Input.GetAxis("Mouse X") * _firstPersonCamMouseSensitivity * Time.deltaTime;
 
             transform.Rotate(Vector3.up * mouseX);
         }
@@ -144,27 +152,27 @@ public class PlayerMovement : MonoBehaviour
         // If There's Input
         if (direction.magnitude >= 0.1f)
         {
-            if (IsFPS)
+            if (_useFirstPersonCam)
             {
                 _isMoving = true;
                 Sprint();
                 Vector3 moveDirFPS = transform.right * horizontal + transform.forward * vertical;
-                _characterController.Move(moveDirFPS * _TotalMoveSpeed * Time.deltaTime);
+                _characterController.Move(moveDirFPS * _finalSpeed * Time.deltaTime);
             }
             else
             {
                 _isMoving = true;
                 // Rotate Player to Direction of Movement
                 // *(The "+ Cam.eulerAngles.y" Makes the Player Face Look Direction)
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Cam.eulerAngles.y;
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _mainPlayerCamTransform.eulerAngles.y;
                 float angle;
-                if (GamingStyleMovement)
+                if (_useOldControls)
                 {
-                    angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, RotationSmoothTime);
+                    angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, _rotationSmootingTime);
                 }
                 else
                 {
-                    angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, RotationSmoothTime * 4);
+                    angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, _rotationSmootingTime * 4);
                 }
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
@@ -173,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
                 // Apply Sprint
                 Sprint();
                 // Move Player
-                _characterController.Move(moveDir.normalized * _TotalMoveSpeed * Time.deltaTime);
+                _characterController.Move(moveDir.normalized * _finalSpeed * Time.deltaTime);
             }
         }
         else
@@ -184,31 +192,31 @@ public class PlayerMovement : MonoBehaviour
 
     public void ApplyGravity()
     {
-        if (!EnableFly)
+        if (!_isFlying)
         {
-            _isGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask);
+            _isGrounded = Physics.CheckSphere(_groundCheckTransform.position, _groundCheckRadius, _groundLayer);
 
             if (_isGrounded && _velocity.y < 0)
             {
                 _velocity.y = -2;
             }
 
-            _velocity.y += Gravity * Time.deltaTime;
+            _velocity.y += _gravity * Time.deltaTime;
             _characterController.Move(_velocity * Time.deltaTime);
         }
     }
 
-    public void Jump()
-    {
-        if (Input.GetButtonDown("Jump") && _isGrounded && EnableJump)
-        {
-            _velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-        }
-    }
+    //public void Jump()
+    //{
+    //    if (Input.GetButtonDown("Jump") && _isGrounded && _isJumping)
+    //    {
+    //        _velocity.y = Mathf.Sqrt(_jumpHeight * -2f * _gravity);
+    //    }
+    //}
 
     public void Sprint()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && EnableSprint)
+        if (Input.GetKey(KeyCode.LeftShift) && _isRunning)
         {
             _isSprinting = true;
         }
@@ -219,59 +227,59 @@ public class PlayerMovement : MonoBehaviour
 
         if (_isSprinting)
         {
-            _TotalMoveSpeed = MoveSpeed * SprintMultiplier;
+            _finalSpeed = _movementSpeed * _sprintMultiplier;
         }
         else
         {
-            _TotalMoveSpeed = MoveSpeed;
+            _finalSpeed = _movementSpeed;
         }
     }
 
-    public void Crouch()
-    {
-        if (Input.GetKey(KeyCode.LeftControl) && EnableCrouch && _isGrounded)
-        {
-            _isCrouching = true;
-        }
-        else
-        {
-            _isCrouching = false;
-        }
-
-        if (_isCrouching)
-        {
-            _characterController.height = _crouchHeight;
-            _characterController.center = _crouchOffset;
-        }
-        else
-        {
-            _characterController.height = _standingHeight;
-            _characterController.center = _standingOffset;
-        }
-    }
+    //public void Crouch()
+    //{
+    //    if (Input.GetKey(KeyCode.LeftControl) && _isCrouching2 && _isGrounded)
+    //    {
+    //        _isCrouching = true;
+    //    }
+    //    else
+    //    {
+    //        _isCrouching = false;
+    //    }
+    //
+    //    if (_isCrouching)
+    //    {
+    //        _characterController.height = _crouchHeight;
+    //        _characterController.center = _crouchOffset;
+    //    }
+    //    else
+    //    {
+    //        _characterController.height = _standingHeight;
+    //        _characterController.center = _standingOffset;
+    //    }
+    //}
 
     public void Fly()
     {
-        if (Input.GetKeyDown(KeyCode.G) && EnableFly)
+        if (Input.GetKeyDown(KeyCode.G) && _isFlying)
         {
-            EnableFly = false;
-            PlayerAnimator.gameObject.SetActive(true);
-            BeanModel.gameObject.SetActive(false);
-            MoveSpeed /= 8;
+            _isFlying = false;
+            _playerAnimator.gameObject.SetActive(true);
+            _alternativeFlyingModel.gameObject.SetActive(false);
+            _movementSpeed /= 8;
         }
-        else if (Input.GetKeyDown(KeyCode.G) && !EnableFly)
+        else if (Input.GetKeyDown(KeyCode.G) && !_isFlying)
         {
-            EnableFly = true;
-            PlayerAnimator.gameObject.SetActive(false);
-            BeanModel.gameObject.SetActive(true);
-            MoveSpeed *= 8;
+            _isFlying = true;
+            _playerAnimator.gameObject.SetActive(false);
+            _alternativeFlyingModel.gameObject.SetActive(true);
+            _movementSpeed *= 8;
         }
-        if (EnableFly)
+        if (_isFlying)
         {
             Sprint();
 
             Vector3 moveDir = Vector3.zero;
-            if (Input.GetKey(KeyCode.E) && !(_characterController.transform.position.y >= MaxFlyingHeight))
+            if (Input.GetKey(KeyCode.E) && !(_characterController.transform.position.y >= _maxFlyingHeight))
             {
                 moveDir.y = 1f;
             }
@@ -283,7 +291,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 moveDir.y = 0f;
             }
-            _characterController.Move(moveDir.normalized * _TotalMoveSpeed * Time.deltaTime);
+            _characterController.Move(moveDir.normalized * _finalSpeed * Time.deltaTime);
         }
     }
 
@@ -291,31 +299,31 @@ public class PlayerMovement : MonoBehaviour
     {
         if (pov == "1st")
         {
-            IsFPS = true;
-            VC1stPerson.SetActive(true);
-            VC3rdPerson.SetActive(false);
+            _useFirstPersonCam = true;
+            _firstPersonCameraScenemachine.SetActive(true);
+            _thirdPersonCameraScenemachine.SetActive(false);
         }
         else if (pov == "3rd")
         {
-            IsFPS = false;
-            VC3rdPerson.SetActive(true);
-            VC1stPerson.SetActive(false);
+            _useFirstPersonCam = false;
+            _thirdPersonCameraScenemachine.SetActive(true);
+            _firstPersonCameraScenemachine.SetActive(false);
         }
     }
 
     public void TogglePOV()
     {
-        if (IsFPS)
+        if (_useFirstPersonCam)
         {
-            IsFPS = false;
-            VC3rdPerson.SetActive(true);
-            VC1stPerson.SetActive(false);
+            _useFirstPersonCam = false;
+            _thirdPersonCameraScenemachine.SetActive(true);
+            _firstPersonCameraScenemachine.SetActive(false);
         }
         else
         {
-            IsFPS = true;
-            VC1stPerson.SetActive(true);
-            VC3rdPerson.SetActive(false);
+            _useFirstPersonCam = true;
+            _firstPersonCameraScenemachine.SetActive(true);
+            _thirdPersonCameraScenemachine.SetActive(false);
         }
     }
 
@@ -323,7 +331,7 @@ public class PlayerMovement : MonoBehaviour
     {
         RaycastHit raycastHit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out raycastHit, 10f, InteractableMask))
+        if (Physics.Raycast(ray, out raycastHit, 10f, _interactableLayer))
         {
             //Our custom method. 
             if (raycastHit.transform.gameObject.GetComponent<Collider>().enabled)
@@ -349,7 +357,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FreeCursorToggle()
     {
-        if (!GamingStyleMovement)
+        if (!_useOldControls)
         {
             if (Input.GetMouseButtonDown(1))
             {
@@ -375,16 +383,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void FreeCursor()
     {
-        if (!GamingStyleMovement)
+        if (!_useOldControls)
         {
             if (!_isCursorFree)
             {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                Cam.GetComponent<CinemachineBrain>().enabled = true;
+                _mainPlayerCamTransform.GetComponent<CinemachineBrain>().enabled = true;
 
-                float targetAngle = Cam.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, RotationSmoothTime);
+                float targetAngle = _mainPlayerCamTransform.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, _rotationSmootingTime);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             }
@@ -392,7 +400,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                Cam.GetComponent<CinemachineBrain>().enabled = false;
+                _mainPlayerCamTransform.GetComponent<CinemachineBrain>().enabled = false;
             }
         }
         else
@@ -401,14 +409,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                Cam.GetComponent<CinemachineBrain>().enabled = true;
+                _mainPlayerCamTransform.GetComponent<CinemachineBrain>().enabled = true;
 
             }
             else
             {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                Cam.GetComponent<CinemachineBrain>().enabled = false;
+                _mainPlayerCamTransform.GetComponent<CinemachineBrain>().enabled = false;
             }
         }
     }
@@ -417,44 +425,44 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_isMoving && !_isSprinting)
         {
-            PlayerAnimator.SetBool("IsWalking", true);
-            PlayerAnimator.SetBool("IsRunning", false);
+            _playerAnimator.SetBool("IsWalking", true);
+            _playerAnimator.SetBool("IsRunning", false);
         }
         else if (_isMoving && _isSprinting)
         {
-            PlayerAnimator.SetBool("IsWalking", true);
-            PlayerAnimator.SetBool("IsRunning", true);
+            _playerAnimator.SetBool("IsWalking", true);
+            _playerAnimator.SetBool("IsRunning", true);
         }
         else
         {
-            PlayerAnimator.SetBool("IsWalking", false);
-            PlayerAnimator.SetBool("IsRunning", false);
+            _playerAnimator.SetBool("IsWalking", false);
+            _playerAnimator.SetBool("IsRunning", false);
         }
 
         if (_velocity.y > 0 && !_isGrounded)
         {
-            PlayerAnimator.SetBool("IsJumping", true);
+            _playerAnimator.SetBool("IsJumping", true);
         }
         else if (_velocity.y < 0)
         {
-            PlayerAnimator.SetBool("IsJumping", false);
+            _playerAnimator.SetBool("IsJumping", false);
         }
 
         if (_isGrounded)
         {
-            PlayerAnimator.SetBool("IsGrounded", true);
+            _playerAnimator.SetBool("IsGrounded", true);
         }
         else
         {
-            PlayerAnimator.SetBool("IsGrounded", false);
+            _playerAnimator.SetBool("IsGrounded", false);
         }
 
-        if (!InControl)
+        if (!IsOnFoot)
         {
-            PlayerAnimator.SetBool("IsGrounded", true);
-            PlayerAnimator.SetBool("IsJumping", false);
-            PlayerAnimator.SetBool("IsWalking", false);
-            PlayerAnimator.SetBool("IsRunning", false);
+            _playerAnimator.SetBool("IsGrounded", true);
+            _playerAnimator.SetBool("IsJumping", false);
+            _playerAnimator.SetBool("IsWalking", false);
+            _playerAnimator.SetBool("IsRunning", false);
 
         }
     }
@@ -469,6 +477,6 @@ public class PlayerMovement : MonoBehaviour
         else Gizmos.color = transparentRed;
 
         // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
-        Gizmos.DrawSphere(GroundCheck.position, GroundDistance);
+        Gizmos.DrawSphere(_groundCheckTransform.position, _groundCheckRadius);
     }
 }

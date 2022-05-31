@@ -63,14 +63,14 @@ public class CarDoorCollision : MonoBehaviour
             {
                 OpenCloseDoorToggle();
                 SeatOccupied = true;
-                CollidedPlayer.GetComponent<PlayerMovement>().InControl = false;
+                CollidedPlayer.GetComponent<PlayerMovement>().IsOnFoot = false;
                 CollidedPlayer.GetComponent<PlayerMovement>().SetPOV("1st");
             }
             else if (SeatOccupied)
             {
                 SeatOccupied = false;
                 CollidedPlayer.transform.position = gameObject.transform.position;
-                CollidedPlayer.GetComponent<PlayerMovement>().InControl = true;
+                CollidedPlayer.GetComponent<PlayerMovement>().IsOnFoot = true;
                 CollidedPlayer.GetComponent<PlayerMovement>().SetPOV("3rd");
             }
         }
