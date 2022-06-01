@@ -8,13 +8,14 @@ public class PlayerControllerV2 : MonoBehaviour
     [Header("Camera")]
     [SerializeField] private Camera _playerCamera;
     [SerializeField] private Transform _firstPersonCameraTransform;
+    [SerializeField] private Transform _thirdPersonCameraTransform;
 
     [Header("Animation")]
     [SerializeField] private Animator _playerAnimator;
 
     [Header("Momvement")]
     [SerializeField] private CharacterController _characterController;
-    [SerializeField] private Vector2 _mouseSensitivity = new Vector2(1f, 1f);
+    [SerializeField] private Vector2 _mouseSensitivity = new Vector2(60f, 40f);
     [SerializeField] private float _walkingSpeed = 6f, _runningSpeed = 11f;
     [SerializeField] private float _jumpForce = 3f;
     [SerializeField] private float _maxFlyingHeight = 100f;
@@ -40,7 +41,8 @@ public class PlayerControllerV2 : MonoBehaviour
 
     private void Start()
     {
-        _stateAction = UseIdleState;
+        FreeMouse(true);
+        _stateAction = UseTankIdleState;
     }
 
     private void Update()
@@ -58,7 +60,7 @@ public class PlayerControllerV2 : MonoBehaviour
         Vector3 moveDirerction;
         moveDirerction = transform.forward * _input.y * (Input.GetKey(KeyCode.LeftShift) ? _runningSpeed : _walkingSpeed);
 
-        // moves the character in horizontal direction
+        // moves the character in diagonal direction
         _characterController.Move(moveDirerction * Time.deltaTime - Vector3.up * 0.1f);
     }
 
@@ -69,7 +71,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
     private void UseFirstPersonMovement()
     {
-        _characterController.Move(_input.x * transform.right * Time.deltaTime + _input.y * transform.forward * Time.deltaTime);
+        _characterController.Move( transform.right * _input.x * (Input.GetKey(KeyCode.LeftShift) ? _runningSpeed : _walkingSpeed) * Time.deltaTime +  transform.forward * _input.y * (Input.GetKey(KeyCode.LeftShift) ? _runningSpeed : _walkingSpeed) * Time.deltaTime);
     }
 
     private void UseFirstPersonRotate()
@@ -82,16 +84,40 @@ public class PlayerControllerV2 : MonoBehaviour
 
     private void SetFirstPersonCamera(bool value)
     {
-        _playerCamera.transform.position = value ? _firstPersonCameraTransform.position : new Vector3(0f, 3.25f, -4.5f);
-        _playerCamera.transform.rotation = value ? _firstPersonCameraTransform.rotation : Quaternion.Euler(new Vector3(15f, 0f, 0f));
+        _playerCamera.transform.position = value ? _firstPersonCameraTransform.position : _thirdPersonCameraTransform.position;
+        _playerCamera.transform.rotation = value ? _firstPersonCameraTransform.rotation : _thirdPersonCameraTransform.rotation;
+    }
+
+    private void FreeMouse(bool value)
+    {
+        // Input.GetMouseButtonDown(1)
+        Cursor.visible = value;
+        Cursor.lockState = value ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
+    private void RotateBodyWithMouse()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            FreeMouse(true);
+        }
+        else if (Input.GetMouseButton(1))
+        {
+            Vector2 mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), -Input.GetAxisRaw("Mouse Y"));
+
+            transform.Rotate(Vector3.up * mouseInput.x * _mouseSensitivity.x * Time.deltaTime);
+            _playerCamera.transform.Rotate(Vector3.right * mouseInput.y * _mouseSensitivity.y * Time.deltaTime);
+        }
+        else
+        {
+            FreeMouse(false);
+        }
     }
 
 
     #region States
-    // states:
-    // idle, walking, running, flying, firstPerson, thirdPerson, driving, treating
 
-    private void UseIdleState()
+    private void UseTankIdleState()
     {
         Debug.Log("Current State: Idle");
 
@@ -104,9 +130,34 @@ public class PlayerControllerV2 : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.V))
         {
+            FreeMouse(false);
             SetFirstPersonCamera(true);
+            _stateAction = UseFirstPersonIdleState;
+        }
+
+        RotateBodyWithMouse();
+    }
+
+    private void UseFirstPersonIdleState()
+    {
+        Debug.Log("Current State: First Person Idle");
+
+        GetInputAxis();
+
+        if (_input != Vector2.zero)
+        {
+            FreeMouse(false);
             _stateAction = UseFirstPersonWalkingState;
         }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            FreeMouse(true);
+            SetFirstPersonCamera(false);
+            _stateAction = UseTankIdleState;
+        }
+
+        UseFirstPersonRotate();
     }
 
     private void UseTankWalkingState()
@@ -117,15 +168,18 @@ public class PlayerControllerV2 : MonoBehaviour
 
         if (_input == Vector2.zero)
         {
-            _stateAction = UseIdleState;
+            FreeMouse(true);
+            _stateAction = UseTankIdleState;
         }
 
         if (Input.GetKeyDown(KeyCode.V))
         {
+            FreeMouse(false);
             SetFirstPersonCamera(true);
             _stateAction = UseFirstPersonWalkingState;
         }
 
+        RotateBodyWithMouse();
         UseTankRotate();
         UseTankMovement();
     }
@@ -136,17 +190,36 @@ public class PlayerControllerV2 : MonoBehaviour
 
         GetInputAxis();
 
+        if (_input == Vector2.zero)
+        {
+            _stateAction = UseFirstPersonIdleState;
+        }
+
         if (Input.GetKeyDown(KeyCode.V))
         {
             SetFirstPersonCamera(false);
 
             if (_input == Vector2.zero)
             {
-                _stateAction = UseIdleState;
+                FreeMouse(true);
+                _stateAction = UseTankIdleState;
             }
             else
             {
+                FreeMouse(true);
                 _stateAction = UseTankWalkingState;
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (Cursor.visible)
+            {
+                FreeMouse(false);
+            }
+            else
+            {
+                FreeMouse(true);
             }
         }
 
@@ -157,18 +230,6 @@ public class PlayerControllerV2 : MonoBehaviour
     private void UseFlyingState()
     {
 
-    }
-
-    private void UseFirstPersonState()
-    {
-
-    }
-
-    private void UseThirdPersonState()
-    {
-        // set camera original pos
-        // position: Vector3(0,3.25,-4.5)
-        // rotation: Vector3(15,0,0)
     }
 
     private void UseDrivingState()
