@@ -11,21 +11,22 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Cameras")]
     [SerializeField] private Transform _mainPlayerCamTransform;
-    [SerializeField] private Transform _playerFirstPersonCamParent;
+    public bool UseFirstPersonCam = false;
+    //[SerializeField] private Transform _mainPlayerCamTransform;
+    //[SerializeField] private Transform _playerFirstPersonCamParent;
 
     [Header("Momvement")]
     [SerializeField] private CharacterController _characterController;
-    [SerializeField] private GameObject _thirdPersonCameraScenemachine;
-    [SerializeField] private GameObject _firstPersonCameraScenemachine;
+    //[SerializeField] private GameObject _thirdPersonCameraScenemachine;
+    //[SerializeField] private GameObject _firstPersonCameraScenemachine;
     [SerializeField] private float _movementSpeed = 4f, _sprintMultiplier = 2f;
-    [SerializeField] private float _rotationSmootingTime = 0.1f;
     [SerializeField] private float _jumpHeight = 3f;
     [SerializeField] private float _maxFlyingHeight = 100f;
-    private float _headRotation = 0f;
-    public float _firstPersonCamMouseSensitivity = 100f;
-    private bool _isCursorFree;
+    public float RotationSmootingTime = 0.1f, RotationSmoothVelocity;
+    //private float _headRotation = 0f;
+    //public float _firstPersonCamMouseSensitivity = 100f;
+    //private bool _isCursorFree;
     private float _finalSpeed;
-    private float _rotationSmoothVelocity;
 
     [Header("Animation")]
     [SerializeField] private Animator _playerAnimator;
@@ -43,7 +44,9 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("States")]
     [SerializeField] private bool _isRunning = true;
-    [SerializeField] private bool _isFlying = false, _useFirstPersonCam = false, _useOldControls = true;
+    [SerializeField] private bool _isFlying = false;
+
+    public bool UseOldControls = true;
     public bool IsOnFoot = true;
 
     private Vector3 _velocity;
@@ -74,17 +77,14 @@ public class PlayerMovement : MonoBehaviour
         //_crouchHeight = _standingHeight / 2;
         //_crouchOffset.y = -(_crouchHeight / 2);
 
-        if (!_useOldControls)
-        {
-            _isCursorFree = true;
-        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        FreeCursorToggle();
-        FreeCursor();
+        //FreeCursorToggle();
+        //FreeCursor();
 
         if (IsOnFoot)
         {
@@ -105,12 +105,12 @@ public class PlayerMovement : MonoBehaviour
             AnimationController();
         }
 
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            TogglePOV();
-        }
+        //if (Input.GetKeyDown(KeyCode.V))
+        //{
+        //    TogglePOV();
+        //}
 
-        CameraFPSControls();
+        //CameraFPSControls();
         CheckInteraction();
     }
 
@@ -119,45 +119,47 @@ public class PlayerMovement : MonoBehaviour
     // Created Methods
 
 
-    public void CameraFPSControls()
-    {
-        if (IsOnFoot)
-        {
-            _headRotation = 0f;
-            _playerFirstPersonCamParent.localRotation = Quaternion.Euler(0f, _headRotation, 0f);
-        }
-        else if (!IsOnFoot)
-        {
-            float mouseX = Input.GetAxis("Mouse X") * _firstPersonCamMouseSensitivity * Time.deltaTime;
-            _headRotation += mouseX;
-            _headRotation = Mathf.Clamp(_headRotation, -90f, 90f);
-            _playerFirstPersonCamParent.localRotation = Quaternion.Euler(0f, _headRotation, 0f);
-        }
-    }
+    //public void CameraFPSControls()
+    //{
+    //    if (IsOnFoot)
+    //    {
+    //        _headRotation = 0f;
+    //        _playerFirstPersonCamParent.localRotation = Quaternion.Euler(0f, _headRotation, 0f);
+    //    }
+    //    else if (!IsOnFoot)
+    //    {
+    //        float mouseX = Input.GetAxis("Mouse X") * _firstPersonCamMouseSensitivity * Time.deltaTime;
+    //        _headRotation += mouseX;
+    //        _headRotation = Mathf.Clamp(_headRotation, -90f, 90f);
+    //        _playerFirstPersonCamParent.localRotation = Quaternion.Euler(0f, _headRotation, 0f);
+    //    }
+    //}
 
     public void MovePlayer()
     {
-        // Calculate Direction
+        // get input
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+
+        // calculate Direction
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if (_useFirstPersonCam)
-        {
-            float mouseX = Input.GetAxis("Mouse X") * _firstPersonCamMouseSensitivity * Time.deltaTime;
-
-            transform.Rotate(Vector3.up * mouseX);
-        }
+        //if (_useFirstPersonCam)
+        //{
+        //    float mouseX = Input.GetAxis("Mouse X") * _firstPersonCamMouseSensitivity * Time.deltaTime;
+        //
+        //    transform.Rotate(Vector3.up * mouseX);
+        //}
 
         // If There's Input
-        if (direction.magnitude >= 0.1f)
+        if (direction.sqrMagnitude >= 0.1f)
         {
-            if (_useFirstPersonCam)
+            if (UseFirstPersonCam)
             {
                 _isMoving = true;
                 Sprint();
-                Vector3 moveDirFPS = transform.right * horizontal + transform.forward * vertical;
-                _characterController.Move(moveDirFPS * _finalSpeed * Time.deltaTime);
+                Vector3 moveDirectionFirstPesonCam = transform.right * horizontal + transform.forward * vertical;
+                _characterController.Move(moveDirectionFirstPesonCam * _finalSpeed * Time.deltaTime);
             }
             else
             {
@@ -166,13 +168,13 @@ public class PlayerMovement : MonoBehaviour
                 // *(The "+ Cam.eulerAngles.y" Makes the Player Face Look Direction)
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _mainPlayerCamTransform.eulerAngles.y;
                 float angle;
-                if (_useOldControls)
+                if (UseOldControls)
                 {
-                    angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, _rotationSmootingTime);
+                    angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref RotationSmoothVelocity, RotationSmootingTime);
                 }
                 else
                 {
-                    angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, _rotationSmootingTime * 4);
+                    angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref RotationSmoothVelocity, RotationSmootingTime * 4);
                 }
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
@@ -295,37 +297,37 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void SetPOV(string pov)
-    {
-        if (pov == "1st")
-        {
-            _useFirstPersonCam = true;
-            _firstPersonCameraScenemachine.SetActive(true);
-            _thirdPersonCameraScenemachine.SetActive(false);
-        }
-        else if (pov == "3rd")
-        {
-            _useFirstPersonCam = false;
-            _thirdPersonCameraScenemachine.SetActive(true);
-            _firstPersonCameraScenemachine.SetActive(false);
-        }
-    }
-
-    public void TogglePOV()
-    {
-        if (_useFirstPersonCam)
-        {
-            _useFirstPersonCam = false;
-            _thirdPersonCameraScenemachine.SetActive(true);
-            _firstPersonCameraScenemachine.SetActive(false);
-        }
-        else
-        {
-            _useFirstPersonCam = true;
-            _firstPersonCameraScenemachine.SetActive(true);
-            _thirdPersonCameraScenemachine.SetActive(false);
-        }
-    }
+    //public void SetPOV(string pov)
+    //{
+    //    if (pov == "1st")
+    //    {
+    //        _useFirstPersonCam = true;
+    //        _firstPersonCameraScenemachine.SetActive(true);
+    //        _thirdPersonCameraScenemachine.SetActive(false);
+    //    }
+    //    else if (pov == "3rd")
+    //    {
+    //        _useFirstPersonCam = false;
+    //        _thirdPersonCameraScenemachine.SetActive(true);
+    //        _firstPersonCameraScenemachine.SetActive(false);
+    //    }
+    //}
+    //
+    //public void TogglePOV()
+    //{
+    //    if (_useFirstPersonCam)
+    //    {
+    //        _useFirstPersonCam = false;
+    //        _thirdPersonCameraScenemachine.SetActive(true);
+    //        _firstPersonCameraScenemachine.SetActive(false);
+    //    }
+    //    else
+    //    {
+    //        _useFirstPersonCam = true;
+    //        _firstPersonCameraScenemachine.SetActive(true);
+    //        _thirdPersonCameraScenemachine.SetActive(false);
+    //    }
+    //}
 
     public RaycastHit CheckInteraction()
     {
@@ -355,71 +357,71 @@ public class PlayerMovement : MonoBehaviour
         return raycastHit;
     }
 
-    private void FreeCursorToggle()
-    {
-        if (!_useOldControls)
-        {
-            if (Input.GetMouseButtonDown(1))
-            {
-                _isCursorFree = false;
-            }
-            if (Input.GetMouseButtonUp(1))
-            {
-                _isCursorFree = true;
-            }
-        }
-        else
-        {
-            if (Input.GetKeyUp(KeyCode.LeftAlt))
-            {
-                _isCursorFree = false;
-            }
-            if (Input.GetKeyDown(KeyCode.LeftAlt))
-            {
-                _isCursorFree = true;
-            }
-        }
-    }
+    //private void FreeCursorToggle()
+    //{
+    //    if (!UseOldControls)
+    //    {
+    //        if (Input.GetMouseButtonDown(1))
+    //        {
+    //            _isCursorFree = false;
+    //        }
+    //        if (Input.GetMouseButtonUp(1))
+    //        {
+    //            _isCursorFree = true;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (Input.GetKeyUp(KeyCode.LeftAlt))
+    //        {
+    //            _isCursorFree = false;
+    //        }
+    //        if (Input.GetKeyDown(KeyCode.LeftAlt))
+    //        {
+    //            _isCursorFree = true;
+    //        }
+    //    }
+    //}
 
-    private void FreeCursor()
-    {
-        if (!_useOldControls)
-        {
-            if (!_isCursorFree)
-            {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                _mainPlayerCamTransform.GetComponent<CinemachineBrain>().enabled = true;
-
-                float targetAngle = _mainPlayerCamTransform.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, _rotationSmootingTime);
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            }
-            else
-            {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                _mainPlayerCamTransform.GetComponent<CinemachineBrain>().enabled = false;
-            }
-        }
-        else
-        {
-            if (!_isCursorFree)
-            {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                _mainPlayerCamTransform.GetComponent<CinemachineBrain>().enabled = true;
-
-            }
-            else
-            {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                _mainPlayerCamTransform.GetComponent<CinemachineBrain>().enabled = false;
-            }
-        }
-    }
+    //private void FreeCursor()
+    //{
+    //    if (!UseOldControls)
+    //    {
+    //        if (!_isCursorFree)
+    //        {
+    //            Cursor.visible = false;
+    //            Cursor.lockState = CursorLockMode.Locked;
+    //            _mainPlayerCamTransform.GetComponent<CinemachineBrain>().enabled = true;
+    //
+    //            float targetAngle = _mainPlayerCamTransform.eulerAngles.y;
+    //            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationSmoothVelocity, _rotationSmootingTime);
+    //            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+    //
+    //        }
+    //        else
+    //        {
+    //            Cursor.visible = true;
+    //            Cursor.lockState = CursorLockMode.None;
+    //            _mainPlayerCamTransform.GetComponent<CinemachineBrain>().enabled = false;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (!_isCursorFree)
+    //        {
+    //            Cursor.visible = false;
+    //            Cursor.lockState = CursorLockMode.Locked;
+    //            _mainPlayerCamTransform.GetComponent<CinemachineBrain>().enabled = true;
+    //
+    //        }
+    //        else
+    //        {
+    //            Cursor.visible = true;
+    //            Cursor.lockState = CursorLockMode.None;
+    //            _mainPlayerCamTransform.GetComponent<CinemachineBrain>().enabled = false;
+    //        }
+    //    }
+    //}
 
     public void AnimationController()
     {
