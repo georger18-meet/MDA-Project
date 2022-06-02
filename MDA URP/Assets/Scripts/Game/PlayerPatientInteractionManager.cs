@@ -9,7 +9,7 @@ public class PlayerPatientInteractionManager : MonoBehaviour
     [SerializeField] private Patient _patientScript;
 
     [SerializeField] private PlayerData _playerData;
-    [SerializeField] private PlayerMovement _playerScript;
+    [SerializeField] private CameraControllerV2 _playerCameraController;
 
     [SerializeField] private Canvas _patientMenuCanvas;
     [SerializeField] private Image _ActionBar;
@@ -22,7 +22,7 @@ public class PlayerPatientInteractionManager : MonoBehaviour
 
     public void JoinPatient()
     {
-        if (_playerScript.CheckInteraction().transform.tag == "Patient")
+        if (_playerCameraController.CheckInteraction().transform.tag == "Patient")
         {
             print("Managed to get raycstHit");
         }
