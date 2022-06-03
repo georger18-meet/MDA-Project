@@ -15,8 +15,8 @@ public class PlayerControllerV2 : MonoBehaviour
     [Header("Momvement")]
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private Vector2 _mouseSensitivity = new Vector2(60f, 40f);
-    [SerializeField] private float _turnSpeed = 90f, _walkingSpeed = 6f, _runningSpeed = 11f;
-    [SerializeField] private float _jumpForce = 3f, _maxFlyingHeight = 100f;
+    [SerializeField] private float _turnSpeed = 90f, _walkingSpeed = 6f, _runningSpeed = 11f, _flyingSpeed = 16f;
+    [SerializeField] private float _jumpForce = 3f, _flyUpwardsSpeed = 9f, _maxFlyingHeight = 100f;
     private Vector2 _input;
 
     [Header("Models")]
@@ -27,8 +27,9 @@ public class PlayerControllerV2 : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private Transform _groundCheckTransform;
     [SerializeField] private float _groundCheckRadius = 0.5f;
-    private float _gravity = Physics.gravity.y;
     private bool _isGrounded;
+    
+    //private float _gravity = Physics.gravity.y;
 
     // state machine
     private delegate void State();
@@ -56,10 +57,21 @@ public class PlayerControllerV2 : MonoBehaviour
     private void UseTankMovement()
     {
         Vector3 moveDirerction;
-        moveDirerction = transform.forward * _input.y * (Input.GetKey(KeyCode.LeftShift) ? _runningSpeed : _walkingSpeed);
+        moveDirerction = (Input.GetKey(KeyCode.LeftShift) ? _runningSpeed : _walkingSpeed) * _input.y * transform.forward;
 
         // moves the character in diagonal direction
         _characterController.Move(moveDirerction * Time.deltaTime - Vector3.up * 0.1f);
+    }
+
+    private void UseFlyingMovement()
+    {
+        float yPosition = transform.position.y;
+        Vector3 moveDirerction;
+        moveDirerction = (Input.GetKey(KeyCode.LeftShift) ? _flyingSpeed * 2 : _flyingSpeed) * _input.y * transform.forward;
+
+        // moves the character in diagonal direction
+        _characterController.Move(moveDirerction * Time.deltaTime - Vector3.up * 0.1f);
+        transform.position = new Vector3(transform.position.x, yPosition, transform.position.z);
     }
 
     private void UseTankRotate()
@@ -69,15 +81,15 @@ public class PlayerControllerV2 : MonoBehaviour
 
     private void UseFirstPersonMovement()
     {
-        _characterController.Move( transform.right * _input.x * (Input.GetKey(KeyCode.LeftShift) ? _runningSpeed : _walkingSpeed) * Time.deltaTime +  transform.forward * _input.y * (Input.GetKey(KeyCode.LeftShift) ? _runningSpeed : _walkingSpeed) * Time.deltaTime);
+        _characterController.Move((Input.GetKey(KeyCode.LeftShift) ? _runningSpeed : _walkingSpeed) * _input.x * Time.deltaTime * transform.right +  (Input.GetKey(KeyCode.LeftShift) ? _runningSpeed : _walkingSpeed) * _input.y * Time.deltaTime * transform.forward);
     }
 
     private void UseFirstPersonRotate()
     {
         Vector2 mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), -Input.GetAxisRaw("Mouse Y"));
 
-        transform.Rotate(Vector3.up * mouseInput.x * _mouseSensitivity.x * Time.deltaTime);
-        _playerCamera.transform.Rotate(Vector3.right * mouseInput.y * _mouseSensitivity.y * Time.deltaTime);
+        transform.Rotate(_mouseSensitivity.x * mouseInput.x * Time.deltaTime * Vector3.up);
+        _playerCamera.transform.Rotate(_mouseSensitivity.y * mouseInput.y * Time.deltaTime * Vector3.right);
     }
 
     private void SetFirstPersonCamera(bool value)
@@ -88,7 +100,6 @@ public class PlayerControllerV2 : MonoBehaviour
 
     private void FreeMouse(bool value)
     {
-        // Input.GetMouseButtonDown(1)
         Cursor.visible = value;
         Cursor.lockState = value ? CursorLockMode.None : CursorLockMode.Locked;
     }
@@ -135,7 +146,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            _stateAction = UseFlyingState;
+            _stateAction = UseFlyingMovingState;
         }
 
         RotateBodyWithMouse();
@@ -162,7 +173,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            _stateAction = UseFlyingState;
+            _stateAction = UseFlyingMovingState;
         }
 
         UseFirstPersonRotate();
@@ -189,7 +200,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            _stateAction = UseFlyingState;
+            _stateAction = UseFlyingMovingState;
         }
 
         RotateBodyWithMouse();
@@ -226,7 +237,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            _stateAction = UseFlyingState;
+            _stateAction = UseFlyingMovingState;
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -245,14 +256,65 @@ public class PlayerControllerV2 : MonoBehaviour
         UseFirstPersonMovement();
     }
 
-    private void UseFlyingState()
+    private void UseFlyingIdleState()
     {
-        Debug.Log("Current State: Flying");
+        Debug.Log("Current State: FlyingIdle");
+
+        GetInputAxis();
+
+        if (_input != Vector2.zero)
+        {
+            FreeMouse(false);
+            _stateAction = UseFlyingMovingState;
+        }
 
         if (Input.GetKeyDown(KeyCode.G))
         {
             _stateAction = UseTankIdleState;
         }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            transform.position += new Vector3(0, _flyUpwardsSpeed * Time.deltaTime, 0);
+        }
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            transform.position -= new Vector3(0, _flyUpwardsSpeed * Time.deltaTime, 0);
+        }
+
+        RotateBodyWithMouse();
+    }
+
+    private void UseFlyingMovingState()
+    {
+        Debug.Log("Current State: FlyingMoving");
+
+        GetInputAxis();
+
+        if (_input == Vector2.zero)
+        {
+            _stateAction = UseFlyingIdleState;
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            _stateAction = UseTankIdleState;
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            transform.position += new Vector3(0, _flyUpwardsSpeed * Time.deltaTime, 0);
+        }
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            transform.position -= new Vector3(0, _flyUpwardsSpeed * Time.deltaTime, 0);
+        }
+
+        RotateBodyWithMouse();
+        UseTankRotate();
+        UseFlyingMovement();
     }
 
     private void UseDrivingState()
