@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
@@ -16,10 +17,10 @@ public class ActionsManager : MonoBehaviour
     #region Data References
     [Header("Data & Scripts")]
     
-    private Patient _currentPatientScript;
+    private PatientV2 _currentPatientScript;
     private PatientData _currentPatientData;
 
-    public Patient CurrentPatientScript { get => _currentPatientScript; }
+    public PatientV2 CurrentPatientScript { get => _currentPatientScript; }
     public PatientData CurrentPatientData { get => _currentPatientData; }
     #endregion
 
@@ -118,7 +119,9 @@ public class ActionsManager : MonoBehaviour
         if (confirm)
         {
             // need to verify that set operating crew is setting an empty group of maximum 4 and insitialize it with current player
-            SetOperatingCrew(_currentPatientScript.OperatingUserCrew);
+            // wip -v-
+            //SetOperatingCrew(_currentPatientScript.OperatingUserCrew);
+            // -------
             SetupPatientInfoDisplay();
             _joinPatientPopUp.SetActive(false);
             _patientMenuParent.SetActive(true);
@@ -131,14 +134,14 @@ public class ActionsManager : MonoBehaviour
         }
     }
 
-    private void SetOperatingCrew(Dictionary<string, int> operatingUserCrew)
-    {
-        if (!_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
-        {
-            _currentPatientScript.OperatingUserCrew.Add(PlayerData.UserName, PlayerData.CrewIndex);
-            _currentPatientScript.DisplayDictionary();
-        }
-    }
+    //private void SetOperatingCrew(Dictionary<string, int> operatingUserCrew)
+    //{
+    //    if (!_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
+    //    {
+    //        _currentPatientScript.OperatingUserCrew.Add(PlayerData.UserName, PlayerData.CrewIndex);
+    //        _currentPatientScript.DisplayDictionary();
+    //    }
+    //}
 
     private void SetupPatientInfoDisplay()
     {
@@ -233,13 +236,15 @@ public class ActionsManager : MonoBehaviour
         CloseAllPatientWindows();        
         if (_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
         {
-            for (int i = 0; i < _currentPatientScript.OperatingUsers.Count; i++)
-            {
-                if (_currentPatientScript.OperatingUsers[i] == PlayerData.UserName)
-                {
-                    _currentPatientScript.OperatingUsers.RemoveAt(i);
-                    _currentPatientScript.OperatingCrews.RemoveAt(i);
-                }
+            for (int i = 0; i < _currentPatientScript.CurrentlyTreatingUser.Length; i++)
+            {     
+                // wip -v-
+                //if (_currentPatientScript.CurrentlyTreatingUser[i] == PlayerData.UerName)
+                //{
+                //    Array.Clear(_currentPatientScript.CurrentlyTreatingUser, 0, _currentPatientScript.CurrentlyTreatingUser.Length);
+                //    _currentPatientScript.CurrentlyTreatingUser.RemoveAt(i);
+                //}
+                // -------
             }
 
             _currentPatientScript.OperatingUserCrew.Remove(PlayerData.UserName);
@@ -257,10 +262,12 @@ public class ActionsManager : MonoBehaviour
 
     public void CallAction(int actionNumInList)
     {
-        if (_currentPatientData != null)
-        {
-            _actionsHandler.RunAction(this, _currentPatientScript, _player, _monitor, PlayerData.UserRole, actionNumInList);
-        }
+        // wip -v-
+        //if (_currentPatientData != null)
+        //{
+        //    _actionsHandler.RunAction(this, _currentPatientScript, _player, _monitor, PlayerData.UserRole, actionNumInList);
+        //}
+        // -------
     }
     #endregion
 
@@ -274,7 +281,9 @@ public class ActionsManager : MonoBehaviour
                 _ambulanceActionBtnParents[i].GetComponentInChildren<Button>().interactable = true;
             }
 
-            _currentPatientScript = other.gameObject.GetComponent<Patient>();
+            // wip -v-
+            //_currentPatientScript = other.gameObject.GetComponent<Patient>();
+            // -------
             _currentPatientData = _currentPatientScript.PatientData;
             CurrentPatient = other.gameObject;
         }

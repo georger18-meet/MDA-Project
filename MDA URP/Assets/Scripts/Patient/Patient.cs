@@ -19,7 +19,6 @@ public class Patient : MonoBehaviour
     #endregion
 
     #region Public fields
-    [SerializeField]
     public Dictionary<string, int> OperatingUserCrew = new Dictionary<string, int>();
     public Animation PatientAnimation;
     #endregion
