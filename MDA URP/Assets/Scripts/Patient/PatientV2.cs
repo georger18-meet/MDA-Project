@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class PatientV2 : MonoBehaviour
     #region Script References
     [Header("Data & Scripts")]
     public PatientData PatientData;
+    public List<ActionSequence> ActionSequences;
     #endregion
 
     #region Material References
@@ -21,8 +23,9 @@ public class PatientV2 : MonoBehaviour
 
     #region private serialized fields
     [Header("Joined Crews & Players Lists")]
-    public string[] CurrentlyTreatingUser;
-    public int[] CurrentlyTreatingCrew;
+    public List<PlayerData> CurrentlyTreatingUsers;
+    public List<PlayerData> TreatingUsers;
+    public List<int> TreatingCrews;
     #endregion
 
     private void Start()
@@ -38,32 +41,77 @@ public class PatientV2 : MonoBehaviour
     }
 
 
-    public void AddUserToCurrentlyTreating(GameObject user)
+    public void AddUserToTreatingLists(object currentPlayer)
     {
-        for (int i = 0; i < CurrentlyTreatingCrew.Length; i++)
+        GameObject currentPlayerGO = currentPlayer != null ? currentPlayer as GameObject : null;
+
+        if (currentPlayerGO == null)
         {
-            if (CurrentlyTreatingCrew[i].ToString() == user.name)
+            return;
+        }
+
+        PlayerData currentPlayerData = currentPlayerGO.GetComponent<PlayerData>();
+
+        for (int i = 0; i < TreatingUsers.Count; i++)
+        {
+            if (TreatingUsers.Contains(currentPlayerData))
             {
                 continue;
             }
             else
             {
-                
+                TreatingUsers.Add(currentPlayerData);
+            }
+
+            if (TreatingCrews.Contains(currentPlayerData.CrewIndex))
+            {
+                return;
+            }
+            else
+            {
+                TreatingCrews.Add(currentPlayerData.CrewIndex);
             }
         }
-        
     }
 
-    // wip -v-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer != 11)
+        {
+            return;
+        }
+        else
+        {
+            PlayerData lastEnteredPlayer = other.gameObject.GetComponent<PlayerData>();
+            CurrentlyTreatingUsers.Add(lastEnteredPlayer);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == 11)
+        {
+            PlayerData lastEnteredPlayer = other.gameObject.GetComponent<PlayerData>();
+
+            if (!CurrentlyTreatingUsers.Contains(lastEnteredPlayer))
+            {
+                return;
+            }
+            else
+            {
+                CurrentlyTreatingUsers.Remove(lastEnteredPlayer);
+            }
+        }
+    }
+
     //private void SetOperatingCrew(Dictionary<string, int> operatingUserCrew)
     //{
-    //    if (!_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
+    //    if (!OperatingUserCrew.ContainsKey(PlayerData.UserName))
     //    {
-    //        _currentPatientScript.OperatingUserCrew.Add(PlayerData.UserName, PlayerData.CrewIndex);
-    //        _currentPatientScript.DisplayDictionary();
+    //        OperatingUserCrew.Add(PlayerData.UserName, PlayerData.CrewIndex);
+    //        DisplayDictionary();
     //    }
     //}
-    // -------
 
     //public void DisplayDictionary()
     //{

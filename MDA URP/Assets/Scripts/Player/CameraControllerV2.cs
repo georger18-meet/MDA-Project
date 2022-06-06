@@ -15,10 +15,10 @@ public class CameraControllerV2 : MonoBehaviour
 
     private void Update()
     {
-        CheckInteraction();
+        Interact();
     }
 
-    public RaycastHit CheckInteraction()
+    public RaycastHit Interact()
     {
         Ray ray = _playerCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit raycastHit, _raycastDistance, _interactableLayer))
@@ -32,7 +32,7 @@ public class CameraControllerV2 : MonoBehaviour
                 _indicatorSound.Play();
                 raycastHit.transform.GetComponent<MakeItAButton>().EventToCall.Invoke();
 
-                Debug.Log($"Clicked On {raycastHit.transform.name}");
+                Debug.Log($"Interacted with {raycastHit.transform.name}");
             }
         }
         else

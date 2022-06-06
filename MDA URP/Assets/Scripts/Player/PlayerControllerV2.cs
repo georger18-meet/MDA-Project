@@ -146,7 +146,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            _stateAction = UseFlyingMovingState;
+            _stateAction = UseFlyingIdleState;
         }
 
         RotateBodyWithMouse();
@@ -173,7 +173,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            _stateAction = UseFlyingMovingState;
+            _stateAction = UseFlyingIdleState;
         }
 
         UseFirstPersonRotate();

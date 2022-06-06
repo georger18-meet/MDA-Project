@@ -36,11 +36,6 @@ public class ActionsManager : MonoBehaviour
     [Header("Player UI Parents")]
     [SerializeField] private GameObject _ambulanceActionBarParent;
     [SerializeField] private GameObject _natanActionBarParent, _basicActionMenuParent;
-    //[SerializeField] private GameObject
-
-    //[Header("Player UI Texts")]
-    //[SerializeField] private TextMeshProUGUI
-    //[SerializeField] private TextMeshProUGUI
     #endregion
 
     #region Patient UI 
@@ -91,12 +86,18 @@ public class ActionsManager : MonoBehaviour
     // Triggered upon Clicking on the Patient
     public void SetOperatingCrewCheck(GameObject patient)
     {
-        //if (_currentPatientInfoSo == null && patient.CompareTag("Patient"))
-        //{
-        //    _currentPatientScript = patient.GetComponent<Patient>();
-        //    _currentPatientInfoSo = _currentPatientScript.PatientInfoSO;
-        //    GetPatientInfo();
-        //}
+        PatientData _currentPatientInfoSo = patient != null ? patient.GetComponent<PatientData>() : null;
+
+        if (_currentPatientInfoSo == null)
+        {
+            return;
+        }
+
+        if (patient.CompareTag("Patient"))
+        {
+            _currentPatientScript = patient.GetComponent<PatientV2>();
+            GetPatientInfo();
+        }
 
         if (_player == null)
         {
@@ -113,15 +114,29 @@ public class ActionsManager : MonoBehaviour
         }
     }
 
+    private void GetPatientInfo()
+    {
+        if (_currentPatientScript.CheckIfPlayerJoined())
+        {
+            AmbulanceActionPanel.SetActive(true);
+            _patientInfoSO = _currentPatientScript.PatientInfoSO;
+        }
+        else
+        {
+            AmbulanceActionPanel.SetActive(false);
+            _patientInfoSO = null;
+        }
+    }
+
     // triggered upon pressing "yes" in patient Join pop-up
     public void ConfirmOperation(bool confirm)
     {
         if (confirm)
         {
             // need to verify that set operating crew is setting an empty group of maximum 4 and insitialize it with current player
-            // wip -v-
+
             //SetOperatingCrew(_currentPatientScript.OperatingUserCrew);
-            // -------
+
             SetupPatientInfoDisplay();
             _joinPatientPopUp.SetActive(false);
             _patientMenuParent.SetActive(true);
@@ -151,7 +166,6 @@ public class ActionsManager : MonoBehaviour
         _adress.text = _currentPatientData.AddressLocation;
         _insuranceCompany.text = _currentPatientData.MedicalCompany;
         _complaint.text = _currentPatientData.Complaint;
-        //_incidentAdress.text = PatientInfoSO.eventPlace;
 
         _age.text = _currentPatientData.Age.ToString();
         _id.text = _currentPatientData.Id.ToString();
@@ -236,16 +250,14 @@ public class ActionsManager : MonoBehaviour
         CloseAllPatientWindows();        
         if (_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
         {
-            for (int i = 0; i < _currentPatientScript.CurrentlyTreatingUser.Length; i++)
-            {     
-                // wip -v-
-                //if (_currentPatientScript.CurrentlyTreatingUser[i] == PlayerData.UerName)
-                //{
-                //    Array.Clear(_currentPatientScript.CurrentlyTreatingUser, 0, _currentPatientScript.CurrentlyTreatingUser.Length);
-                //    _currentPatientScript.CurrentlyTreatingUser.RemoveAt(i);
-                //}
-                // -------
-            }
+            //for (int i = 0; i < _currentPatientScript.TreatingUsers.Length; i++)
+            //{     
+            //    if (_currentPatientScript.TreatingUsers[i] == PlayerData.UerName)
+            //    {
+            //        Array.Clear(_currentPatientScript.TreatingUsers, 0, _currentPatientScript.TreatingUsers.Length);
+            //        _currentPatientScript.TreatingUsers.RemoveAt(i);
+            //    }
+            //}
 
             _currentPatientScript.OperatingUserCrew.Remove(PlayerData.UserName);
         }
@@ -253,6 +265,7 @@ public class ActionsManager : MonoBehaviour
         print("Leave Patient");
     }
     #endregion
+
 
     #region Player Action Events
     public void OpenNoBagActionMenu()
@@ -262,12 +275,10 @@ public class ActionsManager : MonoBehaviour
 
     public void CallAction(int actionNumInList)
     {
-        // wip -v-
-        //if (_currentPatientData != null)
-        //{
-        //    _actionsHandler.RunAction(this, _currentPatientScript, _player, _monitor, PlayerData.UserRole, actionNumInList);
-        //}
-        // -------
+        if (_currentPatientData != null)
+        {
+            //_actionsHandler.RunAction(this, _currentPatientScript, _player, _monitor, PlayerData.UserRole, actionNumInList);
+        }
     }
     #endregion
 
@@ -281,9 +292,7 @@ public class ActionsManager : MonoBehaviour
                 _ambulanceActionBtnParents[i].GetComponentInChildren<Button>().interactable = true;
             }
 
-            // wip -v-
             //_currentPatientScript = other.gameObject.GetComponent<Patient>();
-            // -------
             _currentPatientData = _currentPatientScript.PatientData;
             CurrentPatient = other.gameObject;
         }

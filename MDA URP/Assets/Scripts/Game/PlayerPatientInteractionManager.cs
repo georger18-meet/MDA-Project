@@ -22,7 +22,7 @@ public class PlayerPatientInteractionManager : MonoBehaviour
 
     public void JoinPatient()
     {
-        if (_playerCameraController.CheckInteraction().transform.tag == "Patient")
+        if (_playerCameraController.Interact().transform.tag == "Patient")
         {
             print("Managed to get raycstHit");
         }
