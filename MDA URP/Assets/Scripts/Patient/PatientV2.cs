@@ -124,6 +124,7 @@ public class PatientV2 : MonoBehaviour
 
     public void CheckIfPlayerJoined()
     {
+        // issue
         IsPlayerJoined(_actionsManager.PlayerData);
     }
 

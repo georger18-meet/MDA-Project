@@ -9194,6 +9194,7 @@ Transform:
   - {fileID: 308614248}
   - {fileID: 1455303640}
   - {fileID: 5907449908772072295}
+  - {fileID: 6280933319571540236}
   m_Father: {fileID: 0}
   m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9214,7 +9215,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _indicatorIcon: {fileID: 8489877796061204083}
-  _indicatorSound: {fileID: 0}
+  _indicatorSound: {fileID: 6877555656913926957}
   _raycastDistance: 10
 --- !u!114 &1911744584
 MonoBehaviour:
@@ -19536,7 +19537,7 @@ GameObject:
   - component: {fileID: 1968432829176061731}
   - component: {fileID: 6877555656913926957}
   m_Layer: 0
-  m_Name: ClickSFX
+  m_Name: Click Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19761,7 +19762,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6280933319571540236}
   m_Layer: 0
-  m_Name: PlayerAudio
+  m_Name: Player Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25332,7 +25333,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5401322901793047342}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4728146688060599900
 GameObject:
@@ -27211,7 +27212,6 @@ Transform:
   - {fileID: 4669639503914165014}
   - {fileID: 5401322902474172213}
   - {fileID: 682228997218767444}
-  - {fileID: 6280933319571540236}
   - {fileID: 4727326699697354057}
   m_Father: {fileID: 0}
   m_RootOrder: 29
@@ -35863,13 +35863,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3441630292012909945}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.75, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1968432829176061731}
-  m_Father: {fileID: 5401322901793047342}
-  m_RootOrder: 4
+  m_Father: {fileID: 1911744582}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6290606406854360815
 MonoBehaviour:
