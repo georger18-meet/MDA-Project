@@ -9143,15 +9143,13 @@ MonoBehaviour:
   _playerAnimator: {fileID: 1553611391}
   _characterController: {fileID: 1911744581}
   _mouseSensitivity: {x: 60, y: 40}
+  _turnSpeed: 90
   _walkingSpeed: 6
   _runningSpeed: 11
   _jumpForce: 3
   _maxFlyingHeight: 100
-  _turnSpeed: 90
+  _originalModel: {fileID: 1553611390}
   _alternativeFlyingModel: {fileID: 308614245}
-  _interactableLayer:
-    serializedVersion: 2
-    m_Bits: 128
   _groundLayer:
     serializedVersion: 2
     m_Bits: 520
@@ -9207,6 +9205,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab005f3b2fec3844b4cc2f740b3e017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerCamera: {fileID: 1040738767}
+  _interactableLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _indicatorIcon: {fileID: 8489877796061204083}
+  _indicatorSound: {fileID: 0}
+  _raycastDistance: 10
 --- !u!1 &1929268191
 GameObject:
   m_ObjectHideFlags: 0
