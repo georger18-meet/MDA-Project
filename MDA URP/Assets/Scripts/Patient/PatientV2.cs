@@ -7,6 +7,7 @@ public class PatientV2 : MonoBehaviour
 {
     #region Script References
     [Header("Data & Scripts")]
+    private ActionsManager _actionsManager;
     public PatientData PatientData;
     public List<ActionSequence> ActionSequences;
     #endregion
@@ -23,7 +24,7 @@ public class PatientV2 : MonoBehaviour
 
     #region private serialized fields
     [Header("Joined Crews & Players Lists")]
-    public List<PlayerData> CurrentlyTreatingUsers;
+    public List<PlayerData> NearbyUsers;
     public List<PlayerData> TreatingUsers;
     public List<int> TreatingCrews;
     #endregion
@@ -76,30 +77,30 @@ public class PatientV2 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer != 11)
+        if (other.tag != "Player")
         {
             return;
         }
         else
         {
             PlayerData lastEnteredPlayer = other.gameObject.GetComponent<PlayerData>();
-            CurrentlyTreatingUsers.Add(lastEnteredPlayer);
+            NearbyUsers.Add(lastEnteredPlayer);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == 11)
+        if (other.tag == "Player")
         {
             PlayerData lastEnteredPlayer = other.gameObject.GetComponent<PlayerData>();
 
-            if (!CurrentlyTreatingUsers.Contains(lastEnteredPlayer))
+            if (!NearbyUsers.Contains(lastEnteredPlayer))
             {
                 return;
             }
             else
             {
-                CurrentlyTreatingUsers.Remove(lastEnteredPlayer);
+                NearbyUsers.Remove(lastEnteredPlayer);
             }
         }
     }

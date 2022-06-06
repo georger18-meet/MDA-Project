@@ -96,7 +96,7 @@ public class ActionsManager : MonoBehaviour
         if (patient.CompareTag("Patient"))
         {
             _currentPatientScript = patient.GetComponent<PatientV2>();
-            GetPatientInfo();
+            //GetPatientInfo();
         }
 
         if (_player == null)
@@ -114,19 +114,19 @@ public class ActionsManager : MonoBehaviour
         }
     }
 
-    private void GetPatientInfo()
-    {
-        if (_currentPatientScript.CheckIfPlayerJoined())
-        {
-            AmbulanceActionPanel.SetActive(true);
-            _patientInfoSO = _currentPatientScript.PatientInfoSO;
-        }
-        else
-        {
-            AmbulanceActionPanel.SetActive(false);
-            _patientInfoSO = null;
-        }
-    }
+    //private void GetPatientInfo()
+    //{
+    //    if (_currentPatientScript.CheckIfPlayerJoined())
+    //    {
+    //        AmbulanceActionPanel.SetActive(true);
+    //        _patientInfoSO = _currentPatientScript.PatientInfoSO;
+    //    }
+    //    else
+    //    {
+    //        AmbulanceActionPanel.SetActive(false);
+    //        _patientInfoSO = null;
+    //    }
+    //}
 
     // triggered upon pressing "yes" in patient Join pop-up
     public void ConfirmOperation(bool confirm)
@@ -147,6 +147,16 @@ public class ActionsManager : MonoBehaviour
         {
             _joinPatientPopUp.SetActive(false);
         }
+    }
+
+    private void JoinPatient()
+    {
+        _currentPatientScript.NearbyUsers.Contains()
+    }
+
+    public bool CheckIfPlayerJoinedCurrentPatient()
+    {
+        return false;
     }
 
     //private void SetOperatingCrew(Dictionary<string, int> operatingUserCrew)

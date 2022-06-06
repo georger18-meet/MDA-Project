@@ -9117,6 +9117,7 @@ GameObject:
   - component: {fileID: 1911744582}
   - component: {fileID: 1911744581}
   - component: {fileID: 1911744580}
+  - component: {fileID: 1911744584}
   - component: {fileID: 1911744583}
   m_Layer: 0
   m_Name: Player_V6
@@ -9214,6 +9215,24 @@ MonoBehaviour:
   _indicatorIcon: {fileID: 8489877796061204083}
   _indicatorSound: {fileID: 0}
   _raycastDistance: 10
+--- !u!114 &1911744584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911744579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5242308325d4a9c4bb31aec1866f0403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <UserName>k__BackingField: David
+  <CrewName>k__BackingField: Hulon 521
+  <UserIndexInCrew>k__BackingField: 0
+  <CrewIndex>k__BackingField: 0
+  <UserRole>k__BackingField: 1
+  PlayerAnimation: {fileID: 0}
 --- !u!1 &1929268191
 GameObject:
   m_ObjectHideFlags: 0
@@ -15849,7 +15868,6 @@ MonoBehaviour:
   <CrewIndex>k__BackingField: 0
   <UserRole>k__BackingField: 0
   PlayerAnimation: {fileID: 0}
-  JoinedPatients: []
 --- !u!23 &1956361253928732735
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -37241,26 +37259,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &6862513401137359974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7736149374362169350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94b0e86cd43a99747acb2a5e348eefd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PatientData: {fileID: 11400000, guid: 0a22cfce45ddf3f4788ddd2a7b43e878, type: 2}
-  InitialShirt: {fileID: 2100000, guid: 4b21d49e419942944bde72d829d09924, type: 2}
-  InitialPants: {fileID: 2100000, guid: 6005b29a5d8d98348a9fac9f5893b78b, type: 2}
-  Shirt: {fileID: 1536489730}
-  Pants: {fileID: 1515518858}
-  PatientAnimation: {fileID: 0}
-  OperatingUsers: []
-  OperatingCrews: 
 --- !u!114 &6868299670614300229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39714,7 +39712,7 @@ GameObject:
   - component: {fileID: 7736149374362169346}
   - component: {fileID: 1468440912149456685}
   - component: {fileID: 1896313460150987686}
-  - component: {fileID: 6862513401137359974}
+  - component: {fileID: 7736149374362169351}
   - component: {fileID: 6362095160061081794}
   m_Layer: 7
   m_Name: Patient_V5
@@ -39723,6 +39721,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7736149374362169351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7736149374362169350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06678e687e4ed4f4fa18d61c9eefee92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PatientData: {fileID: 11400000, guid: 0a22cfce45ddf3f4788ddd2a7b43e878, type: 2}
+  ActionSequences:
+  - {fileID: 11400000, guid: b4661d3fd770e0c4fbae082fe675b82a, type: 2}
+  InitialShirt: {fileID: 2100000, guid: 4b21d49e419942944bde72d829d09924, type: 2}
+  InitialPants: {fileID: 2100000, guid: 6005b29a5d8d98348a9fac9f5893b78b, type: 2}
+  Shirt: {fileID: 1536489730}
+  Pants: {fileID: 1515518858}
+  PatientAnimation: {fileID: 0}
+  CurrentlyTreatingUsers: []
+  TreatingUsers: []
+  TreatingCrews: 
 --- !u!114 &7739260602704828455
 MonoBehaviour:
   m_ObjectHideFlags: 0
