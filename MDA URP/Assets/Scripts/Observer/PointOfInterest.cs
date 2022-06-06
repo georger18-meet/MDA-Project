@@ -13,9 +13,6 @@ public class PointOfInterest : MonoBehaviour
 
     public void Trigger()
     {
-        if (OnPointOfInterest != null)
-        {
-            OnPointOfInterest(this);
-        }
+        OnPointOfInterest?.Invoke(this);
     }
 }

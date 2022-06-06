@@ -53,6 +53,11 @@ public class PatientV2 : MonoBehaviour
 
         PlayerData currentPlayerData = currentPlayerGO.GetComponent<PlayerData>();
 
+        if (IsPlayerJoined(currentPlayerData))
+        {
+            return;
+        }
+
         for (int i = 0; i < TreatingUsers.Count; i++)
         {
             if (TreatingUsers.Contains(currentPlayerData))
@@ -77,21 +82,12 @@ public class PatientV2 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag != "Player")
-        {
-            return;
-        }
-        else
-        {
-            PlayerData lastEnteredPlayer = other.gameObject.GetComponent<PlayerData>();
-            //_actionsManager.PlayerData = lastEnteredPlayer;
-            NearbyUsers.Add(lastEnteredPlayer);
-        }
+        GetPlayerData(other);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             PlayerData lastEnteredPlayer = other.gameObject.GetComponent<PlayerData>();
 
@@ -103,6 +99,22 @@ public class PatientV2 : MonoBehaviour
             {
                 NearbyUsers.Remove(lastEnteredPlayer);
             }
+        }
+    }
+
+    public PlayerData GetPlayerData(object collidingObject)
+    {
+        GameObject collidingGameObject = collidingObject as GameObject;
+
+        if (!collidingGameObject.CompareTag("Player"))
+        {
+            return null;
+        }
+        else
+        {
+            PlayerData lastEnteredPlayer = collidingGameObject.GetComponent<PlayerData>();
+            NearbyUsers.Add(lastEnteredPlayer);
+            return lastEnteredPlayer;
         }
     }
 
@@ -120,12 +132,6 @@ public class PatientV2 : MonoBehaviour
             Debug.Log("Checked if player is joined, it is false");
             return false;
         }
-    }
-
-    public void CheckIfPlayerJoined()
-    {
-        // issue
-        IsPlayerJoined(_actionsManager.PlayerData);
     }
 
     //private void SetOperatingCrew(Dictionary<string, int> operatingUserCrew)
