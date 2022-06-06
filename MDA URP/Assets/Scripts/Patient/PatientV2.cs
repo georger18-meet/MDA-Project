@@ -84,7 +84,7 @@ public class PatientV2 : MonoBehaviour
         else
         {
             PlayerData lastEnteredPlayer = other.gameObject.GetComponent<PlayerData>();
-            _actionsManager.PlayerData = lastEnteredPlayer;
+            //_actionsManager.PlayerData = lastEnteredPlayer;
             NearbyUsers.Add(lastEnteredPlayer);
         }
     }
@@ -120,8 +120,6 @@ public class PatientV2 : MonoBehaviour
             Debug.Log("Checked if player is joined, it is false");
             return false;
         }
-
-        
     }
 
     public void CheckIfPlayerJoined()
