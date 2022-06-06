@@ -9146,7 +9146,9 @@ MonoBehaviour:
   _turnSpeed: 90
   _walkingSpeed: 6
   _runningSpeed: 11
+  _flyingSpeed: 16
   _jumpForce: 3
+  _flyUpwardsSpeed: 9
   _maxFlyingHeight: 100
   _originalModel: {fileID: 1553611390}
   _alternativeFlyingModel: {fileID: 308614245}
