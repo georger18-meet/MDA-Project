@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         //}
 
         //CameraFPSControls();
-        CheckInteraction();
+        //CheckInteraction();
     }
 
 
@@ -329,33 +329,33 @@ public class PlayerMovement : MonoBehaviour
     //    }
     //}
 
-    public RaycastHit CheckInteraction()
-    {
-        RaycastHit raycastHit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out raycastHit, 10f, _interactableLayer))
-        {
-            //Our custom method. 
-            if (raycastHit.transform.gameObject.GetComponent<Collider>().enabled)
-            {
-                _indicatorIcon.SetActive(true);
-                if (Input.GetMouseButtonDown(0))
-                {
-                    Debug.Log("Object Hit: " + raycastHit.transform.gameObject.name);
-                    Vector3 pointToLook = ray.GetPoint(Vector3.Distance(ray.origin, raycastHit.transform.position));
-                    Debug.DrawLine(ray.origin, pointToLook, Color.cyan, 5f);
-                    _indicatorSound.Play();
-                    raycastHit.transform.gameObject.GetComponent<MakeItAButton>().EventToCall.Invoke();
-                }
-            }
-        }
-        else
-        {
-            _indicatorIcon.SetActive(false);
-        }
-
-        return raycastHit;
-    }
+    //public RaycastHit CheckInteraction()
+    //{
+    //    RaycastHit raycastHit;
+    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //    if (Physics.Raycast(ray, out raycastHit, 10f, _interactableLayer))
+    //    {
+    //        //Our custom method. 
+    //        if (raycastHit.transform.gameObject.GetComponent<Collider>().enabled)
+    //        {
+    //            _indicatorIcon.SetActive(true);
+    //            if (Input.GetMouseButtonDown(0))
+    //            {
+    //                Debug.Log("Object Hit: " + raycastHit.transform.gameObject.name);
+    //                Vector3 pointToLook = ray.GetPoint(Vector3.Distance(ray.origin, raycastHit.transform.position));
+    //                Debug.DrawLine(ray.origin, pointToLook, Color.cyan, 5f);
+    //                _indicatorSound.Play();
+    //                raycastHit.transform.gameObject.GetComponent<MakeItAButton>().EventToCall.Invoke();
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        _indicatorIcon.SetActive(false);
+    //    }
+    //
+    //    return raycastHit;
+    //}
 
     //private void FreeCursorToggle()
     //{

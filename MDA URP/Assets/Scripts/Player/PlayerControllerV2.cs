@@ -7,8 +7,7 @@ public class PlayerControllerV2 : MonoBehaviour
     // player controller
     [Header("Camera")]
     [SerializeField] private Camera _playerCamera;
-    [SerializeField] private Transform _firstPersonCameraTransform;
-    [SerializeField] private Transform _thirdPersonCameraTransform;
+    [SerializeField] private Transform _firstPersonCameraTransform, _thirdPersonCameraTransform;
 
     [Header("Animation")]
     [SerializeField] private Animator _playerAnimator;
@@ -16,28 +15,26 @@ public class PlayerControllerV2 : MonoBehaviour
     [Header("Momvement")]
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private Vector2 _mouseSensitivity = new Vector2(60f, 40f);
-    [SerializeField] private float _walkingSpeed = 6f, _runningSpeed = 11f;
-    [SerializeField] private float _jumpForce = 3f;
-    [SerializeField] private float _maxFlyingHeight = 100f;
-    [SerializeField] private float _turnSpeed = 90f;
+    [SerializeField] private float _turnSpeed = 90f, _walkingSpeed = 6f, _runningSpeed = 11f;
+    [SerializeField] private float _jumpForce = 3f, _maxFlyingHeight = 100f;
     private Vector2 _input;
 
     [Header("Models")]
+    [SerializeField] private GameObject _originalModel;
     [SerializeField] private GameObject _alternativeFlyingModel;
 
     [Header("Physics")]
-    [SerializeField] private LayerMask _interactableLayer;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private Transform _groundCheckTransform;
     [SerializeField] private float _groundCheckRadius = 0.5f;
     private float _gravity = Physics.gravity.y;
     private bool _isGrounded;
 
-
     // state machine
     private delegate void State();
 
     private State _stateAction;
+    // -------------
 
     private void Start()
     {
@@ -50,6 +47,7 @@ public class PlayerControllerV2 : MonoBehaviour
         _stateAction.Invoke();
     }
 
+    #region Private Methods
     private void GetInputAxis()
     {
         _input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -113,7 +111,7 @@ public class PlayerControllerV2 : MonoBehaviour
             FreeMouse(false);
         }
     }
-
+    #endregion
 
     #region States
 
@@ -133,6 +131,11 @@ public class PlayerControllerV2 : MonoBehaviour
             FreeMouse(false);
             SetFirstPersonCamera(true);
             _stateAction = UseFirstPersonIdleState;
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            _stateAction = UseFlyingState;
         }
 
         RotateBodyWithMouse();
@@ -157,6 +160,11 @@ public class PlayerControllerV2 : MonoBehaviour
             _stateAction = UseTankIdleState;
         }
 
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            _stateAction = UseFlyingState;
+        }
+
         UseFirstPersonRotate();
     }
 
@@ -177,6 +185,11 @@ public class PlayerControllerV2 : MonoBehaviour
             FreeMouse(false);
             SetFirstPersonCamera(true);
             _stateAction = UseFirstPersonWalkingState;
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            _stateAction = UseFlyingState;
         }
 
         RotateBodyWithMouse();
@@ -211,6 +224,11 @@ public class PlayerControllerV2 : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            _stateAction = UseFlyingState;
+        }
+
         if (Input.GetMouseButtonDown(1))
         {
             if (Cursor.visible)
@@ -229,7 +247,12 @@ public class PlayerControllerV2 : MonoBehaviour
 
     private void UseFlyingState()
     {
+        Debug.Log("Current State: Flying");
 
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            _stateAction = UseTankIdleState;
+        }
     }
 
     private void UseDrivingState()
@@ -240,6 +263,20 @@ public class PlayerControllerV2 : MonoBehaviour
     private void UseTreatingState()
     {
 
+    }
+    #endregion
+
+    #region Gizmos
+    private void OnDrawGizmosSelected()
+    {
+        Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+        Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+
+        if (_isGrounded) Gizmos.color = transparentGreen;
+        else Gizmos.color = transparentRed;
+
+        // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
+        Gizmos.DrawSphere(_groundCheckTransform.position, _groundCheckRadius);
     }
     #endregion
 }
