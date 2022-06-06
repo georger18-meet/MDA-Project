@@ -17,7 +17,7 @@ public class ChangeClothing : MonoBehaviour
 
     public void ChangeClothingAction(int measurementNumber)
     {
-        if (!_actionManager.CheckIfPlayerJoined())
+        if (!_actionManager.CurrentPatientScript.IsPlayerJoined(_actionManager.PlayerData))
             return;
 
         // loops throughout measurementList and catches the first element that is equal to measurementNumber

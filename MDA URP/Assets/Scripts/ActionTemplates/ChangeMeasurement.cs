@@ -15,7 +15,7 @@ public class ChangeMeasurement : MonoBehaviour
 
     public void ApplyMeasurementAction(int measurementNumber)
     {
-        if (!_actionManager.CheckIfPlayerJoined())
+        if (!_actionManager.CurrentPatientScript.IsPlayerJoined(_actionManager.PlayerData))
             return;
 
         // loops throughout measurementList and catches the first element that is equal to measurementNumber

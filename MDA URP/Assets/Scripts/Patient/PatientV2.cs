@@ -18,7 +18,7 @@ public class PatientV2 : MonoBehaviour
     #endregion
 
     #region Public fields
-    public Dictionary<string, int> OperatingUserCrew = new Dictionary<string, int>();
+    //public Dictionary<string, int> OperatingUserCrew = new Dictionary<string, int>();
     public Animation PatientAnimation;
     #endregion
 
@@ -84,6 +84,7 @@ public class PatientV2 : MonoBehaviour
         else
         {
             PlayerData lastEnteredPlayer = other.gameObject.GetComponent<PlayerData>();
+            _actionsManager.PlayerData = lastEnteredPlayer;
             NearbyUsers.Add(lastEnteredPlayer);
         }
     }
@@ -103,6 +104,29 @@ public class PatientV2 : MonoBehaviour
                 NearbyUsers.Remove(lastEnteredPlayer);
             }
         }
+    }
+
+    public bool IsPlayerJoined(PlayerData playerData)
+    {
+        Debug.Log("Attempting to check if player is joined");
+
+        if (TreatingUsers.Contains(playerData))
+        {
+            Debug.Log("Checked if player is joined, it is true");
+            return true;
+        }
+        else
+        {
+            Debug.Log("Checked if player is joined, it is false");
+            return false;
+        }
+
+        
+    }
+
+    public void CheckIfPlayerJoined()
+    {
+        IsPlayerJoined(_actionsManager.PlayerData);
     }
 
     //private void SetOperatingCrew(Dictionary<string, int> operatingUserCrew)

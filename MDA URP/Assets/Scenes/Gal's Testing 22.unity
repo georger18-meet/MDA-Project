@@ -9193,6 +9193,7 @@ Transform:
   - {fileID: 1553611392}
   - {fileID: 308614248}
   - {fileID: 1455303640}
+  - {fileID: 5907449908772072295}
   m_Father: {fileID: 0}
   m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -27212,7 +27213,6 @@ Transform:
   - {fileID: 682228997218767444}
   - {fileID: 6280933319571540236}
   - {fileID: 4727326699697354057}
-  - {fileID: 5907449908772072295}
   m_Father: {fileID: 0}
   m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30493,11 +30493,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5907449908772072216}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.75, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5401322901793047342}
+  m_Father: {fileID: 1911744582}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5907449908789651848
@@ -36347,13 +36347,13 @@ MonoBehaviour:
   EventToCall:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4641720744092593647}
-        m_TargetAssemblyTypeName: ActionsOperatingManager, Assembly-CSharp
-        m_MethodName: SetOperatingCrewCheck
-        m_Mode: 2
+      - m_Target: {fileID: 7736149374362169351}
+        m_TargetAssemblyTypeName: PatientV2, Assembly-CSharp
+        m_MethodName: CheckIfPlayerJoined
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 7736149374362169350}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -39741,7 +39741,7 @@ MonoBehaviour:
   Shirt: {fileID: 1536489730}
   Pants: {fileID: 1515518858}
   PatientAnimation: {fileID: 0}
-  CurrentlyTreatingUsers: []
+  NearbyUsers: []
   TreatingUsers: []
   TreatingCrews: 
 --- !u!114 &7739260602704828455
@@ -41565,7 +41565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b39daf3c96d674f8bd3269cae2d5ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _AOM: {fileID: 4641720744092593647}
+  _actionManager: {fileID: 0}
   _actionTemplates: {fileID: 5907449908772072294}
   _player: {fileID: 5401322901793046737}
   _monitor: {fileID: 7768556592622960602, guid: 6d8258cf993f8fb43ab4f71cf3c04abc, type: 3}

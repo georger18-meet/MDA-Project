@@ -10,7 +10,7 @@ public enum Measurements
 
 public struct ActionsData
 {
-    public ActionsManager AOM;
+    public ActionsManager ActionsManagerAD;
     public Patient Patient;
     public GameObject Player;
     public GameObject Monitor;
@@ -18,7 +18,7 @@ public struct ActionsData
 
     public ActionsData(ActionsManager aom, Patient patient, GameObject player, GameObject monitor, Roles roles)
     {
-        AOM = aom;
+        ActionsManagerAD = aom;
         Patient = patient;
         Player = player;
         Monitor = monitor;

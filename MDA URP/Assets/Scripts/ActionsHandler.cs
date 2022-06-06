@@ -49,7 +49,7 @@ public class ActionsHandler
     // Pain Level
     public void AskPainLevel(ActionsData actionData)
     {
-        if (!actionData.AOM.CheckIfPlayerJoined())
+        if (actionData.ActionsManagerAD.CurrentPatientScript.IsPlayerJoined(actionData.ActionsManagerAD.PlayerData))
             return;
         else
             //aT.CheckMeasurement();
@@ -61,10 +61,10 @@ public class ActionsHandler
     // Heart Massage
     public void DoHeartMassage(ActionsData actionData)
     {
-        if (!actionData.AOM.CheckIfPlayerJoined())
+        if (actionData.ActionsManagerAD.CurrentPatientScript.IsPlayerJoined(actionData.ActionsManagerAD.PlayerData))
             return;
         else
-            actionData.Player.transform.position = actionData.AOM.PlayerTreatingTr.position;
+            actionData.Player.transform.position = actionData.ActionsManagerAD.PlayerTreatingTr.position;
 
         Debug.Log("Operating Heart Massage On " + actionData.Patient.name);
     }
@@ -72,15 +72,15 @@ public class ActionsHandler
     // Defibrillator
     public void Defibrillation(ActionsData actionData)
     {
-        if (!actionData.AOM.CheckIfPlayerJoined() || (int)actionData.RolesAD <= 1)
+        if (!actionData.ActionsManagerAD.CurrentPatientScript.IsPlayerJoined(actionData.ActionsManagerAD.PlayerData) || (int)actionData.RolesAD <= 1)
         {
             Debug.Log("You Are NOT WORTHY!");
             return;
         }
         else
         {
-            actionData.Player.transform.position = actionData.AOM.PlayerTreatingTr.position;
-            MonoBehaviour.Instantiate(actionData.Monitor, actionData.AOM.PatientEquipmentTr.position, Quaternion.identity);
+            actionData.Player.transform.position = actionData.ActionsManagerAD.PlayerTreatingTr.position;
+            MonoBehaviour.Instantiate(actionData.Monitor, actionData.ActionsManagerAD.PatientEquipmentTr.position, Quaternion.identity);
         }
 
         Debug.Log("CLEAR!!! Defibrillator On " + actionData.Patient.name);

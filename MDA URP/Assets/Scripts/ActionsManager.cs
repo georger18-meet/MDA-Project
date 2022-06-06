@@ -84,35 +84,35 @@ public class ActionsManager : MonoBehaviour
 
     #region Assignment
     // Triggered upon Clicking on the Patient
-    public void SetOperatingCrewCheck(GameObject patient)
-    {
-        PatientData _currentPatientInfoSo = patient != null ? patient.GetComponent<PatientData>() : null;
-
-        if (_currentPatientInfoSo == null)
-        {
-            return;
-        }
-
-        if (patient.CompareTag("Patient"))
-        {
-            _currentPatientScript = patient.GetComponent<PatientV2>();
-            //GetPatientInfo();
-        }
-
-        if (_player == null)
-        {
-            return;
-        }
-        else if (!_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
-        {
-            _joinPatientPopUp.SetActive(true);
-        }
-        else if (_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
-        {
-            SetupPatientInfoDisplay();
-            _patientMenuParent.SetActive(true);
-        }
-    }
+    //public void SetOperatingCrewCheck(GameObject patient)
+    //{
+    //    PatientData _currentPatientInfoSo = patient != null ? patient.GetComponent<PatientData>() : null;
+    //
+    //    if (_currentPatientInfoSo == null)
+    //    {
+    //        return;
+    //    }
+    //
+    //    if (patient.CompareTag("Patient"))
+    //    {
+    //        _currentPatientScript = patient.GetComponent<PatientV2>();
+    //        GetPatientInfo();
+    //    }
+    //
+    //    if (_player == null)
+    //    {
+    //        return;
+    //    }
+    //    else if (!_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
+    //    {
+    //        _joinPatientPopUp.SetActive(true);
+    //    }
+    //    else if (_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
+    //    {
+    //        SetupPatientInfoDisplay();
+    //        _patientMenuParent.SetActive(true);
+    //    }
+    //}
 
     //private void GetPatientInfo()
     //{
@@ -151,7 +151,7 @@ public class ActionsManager : MonoBehaviour
 
     private void JoinPatient()
     {
-        _currentPatientScript.NearbyUsers.Contains()
+        //_currentPatientScript.NearbyUsers.Contains();
     }
 
     public bool CheckIfPlayerJoinedCurrentPatient()
@@ -183,18 +183,18 @@ public class ActionsManager : MonoBehaviour
     }
 
     // For Use Externally
-    public bool CheckIfPlayerJoined()
-    {
-        bool playerIsJoined = false;
-        if (_player != null)
-        {
-            if (_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
-            {
-                playerIsJoined = true;
-            }
-        }
-        return playerIsJoined;
-    }
+    //public bool CheckIfPlayerJoined()
+    //{
+    //    bool playerIsJoined = false;
+    //    if (_player != null)
+    //    {
+    //        if (_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
+    //        {
+    //            playerIsJoined = true;
+    //        }
+    //    }
+    //    return playerIsJoined;
+    //}
     #endregion
 
     #region Patient Menu Events
@@ -258,19 +258,19 @@ public class ActionsManager : MonoBehaviour
     public void LeavePatient()
     {
         CloseAllPatientWindows();        
-        if (_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
-        {
-            //for (int i = 0; i < _currentPatientScript.TreatingUsers.Length; i++)
-            //{     
-            //    if (_currentPatientScript.TreatingUsers[i] == PlayerData.UerName)
-            //    {
-            //        Array.Clear(_currentPatientScript.TreatingUsers, 0, _currentPatientScript.TreatingUsers.Length);
-            //        _currentPatientScript.TreatingUsers.RemoveAt(i);
-            //    }
-            //}
-
-            _currentPatientScript.OperatingUserCrew.Remove(PlayerData.UserName);
-        }
+        //if (_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
+        //{
+        //    for (int i = 0; i < _currentPatientScript.TreatingUsers.Length; i++)
+        //    {     
+        //        if (_currentPatientScript.TreatingUsers[i] == PlayerData.UerName)
+        //        {
+        //            Array.Clear(_currentPatientScript.TreatingUsers, 0, _currentPatientScript.TreatingUsers.Length);
+        //            _currentPatientScript.TreatingUsers.RemoveAt(i);
+        //        }
+        //    }
+        //
+        //    _currentPatientScript.OperatingUserCrew.Remove(PlayerData.UserName);
+        //}
 
         print("Leave Patient");
     }
