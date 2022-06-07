@@ -8,6 +8,7 @@ public class PatientV2 : MonoBehaviour
     #region Script References
     [Header("Data & Scripts")]
     private ActionsManager _actionsManager;
+    private ActionsManagerV2 _actionsManager2;
     public PatientData PatientData;
     public List<ActionSequence> ActionSequences;
     #endregion
@@ -31,7 +32,7 @@ public class PatientV2 : MonoBehaviour
 
     private void Start()
     {
-        _actionsManager.AllPatients.Add(this);
+        _actionsManager2.AllPatients.Add(this);
         PatientData.PatientShirtMaterial = InitialShirt;
         PatientData.PatientPantsMaterial = InitialPants;
     }

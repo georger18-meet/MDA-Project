@@ -9277,41 +9277,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1911744579}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d155056b5caa866489f5a8232a38907d, type: 3}
+  m_Script: {fileID: 11500000, guid: e1bc2d982fefa7644a3920c2682b4bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MeasurementList: 
   <PlayerData>k__BackingField: {fileID: 0}
   AllPatients: []
-  _player: {fileID: 0}
-  _monitor: {fileID: 0}
-  CurrentPatient: {fileID: 0}
-  _ambulanceActionBarParent: {fileID: 0}
-  _natanActionBarParent: {fileID: 0}
-  _basicActionMenuParent: {fileID: 0}
-  _joinPatientPopUp: {fileID: 0}
-  _patientMenuParent: {fileID: 0}
-  _patientInfoParent: {fileID: 0}
-  _actionLogParent: {fileID: 0}
-  _sureName: {fileID: 0}
-  _lastName: {fileID: 0}
-  _id: {fileID: 0}
-  _age: {fileID: 0}
-  _gender: {fileID: 0}
-  _phoneNumber: {fileID: 0}
-  _insuranceCompany: {fileID: 0}
-  _adress: {fileID: 0}
-  _complaint: {fileID: 0}
-  PlayerTreatingTr: {fileID: 0}
-  PatientEquipmentTr: {fileID: 0}
-  _mapWindow: {fileID: 0}
-  _contentPanel: {fileID: 0}
-  UserName: 
-  CrewName: 
-  UserIndexInCrew: 0
-  CrewIndex: 0
-  _ambulanceActionBtnParents: []
-  _natanActionBtnParents: []
 --- !u!1 &1929268191
 GameObject:
   m_ObjectHideFlags: 0
