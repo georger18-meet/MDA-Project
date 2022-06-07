@@ -31,6 +31,7 @@ public class PatientV2 : MonoBehaviour
 
     private void Start()
     {
+        _actionsManager.AllPatients.Add(this);
         PatientData.PatientShirtMaterial = InitialShirt;
         PatientData.PatientPantsMaterial = InitialPants;
     }
@@ -52,11 +53,6 @@ public class PatientV2 : MonoBehaviour
         }
 
         PlayerData currentPlayerData = currentPlayerGO.GetComponent<PlayerData>();
-
-        if (IsPlayerJoined(currentPlayerData))
-        {
-            return;
-        }
 
         for (int i = 0; i < TreatingUsers.Count; i++)
         {
@@ -82,7 +78,15 @@ public class PatientV2 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        GetPlayerData(other);
+        if (!other.CompareTag("Player"))
+        {
+            return;
+        }
+        else
+        {
+            PlayerData lastEnteredPlayer = other.GetComponent<PlayerData>();
+            NearbyUsers.Add(lastEnteredPlayer);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -102,22 +106,6 @@ public class PatientV2 : MonoBehaviour
         }
     }
 
-    public PlayerData GetPlayerData(object collidingObject)
-    {
-        GameObject collidingGameObject = collidingObject as GameObject;
-
-        if (!collidingGameObject.CompareTag("Player"))
-        {
-            return null;
-        }
-        else
-        {
-            PlayerData lastEnteredPlayer = collidingGameObject.GetComponent<PlayerData>();
-            NearbyUsers.Add(lastEnteredPlayer);
-            return lastEnteredPlayer;
-        }
-    }
-
     public bool IsPlayerJoined(PlayerData playerData)
     {
         Debug.Log("Attempting to check if player is joined");
@@ -130,9 +118,27 @@ public class PatientV2 : MonoBehaviour
         else
         {
             Debug.Log("Checked if player is joined, it is false");
+            //AddUserToTreatingLists(playerData);
             return false;
         }
     }
+
+    /*public PlayerData GetPlayerData(object collidingObject)
+    * {
+    *     GameObject collidingGameObject = collidingObject as GameObject;
+    * 
+    *     if (!collidingGameObject.CompareTag("Player"))
+    *     {
+    *         return null;
+    *     }
+    *     else
+    *     {
+    *         PlayerData lastEnteredPlayer = collidingGameObject.GetComponent<PlayerData>();
+    *         NearbyUsers.Add(lastEnteredPlayer);
+    *         return lastEnteredPlayer;
+    *     }
+    * }
+    */
 
     //private void SetOperatingCrew(Dictionary<string, int> operatingUserCrew)
     //{

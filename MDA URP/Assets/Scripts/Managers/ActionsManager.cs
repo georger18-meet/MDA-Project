@@ -16,7 +16,9 @@ public class ActionsManager : MonoBehaviour
 
     #region Data References
     [Header("Data & Scripts")]
-    
+    public List<PatientV2> AllPatients;
+
+
     private PatientV2 _currentPatientScript;
     private PatientData _currentPatientData;
 
@@ -84,6 +86,10 @@ public class ActionsManager : MonoBehaviour
 
     #region Assignment
     // Triggered upon Clicking on the Patient
+    public void OnPatientClicked()
+    {
+        //if ()
+    }
     //public void SetOperatingCrewCheck(GameObject patient)
     //{
     //    PatientData _currentPatientInfoSo = patient != null ? patient.GetComponent<PatientData>() : null;
@@ -320,6 +326,10 @@ public class ActionsManager : MonoBehaviour
             CurrentPatient = null;
         }
     }
+
+    #endregion
+
+    #region V2 Methods
     
     #endregion
 }
