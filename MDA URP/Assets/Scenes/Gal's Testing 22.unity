@@ -9151,7 +9151,6 @@ GameObject:
   - component: {fileID: 1911744580}
   - component: {fileID: 1911744584}
   - component: {fileID: 1911744583}
-  - component: {fileID: 1911744585}
   m_Layer: 0
   m_Name: Player_V6
   m_TagString: Player
@@ -9268,21 +9267,6 @@ MonoBehaviour:
   <CrewIndex>k__BackingField: 0
   <UserRole>k__BackingField: 1
   PlayerAnimation: {fileID: 0}
---- !u!114 &1911744585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1911744579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1bc2d982fefa7644a3920c2682b4bb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MeasurementList: 
-  <PlayerData>k__BackingField: {fileID: 0}
-  AllPatients: []
 --- !u!1 &1929268191
 GameObject:
   m_ObjectHideFlags: 0
@@ -10407,6 +10391,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2089069625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2089069627}
+  - component: {fileID: 2089069626}
+  m_Layer: 0
+  m_Name: ActionsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2089069626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089069625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1bc2d982fefa7644a3920c2682b4bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeasurementList: 
+  _uIManager: {fileID: 8489877796683096081}
+  AllPatients: []
+--- !u!4 &2089069627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089069625}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -20.065077, y: 2.9693482, z: -17.80701}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2102142688
 GameObject:
@@ -36408,13 +36438,13 @@ MonoBehaviour:
   EventToCall:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7736149374362169351}
-        m_TargetAssemblyTypeName: PatientV2, Assembly-CSharp
-        m_MethodName: AddUserToTreatingLists
+      - m_Target: {fileID: 2089069626}
+        m_TargetAssemblyTypeName: ActionsManagerV2, Assembly-CSharp
+        m_MethodName: OnPatientClicked
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1911744579}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 7736149374362169351}
+          m_ObjectArgumentAssemblyTypeName: PatientV2, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -65311,7 +65341,7 @@ GameObject:
   - component: {fileID: 8489877795587173594}
   - component: {fileID: 8489877795587173595}
   m_Layer: 5
-  m_Name: JoinPatientAprove Btn
+  m_Name: JoinPatientApprove Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65391,9 +65421,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4641720744092593647}
-        m_TargetAssemblyTypeName: ActionsOperatingManager, Assembly-CSharp
-        m_MethodName: ConfirmOperation
+      - m_Target: {fileID: 2089069626}
+        m_TargetAssemblyTypeName: ActionsManagerV2, Assembly-CSharp
+        m_MethodName: OnJoinPatient
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -66733,7 +66763,7 @@ GameObject:
   - component: {fileID: 8489877795653172025}
   - component: {fileID: 8489877795653172022}
   m_Layer: 5
-  m_Name: AmbulanceAction Bar
+  m_Name: AmbulanceActionBar Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97030,6 +97060,7 @@ GameObject:
   - component: {fileID: 8489877796683096085}
   - component: {fileID: 8489877796683096082}
   - component: {fileID: 8489877796683096083}
+  - component: {fileID: 8489877796683096081}
   m_Layer: 5
   m_Name: New GameUI
   m_TagString: Untagged
@@ -97037,6 +97068,34 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8489877796683096081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8489877796683096080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a8dfeefea73694da80d9c20fae745f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AmbulanceActionBarParent: {fileID: 8489877795653172020}
+  NatanActionBarParent: {fileID: 8489877796902693984}
+  BasicActionMenuParent: {fileID: 8489877796623304736}
+  JoinPatientPopUp: {fileID: 8489877796839340513}
+  PatientMenuParent: {fileID: 8489877796897039048}
+  PatientInfoParent: {fileID: 8489877796561216746}
+  ActionLogParent: {fileID: 8489877795662222250}
+  SureName: {fileID: 8489877794886469291}
+  LastName: {fileID: 8489877795720534611}
+  Id: {fileID: 8489877794985923490}
+  Age: {fileID: 8489877795601036029}
+  Gender: {fileID: 8489877794855965517}
+  PhoneNumber: {fileID: 8489877794869855798}
+  InsuranceCompany: {fileID: 8489877795985423746}
+  Adress: {fileID: 8489877795865094878}
+  Complaint: {fileID: 8489877795916351015}
 --- !u!114 &8489877796683096082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98552,9 +98611,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4641720744092593647}
-        m_TargetAssemblyTypeName: ActionsOperatingManager, Assembly-CSharp
-        m_MethodName: ConfirmOperation
+      - m_Target: {fileID: 2089069626}
+        m_TargetAssemblyTypeName: ActionsManagerV2, Assembly-CSharp
+        m_MethodName: OnJoinPatient
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

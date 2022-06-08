@@ -86,10 +86,6 @@ public class ActionsManager : MonoBehaviour
 
     #region Assignment
     // Triggered upon Clicking on the Patient
-    public void OnPatientClicked()
-    {
-        //if ()
-    }
     //public void SetOperatingCrewCheck(GameObject patient)
     //{
     //    PatientData _currentPatientInfoSo = patient != null ? patient.GetComponent<PatientData>() : null;

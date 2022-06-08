@@ -32,7 +32,7 @@ public class PatientV2 : MonoBehaviour
 
     private void Start()
     {
-        _actionsManager2.AllPatients.Add(this);
+        ActionsManagerV2.Instance.AllPatients.Add(this);
         PatientData.PatientShirtMaterial = InitialShirt;
         PatientData.PatientPantsMaterial = InitialPants;
     }

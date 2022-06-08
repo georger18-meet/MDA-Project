@@ -13,10 +13,14 @@ public class ActionsManagerV2 : MonoBehaviour
 
     #region Data References
     [Header("Data & Scripts")]
+    [SerializeField] private UIManager _uIManager;
+    
     public List<PatientV2> AllPatients;
-    #endregion
 
     private PatientV2 _lastClickedPatient;
+    private PatientData _lastClickedPatientData;
+    #endregion
+
 
     #region MonoBehaviour Callbacks
     private void Awake()
@@ -29,23 +33,26 @@ public class ActionsManagerV2 : MonoBehaviour
     // Triggered upon Clicking on the Patient
     public void OnPatientClicked(PatientV2 patient)
     {
-        _lastClickedPatient = patient;
-
-        PatientData currentPatientData = patient != null ? patient.PatientData : null;
-
-        if (currentPatientData == null)
+        if (patient == null)
         {
             return;
         }
 
+        _lastClickedPatient = patient;
+
+        PatientData currentPatientData = patient != null ? patient.PatientData : null;
+
+        _lastClickedPatientData = currentPatientData;
+
         if (!patient.IsPlayerJoined(PlayerData.Instance))
         {
-            //_joinPatientPopUp.SetActive(true);
-            //_patientMenuParent.SetActive(true);
+            _uIManager.JoinPatientPopUp.SetActive(true);
+            
         }
         else
         {
-            //SetupPatientInfoDisplay();
+            SetupPatientInfoDisplay();
+            _uIManager.PatientMenuParent.SetActive(true);
         }
     }
 
@@ -54,20 +61,31 @@ public class ActionsManagerV2 : MonoBehaviour
         if (isJoined)
         {
             _lastClickedPatient.AddUserToTreatingLists(PlayerData.Instance);
-            // need to verify that set operating crew is setting an empty group of maximum 4 and insitialize it with current player
 
-            //SetOperatingCrew(_currentPatientScript.OperatingUserCrew);
+            SetupPatientInfoDisplay();
 
-            //SetupPatientInfoDisplay();
-            //_joinPatientPopUp.SetActive(false);
-            //_patientMenuParent.SetActive(true);
-            //_patientInfoParent.SetActive(false);
-
+            _uIManager.JoinPatientPopUp.SetActive(false);
+            _uIManager.PatientMenuParent.SetActive(true);
+            _uIManager.PatientInfoParent.SetActive(false);
         }
         else
         {
-            //_joinPatientPopUp.SetActive(false);
+            _uIManager.JoinPatientPopUp.SetActive(false);
         }
+    }
+
+    private void SetupPatientInfoDisplay()
+    {
+        _uIManager.SureName.text = _lastClickedPatientData.SureName;
+        _uIManager.LastName.text = _lastClickedPatientData.LastName;
+        _uIManager.Gender.text = _lastClickedPatientData.Gender;
+        _uIManager.Adress.text = _lastClickedPatientData.AddressLocation;
+        _uIManager.InsuranceCompany.text = _lastClickedPatientData.MedicalCompany;
+        _uIManager.Complaint.text = _lastClickedPatientData.Complaint;
+
+        _uIManager.Age.text = _lastClickedPatientData.Age.ToString();
+        _uIManager.Id.text = _lastClickedPatientData.Id.ToString();
+        _uIManager.PhoneNumber.text = _lastClickedPatientData.PhoneNumber.ToString();
     }
     #endregion
 }
