@@ -46,14 +46,13 @@ public class PatientV2 : MonoBehaviour
 
     public void AddUserToTreatingLists(object currentPlayer)
     {
-        GameObject currentPlayerGO = currentPlayer != null ? currentPlayer as GameObject : null;
+        PlayerData currentPlayerData = currentPlayer != null ? currentPlayer as PlayerData : null;
 
-        if (currentPlayerGO == null)
+        if (currentPlayerData == null)
         {
             return;
         }
 
-        PlayerData currentPlayerData = currentPlayerGO.GetComponent<PlayerData>();
 
         for (int i = 0; i < TreatingUsers.Count; i++)
         {
@@ -123,6 +122,41 @@ public class PatientV2 : MonoBehaviour
             return false;
         }
     }
+
+    public void OnInteracted()
+    {
+        ActionsManagerV2.Instance.OnPatientClicked(this);
+    }
+
+    //public void SetOperatingCrewCheck(GameObject patient)
+    //{
+    //    PatientData _currentPatientInfoSo = patient != null ? patient.GetComponent<PatientData>() : null;
+    //
+    //    if (_currentPatientInfoSo == null)
+    //    {
+    //        return;
+    //    }
+    //
+    //    if (patient.CompareTag("Patient"))
+    //    {
+    //        _currentPatientScript = patient.GetComponent<PatientV2>();
+    //        GetPatientInfo();
+    //    }
+    //
+    //    if (_player == null)
+    //    {
+    //        return;
+    //    }
+    //    else if (!_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
+    //    {
+    //        _joinPatientPopUp.SetActive(true);
+    //    }
+    //    else if (_currentPatientScript.OperatingUserCrew.ContainsKey(PlayerData.UserName))
+    //    {
+    //        SetupPatientInfoDisplay();
+    //        _patientMenuParent.SetActive(true);
+    //    }
+    //}
 
     /*public PlayerData GetPlayerData(object collidingObject)
     * {

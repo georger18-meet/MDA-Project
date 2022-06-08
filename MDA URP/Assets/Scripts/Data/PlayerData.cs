@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
+    public static PlayerData Instance;
+
     [field: SerializeField] public string UserName { get; set; }
     [field: SerializeField] public string CrewName { get; set; }
     [field: SerializeField] public int UserIndexInCrew { get; set; }
@@ -11,4 +13,12 @@ public class PlayerData : MonoBehaviour
     [field: SerializeField] public Roles UserRole { get; set; }
 
     [field: SerializeField] public Animation PlayerAnimation;
+
+    private void Awake()
+    {
+        // if photonview().isMine
+        // //Instance = this;
+
+        Instance = this;
+    }
 }
