@@ -8190,6 +8190,38 @@ Transform:
   m_Father: {fileID: 1442835069}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1695909162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1695909163}
+  m_Layer: 7
+  m_Name: Patient Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1695909163
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695909162}
+  m_LocalRotation: {x: -0.000000070552716, y: 0.7071068, z: 0.7071067, w: 0.000000096857526}
+  m_LocalPosition: {x: -31.250011, y: 0.30000854, z: 30.749996}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7736149374362169346}
+  - {fileID: 8610762139696266234}
+  m_Father: {fileID: 0}
+  m_RootOrder: 30
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1713658630
 GameObject:
   m_ObjectHideFlags: 0
@@ -11021,7 +11053,7 @@ GameObject:
   - component: {fileID: 5033086525013030117}
   m_Layer: 0
   m_Name: ChestPos Equipment
-  m_TagString: Untagged
+  m_TagString: Equipment Position
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24079,7 +24111,7 @@ GameObject:
   - component: {fileID: 286101569587572300}
   m_Layer: 0
   m_Name: ChestPos Player
-  m_TagString: Untagged
+  m_TagString: Equipment Position
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24628,7 +24660,7 @@ GameObject:
   - component: {fileID: 1391914899439251711}
   m_Layer: 0
   m_Name: HeadPos Player
-  m_TagString: Untagged
+  m_TagString: Equipment Position
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35942,7 +35974,7 @@ GameObject:
   - component: {fileID: 2922804012125097292}
   m_Layer: 0
   m_Name: HeadPos Equipment
-  m_TagString: Untagged
+  m_TagString: Equipment Position
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39783,14 +39815,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7736149374362169350}
-  m_LocalRotation: {x: -0.000000070552716, y: 0.7071068, z: 0.7071067, w: 0.000000096857526}
-  m_LocalPosition: {x: -31.250011, y: 0.30000854, z: 30.749996}
-  m_LocalScale: {x: 1, y: 0.9999999, z: 0.9999999}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1415368882}
-  - {fileID: 8610762139696266234}
-  m_Father: {fileID: 0}
-  m_RootOrder: 30
+  m_Father: {fileID: 1695909163}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 180}
 --- !u!1 &7736149374362169350
 GameObject:
@@ -104847,7 +104878,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 712648262950180189}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -104855,7 +104886,7 @@ Transform:
   - {fileID: 6172072372113925668}
   - {fileID: 4774863205579753205}
   - {fileID: 3212140968241370265}
-  m_Father: {fileID: 7736149374362169346}
+  m_Father: {fileID: 1695909163}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &8624814422748378469

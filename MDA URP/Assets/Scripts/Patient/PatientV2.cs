@@ -78,7 +78,7 @@ public class PatientV2 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player"))
+        if (!other.CompareTag("Player") && gameObject.layer != 7)
         {
             return;
         }
@@ -91,7 +91,7 @@ public class PatientV2 : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !other.CompareTag("Equipment Position"))
         {
             PlayerData lastEnteredPlayer = other.gameObject.GetComponent<PlayerData>();
 
