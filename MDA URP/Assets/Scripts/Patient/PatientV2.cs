@@ -27,7 +27,9 @@ public class PatientV2 : MonoBehaviour
     [Header("Joined Crews & Players Lists")]
     public List<PlayerData> NearbyUsers;
     public List<PlayerData> TreatingUsers;
+    public List<PlayerData> AllUsersTreatedThisPatient;
     public List<int> TreatingCrews;
+    public List<int> AllCrewTreatedThisPatient;
     #endregion
 
     private void Start()
@@ -54,7 +56,7 @@ public class PatientV2 : MonoBehaviour
         }
 
 
-        for (int i = 0; i < TreatingUsers.Count; i++)
+        for (int i = 0; i < 1; i++)
         {
             if (TreatingUsers.Contains(currentPlayerData))
             {
@@ -63,6 +65,7 @@ public class PatientV2 : MonoBehaviour
             else
             {
                 TreatingUsers.Add(currentPlayerData);
+                AllUsersTreatedThisPatient.Add(currentPlayerData);
             }
 
             if (TreatingCrews.Contains(currentPlayerData.CrewIndex))
@@ -72,36 +75,39 @@ public class PatientV2 : MonoBehaviour
             else
             {
                 TreatingCrews.Add(currentPlayerData.CrewIndex);
+                AllCrewTreatedThisPatient.Add(currentPlayerData.CrewIndex);
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player") && gameObject.layer != 7)
+        PlayerData possiblePlayer = other.GetComponent<PlayerData>();
+
+        if (possiblePlayer == null)
         {
             return;
         }
-        else
+        else if (!NearbyUsers.Contains(possiblePlayer))
         {
-            PlayerData lastEnteredPlayer = other.GetComponent<PlayerData>();
-            NearbyUsers.Add(lastEnteredPlayer);
+            NearbyUsers.Add(possiblePlayer);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && !other.CompareTag("Equipment Position"))
-        {
-            PlayerData lastEnteredPlayer = other.gameObject.GetComponent<PlayerData>();
+        PlayerData possiblePlayer = other.GetComponent<PlayerData>();
 
-            if (!NearbyUsers.Contains(lastEnteredPlayer))
+        if (possiblePlayer != null)
+        {
+
+            if (!NearbyUsers.Contains(possiblePlayer))
             {
                 return;
             }
             else
             {
-                NearbyUsers.Remove(lastEnteredPlayer);
+                NearbyUsers.Remove(possiblePlayer);
             }
         }
     }

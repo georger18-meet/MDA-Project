@@ -47,7 +47,6 @@ public class ActionsManagerV2 : MonoBehaviour
         if (!patient.IsPlayerJoined(PlayerData.Instance))
         {
             _uIManager.JoinPatientPopUp.SetActive(true);
-            
         }
         else
         {
@@ -86,6 +85,19 @@ public class ActionsManagerV2 : MonoBehaviour
         _uIManager.Age.text = _lastClickedPatientData.Age.ToString();
         _uIManager.Id.text = _lastClickedPatientData.Id.ToString();
         _uIManager.PhoneNumber.text = _lastClickedPatientData.PhoneNumber.ToString();
+    }
+
+    public void LeavePatient(PatientV2 patient)
+    {
+        Debug.Log("Attempting leave patient");
+        // if (_photonView.isMine)
+        // {
+            _uIManager.CloseAllPatientWindows();
+            patient.TreatingUsers.Remove(PlayerData.Instance);
+            Debug.Log("Left Patient Succesfully");
+        // }
+
+
     }
     #endregion
 }

@@ -106,20 +106,20 @@ public class PlayerControllerV2 : MonoBehaviour
 
     private void RotateBodyWithMouse()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            FreeMouse(true);
-        }
-        else if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1))
         {
             Vector2 mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), -Input.GetAxisRaw("Mouse Y"));
 
             transform.Rotate(Vector3.up * mouseInput.x * _mouseSensitivity.x * Time.deltaTime);
             _playerCamera.transform.Rotate(Vector3.right * mouseInput.y * _mouseSensitivity.y * Time.deltaTime);
         }
-        else
+    }
+
+    private void FreeMouseWithAlt()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
-            FreeMouse(false);
+            FreeMouse(!Cursor.visible);
         }
     }
     #endregion
@@ -134,6 +134,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
         if (_input != Vector2.zero)
         {
+            FreeMouse(true);
             _stateAction = UseTankWalkingState;
         }
 
@@ -177,6 +178,7 @@ public class PlayerControllerV2 : MonoBehaviour
         }
 
         UseFirstPersonRotate();
+        FreeMouseWithAlt();
     }
 
     private void UseTankWalkingState()
@@ -254,6 +256,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
         UseFirstPersonRotate();
         UseFirstPersonMovement();
+        FreeMouseWithAlt();
     }
 
     private void UseFlyingIdleState()
