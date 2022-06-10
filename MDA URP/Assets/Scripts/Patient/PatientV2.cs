@@ -124,14 +124,13 @@ public class PatientV2 : MonoBehaviour
         else
         {
             Debug.Log("Checked if player is joined, it is false");
-            //AddUserToTreatingLists(playerData);
             return false;
         }
     }
 
     public void OnInteracted()
     {
-        ActionsManagerV2.Instance.OnPatientClicked(this);
+        ActionsManagerV2.Instance.OnPatientClicked();
     }
 
     //public void SetOperatingCrewCheck(GameObject patient)

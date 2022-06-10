@@ -31,20 +31,21 @@ public class ActionsManagerV2 : MonoBehaviour
 
     #region Assignment
     // Triggered upon Clicking on the Patient
-    public void OnPatientClicked(PatientV2 patient)
+    public void OnPatientClicked()
     {
-        if (patient == null)
+        
+        if (PlayerData.Instance.CurrentPatientTreating == null)
         {
             return;
         }
 
-        _lastClickedPatient = patient;
+        _lastClickedPatient = PlayerData.Instance.CurrentPatientTreating;
 
-        PatientData currentPatientData = patient != null ? patient.PatientData : null;
+        PatientData currentPatientData = PlayerData.Instance.CurrentPatientTreating != null ? PlayerData.Instance.CurrentPatientTreating.PatientData : null;
 
         _lastClickedPatientData = currentPatientData;
 
-        if (!patient.IsPlayerJoined(PlayerData.Instance))
+        if (!PlayerData.Instance.CurrentPatientTreating.IsPlayerJoined(PlayerData.Instance))
         {
             _uIManager.JoinPatientPopUp.SetActive(true);
         }
@@ -87,14 +88,14 @@ public class ActionsManagerV2 : MonoBehaviour
         _uIManager.PhoneNumber.text = _lastClickedPatientData.PhoneNumber.ToString();
     }
 
-    public void LeavePatient(PatientV2 patient)
+    public void LeavePatient()
     {
         Debug.Log("Attempting leave patient");
 
         // if (_photonView.isMine)
         // {
             _uIManager.CloseAllPatientWindows();
-            patient.TreatingUsers.Remove(PlayerData.Instance);
+            PlayerData.Instance.CurrentPatientTreating.TreatingUsers.Remove(PlayerData.Instance);
             Debug.Log("Left Patient Succesfully");
         // }
 
