@@ -334,7 +334,7 @@ public class PlayerControllerV2 : MonoBehaviour
     #region Collisions & Triggers
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<PatientV2>(out var possiblePatient))
+        if (other.gameObject.TryGetComponent(out PatientV2 possiblePatient))
         {
             PlayerData.Instance.CurrentPatientTreating = possiblePatient;
         }
@@ -343,7 +343,7 @@ public class PlayerControllerV2 : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         
-        if (other.gameObject.TryGetComponent<PatientV2>(out var possiblePatient))
+        if (other.gameObject.TryGetComponent(out PatientV2 possiblePatient))
         {
             PlayerData.Instance.CurrentPatientTreating = null;
         }
