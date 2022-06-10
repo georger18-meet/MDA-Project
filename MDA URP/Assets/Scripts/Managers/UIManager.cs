@@ -27,4 +27,12 @@ public class UIManager : MonoBehaviour
         // if photonview.isMine
         // 
     }
+
+    public void CloseAllPatientWindows()
+    {
+        JoinPatientPopUp.SetActive(false);
+        PatientMenuParent.SetActive(false);
+        PatientInfoParent.SetActive(false);
+        ActionLogParent.SetActive(false);
+    }
 }

@@ -90,6 +90,7 @@ public class ActionsManagerV2 : MonoBehaviour
     public void LeavePatient(PatientV2 patient)
     {
         Debug.Log("Attempting leave patient");
+
         // if (_photonView.isMine)
         // {
             _uIManager.CloseAllPatientWindows();
