@@ -331,6 +331,25 @@ public class PlayerControllerV2 : MonoBehaviour
     }
     #endregion
 
+    #region Collisions & Triggers
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.TryGetComponent<PatientV2>(out var possiblePatient))
+        {
+            PlayerData.Instance.CurrentPatientTreating = possiblePatient;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        
+        if (other.gameObject.TryGetComponent<PatientV2>(out var possiblePatient))
+        {
+            PlayerData.Instance.CurrentPatientTreating = null;
+        }
+    }
+    #endregion
+
     #region Gizmos
     private void OnDrawGizmosSelected()
     {
