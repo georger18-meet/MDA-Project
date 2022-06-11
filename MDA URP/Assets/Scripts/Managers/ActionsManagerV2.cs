@@ -25,7 +25,10 @@ public class ActionsManagerV2 : MonoBehaviour
     #region MonoBehaviour Callbacks
     private void Awake()
     {
-        Instance = this;
+        //if (_photonView.isMine)
+        //{
+            Instance = this;
+        //}
     }
     #endregion
 
@@ -98,8 +101,6 @@ public class ActionsManagerV2 : MonoBehaviour
             PlayerData.Instance.CurrentPatientTreating.TreatingUsers.Remove(PlayerData.Instance);
             Debug.Log("Left Patient Succesfully");
         // }
-
-
     }
     #endregion
 }

@@ -7,6 +7,8 @@ using System;
 
 public class ActionTemplates : MonoBehaviour
 {
+    public static ActionTemplates Instance;
+
     [SerializeField] private DocumentationLogManager _docLog;
     [SerializeField] private GameObject _alertWindow;
     [SerializeField] private TextMeshProUGUI _alertTitle, _alertText;
@@ -109,6 +111,14 @@ public class ActionTemplates : MonoBehaviour
             return false;
     }
     #endregion
+
+    private void Awake()
+    {
+        //if (_photonView.isMine)
+        //{
+            Instance = this;
+        //}
+    }
 
     // not sure about this - patient bool - isConsious vs if is currently conscious
     public void CheckStatus(bool isConscious, bool isPatientConscious)

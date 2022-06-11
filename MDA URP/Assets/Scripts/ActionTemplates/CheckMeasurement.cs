@@ -8,7 +8,7 @@ using TMPro;
 public class CheckMeasurement : MonoBehaviour
 {
     [Header("Scripts")]
-    [SerializeField] private ActionsManager _actionManager;
+    [SerializeField] private ActionsManagerV2 _actionManager;
     [SerializeField] private ActionTemplates _actionTemplates;
 
     [Header("Component's Data")]
@@ -20,12 +20,12 @@ public class CheckMeasurement : MonoBehaviour
 
     public void CheckMeasurementAction(int measurementNumber)
     {
-        if (!_actionManager.CurrentPatientScript.IsPlayerJoined(_actionManager.PlayerData))
+        if (!PlayerData.Instance.CurrentPatientTreating.IsPlayerJoined(PlayerData.Instance))
             return;
 
         // loops throughout measurementList and catches the first element that is equal to measurementNumber
         Measurements measurements = _actionManager.MeasurementList.FirstOrDefault(item => item == (Measurements)measurementNumber);
-        _measurement = _actionManager.CurrentPatientData.GetMeasurementName(measurementNumber);
+        _measurement = PlayerData.Instance.CurrentPatientTreating.PatientData.GetMeasurementName(measurementNumber);
 
         _actionTemplates.ShowAlertWindow(_measurementTitle, _measurement);
         _actionTemplates.UpdatePatientLog($"Patient's {_measurementTitle} is: {_measurement}");

@@ -5,22 +5,22 @@ using UnityEngine;
 public class ConnectingMonitor : MonoBehaviour
 {
     [Header("Scripts")]
-    [SerializeField] private ActionsManager _actionManager;
+    [SerializeField] private ActionsManagerV2 _actionManager;
     [SerializeField] private ActionTemplates _actionTemplates;
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _monitor;
 
     public void Defibrillation()
     {
-        if (!_actionManager.CurrentPatientScript.IsPlayerJoined(_actionManager.PlayerData)/* || (int)actionData.RolesAD <= 1*/)
+        if (!PlayerData.Instance.CurrentPatientTreating.IsPlayerJoined(PlayerData.Instance)/* || (int)actionData.RolesAD <= 1*/)
         {
             Debug.Log("You Are NOT WORTHY!");
             return;
         }
         else
         {
-            _player.transform.position = _actionManager.PlayerTreatingTr.position;
-            MonoBehaviour.Instantiate(_monitor, _actionManager.PatientEquipmentTr.position, Quaternion.identity);
+            //_player.transform.position = _actionManager.PlayerTreatingTr.position;
+            //MonoBehaviour.Instantiate(_monitor, _actionManager.PatientEquipmentTr.position, Quaternion.identity);
         }
 
         _actionTemplates.UpdatePatientLog($"Connected Defibrilator to Patient");

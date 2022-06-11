@@ -6,7 +6,7 @@ using UnityEngine;
 public class ChangeClothing : MonoBehaviour
 {
     [Header("Scripts")]
-    [SerializeField] private ActionsManager _actionManager;
+    [SerializeField] private ActionsManagerV2 _actionManager;
     [SerializeField] private ActionTemplates _actionTemplates;
 
     [Header("Component's Data")]
@@ -17,13 +17,13 @@ public class ChangeClothing : MonoBehaviour
 
     public void ChangeClothingAction(int measurementNumber)
     {
-        if (!_actionManager.CurrentPatientScript.IsPlayerJoined(_actionManager.PlayerData))
+        if (!PlayerData.Instance.CurrentPatientTreating.IsPlayerJoined(PlayerData.Instance))
             return;
 
         // loops throughout measurementList and catches the first element that is equal to measurementNumber
         Measurements measurements = _actionManager.MeasurementList.FirstOrDefault(item => item == (Measurements)measurementNumber);
-        _actionManager.CurrentPatientData.PatientShirtMaterial = _newShirtMaterial;
-        _actionManager.CurrentPatientData.PatientPantsMaterial = _newPantsMaterial;
+        PlayerData.Instance.CurrentPatientTreating.PatientData.PatientShirtMaterial = _newShirtMaterial;
+        PlayerData.Instance.CurrentPatientTreating.PatientData.PatientPantsMaterial = _newPantsMaterial;
 
 
         _actionTemplates.ShowAlertWindow(_textureToChange, _alertContent);

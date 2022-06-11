@@ -17,9 +17,9 @@ public class PlayerData : MonoBehaviour
 
     private void Awake()
     {
-        // if photonview.isMine
-        // //Instance = this;
-
-        Instance = this;
+        //if (_photonView.isMine)
+        //{
+            Instance = this;
+        //}
     }
 }

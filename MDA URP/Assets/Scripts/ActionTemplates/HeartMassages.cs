@@ -5,17 +5,17 @@ using UnityEngine;
 public class HeartMassages : MonoBehaviour
 {
     [Header("Scripts")]
-    [SerializeField] private ActionsManager _actionManager;
+    [SerializeField] private ActionsManagerV2 _actionManager;
     [SerializeField] private ActionTemplates _actionTemplates;
     [SerializeField] private Animator _playerAnimator;
 
     public void DoHeartMassage()
     {
-        if (!_actionManager.CurrentPatientScript.IsPlayerJoined(_actionManager.PlayerData))
+        if (!PlayerData.Instance.CurrentPatientTreating.IsPlayerJoined(PlayerData.Instance))
             return;
 
-        _actionManager.PlayerData.transform.position = _actionManager.PlayerTreatingTr.position;
-        _actionManager.PlayerData.transform.rotation = _actionManager.PlayerTreatingTr.rotation;
+        //PlayerData.Instance.transform.position = _actionManager.PlayerTreatingTr.position;
+        //PlayerData.Instance.transform.rotation = _actionManager.PlayerTreatingTr.rotation;
         //_playerAnimator.Play(,)
         // change heart rate after x seconds
 

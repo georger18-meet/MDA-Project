@@ -6,7 +6,7 @@ using UnityEngine;
 public class ApplyMedicine : MonoBehaviour
 {
     [Header("Scripts")]
-    [SerializeField] private ActionsManager _actionManager;
+    [SerializeField] private ActionsManagerV2 _actionManager;
     [SerializeField] private ActionTemplates _actionTemplates;
 
     [Header("Component's Data")]
@@ -16,12 +16,12 @@ public class ApplyMedicine : MonoBehaviour
 
     public void ApplyMedicineAction(int measurementNumber)
     {
-        if (!_actionManager.CurrentPatientScript.IsPlayerJoined(_actionManager.PlayerData))
+        if (!PlayerData.Instance.CurrentPatientTreating.IsPlayerJoined(PlayerData.Instance))
             return;
 
         // loops throughout measurementList and catches the first element that is equal to measurementNumber
         Measurements measurements = _actionManager.MeasurementList.FirstOrDefault(item => item == (Measurements)measurementNumber);
-        _actionManager.CurrentPatientData.SetMeasurementName(measurementNumber, _newMeasurement);
+        PlayerData.Instance.CurrentPatientTreating.PatientData.SetMeasurementName(measurementNumber, _newMeasurement);
 
         _actionTemplates.ShowAlertWindow(_alertTitle, _medicineToApply);
         _actionTemplates.UpdatePatientLog($"Applied {_medicineToApply} on Patient");
