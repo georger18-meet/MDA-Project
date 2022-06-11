@@ -2,24 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarController : MonoBehaviour
+public class CarControllerSimple : MonoBehaviour
 {
-    private float _horizontalInput;
     private float _verticalInput;
-    private float _currentSteerAngle;
+    private float _horizontalInput;
     private float _currentbreakForce;
     private bool _isBreaking;
+    private bool _isMovingBackwards;
     [SerializeField] private bool _isDrivable;
 
-    [SerializeField] private float _motorForce;
+    [SerializeField] private float _forwardSpeed = 20;
+    [SerializeField] private float _reverseSpeed = 15;
+    [SerializeField] private float _turningSpeed = 2;
     [SerializeField] private float _breakForce;
-    [SerializeField] private float _maxSteerAngle;
     [SerializeField] private float _centerOfMassOffset;
 
-    [SerializeField] private WheelCollider frontLeftWheelCollider;
-    [SerializeField] private WheelCollider frontRightWheelCollider;
-    [SerializeField] private WheelCollider rearRightWheelCollider;
-    [SerializeField] private WheelCollider rearLeftWheelCollider;
+
 
     [SerializeField] private Transform frontLeftWheelTransform;
     [SerializeField] private Transform frontRightWheeTransform;
@@ -27,11 +25,11 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform rearLeftWheelTransform;
 
     private Rigidbody _carRb;
-    
+
     public GameObject CarHeadLights;
     private bool _carHeadLightsOn = false;
 
-    public GameObject CarSiren/*, CarSirenLightLeft, CarSirenLightRight*/;
+    public GameObject CarSiren;
     public AudioSource CarSirenAudioSource;
     private bool _carSirenOn = false;
 
@@ -42,13 +40,14 @@ public class CarController : MonoBehaviour
     private void Start()
     {
         _carRb = GetComponent<Rigidbody>();
-        _carRb.centerOfMass = new Vector3(_carRb.centerOfMass.x, _carRb.centerOfMass.y - _centerOfMassOffset, _carRb.centerOfMass.z);
+        _carRb.centerOfMass = new Vector3(_carRb.centerOfMass.x, _centerOfMassOffset, _carRb.centerOfMass.z);
     }
 
     private void Update()
     {
         CheckIfDriveable();
         GetInput();
+        CheckIsMovingBackwards();
     }
 
     private void FixedUpdate()
@@ -62,50 +61,62 @@ public class CarController : MonoBehaviour
     {
         if (_isDrivable)
         {
-            _horizontalInput = Input.GetAxis("Horizontal");
             _verticalInput = Input.GetAxis("Vertical");
+            _horizontalInput = Input.GetAxis("Horizontal");
             _isBreaking = Input.GetKey(KeyCode.Space);
         }
     }
 
     private void HandleMotor()
     {
-        frontLeftWheelCollider.motorTorque = _verticalInput * _motorForce;
-        frontRightWheelCollider.motorTorque = _verticalInput * _motorForce;
-        _currentbreakForce = _isBreaking ? _breakForce : 0f;
-        ApplyBreaking();
+        float moveSpeed = _verticalInput *= _verticalInput > 0 ? _forwardSpeed : _reverseSpeed;
+        _carRb.AddForce(transform.forward * moveSpeed, ForceMode.Acceleration);
     }
 
-    private void ApplyBreaking()
+    private void ApplyBreaking(float moveSpeed)
     {
-        frontRightWheelCollider.brakeTorque = _currentbreakForce;
-        frontLeftWheelCollider.brakeTorque = _currentbreakForce;
-        rearLeftWheelCollider.brakeTorque = _currentbreakForce;
-        rearRightWheelCollider.brakeTorque = _currentbreakForce;
     }
 
     private void HandleSteering()
     {
-        _currentSteerAngle = _maxSteerAngle * _horizontalInput;
-        frontLeftWheelCollider.steerAngle = _currentSteerAngle;
-        frontRightWheelCollider.steerAngle = _currentSteerAngle;
+        float turnSpeed = _horizontalInput * _turningSpeed * Time.deltaTime * _carRb.velocity.magnitude;
+        if (_isMovingBackwards)
+        {
+            turnSpeed = -turnSpeed;
+        }
+        transform.Rotate(0, turnSpeed, 0, Space.World);
     }
 
     private void UpdateWheels()
     {
-        UpdateSingleWheel(frontLeftWheelCollider, frontLeftWheelTransform);
-        UpdateSingleWheel(frontRightWheelCollider, frontRightWheeTransform);
-        UpdateSingleWheel(rearRightWheelCollider, rearRightWheelTransform);
-        UpdateSingleWheel(rearLeftWheelCollider, rearLeftWheelTransform);
+        UpdateSingleWheel(frontLeftWheelTransform);
+        UpdateSingleWheel(frontRightWheeTransform);
+        UpdateSingleWheel(rearRightWheelTransform);
+        UpdateSingleWheel(rearLeftWheelTransform);
     }
 
-    private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)
+    private void UpdateSingleWheel(Transform wheelTransform)
     {
-        Vector3 pos;
-        Quaternion rot;
-        wheelCollider.GetWorldPose(out pos, out rot);
-        wheelTransform.rotation = rot;
-        wheelTransform.position = pos;
+        if (_isMovingBackwards)
+        {
+            wheelTransform.Rotate(-_carRb.velocity.magnitude, 0, 0);
+        }
+        else
+        {
+            wheelTransform.Rotate(_carRb.velocity.magnitude, 0, 0);
+        }
+    }
+
+    private void CheckIsMovingBackwards()
+    {
+        if (_carRb.angularVelocity.y > 0)
+        {
+            _isMovingBackwards = true;
+        }
+        else
+        {
+            _isMovingBackwards = false;
+        }
     }
 
 
@@ -151,13 +162,13 @@ public class CarController : MonoBehaviour
             if (item.SeatNumber == 1 && item.IsSeatOccupied)
             {
                 _isDrivable = true;
-                _carRb.drag = 0;
+                _carRb.isKinematic = false;
                 CarDashboardUI.SetActive(true);
             }
             else if (item.SeatNumber == 1 && !item.IsSeatOccupied)
             {
                 _isDrivable = false;
-                _carRb.drag = 10;
+                _carRb.isKinematic = true;
                 CarDashboardUI.SetActive(false);
             }
         }
