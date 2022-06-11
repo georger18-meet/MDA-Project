@@ -36,7 +36,6 @@ public class ActionsManager : MonoBehaviour
     // Triggered upon Clicking on the Patient
     public void OnPatientClicked()
     {
-        
         if (PlayerData.Instance.CurrentPatientTreating == null)
         {
             return;

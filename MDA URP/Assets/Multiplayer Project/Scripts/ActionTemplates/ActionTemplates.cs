@@ -17,12 +17,26 @@ public class ActionTemplates : MonoBehaviour
     #region Most Basic Tools
     public void OpenCloseDisplayWindow(GameObject window)
     {
-        if (window.activeInHierarchy)
-            window.SetActive(false);
-        else
-            window.SetActive(true);
+        // if (_photonView.IsMine)
+        // {
+            if (window.activeInHierarchy)
+                window.SetActive(false);
+            else
+                window.SetActive(true);
+        // }
 
         print($"Opend /Closed {window.name}");
+    }
+
+    public void CreateDestroyWindow(GameObject window)
+    {
+        // if (_photonView.IsMine)
+        // {
+            if (window.activeInHierarchy)
+                Instantiate(window);
+            else
+                Destroy(window);
+        // }
     }
 
     public void UpdateDisplayWindow(GameObject window, TextMeshProUGUI text, int newValue)
