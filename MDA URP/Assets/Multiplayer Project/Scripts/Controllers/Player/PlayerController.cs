@@ -336,6 +336,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.TryGetComponent(out Patient possiblePatient))
         {
             PlayerData.Instance.CurrentPatientTreating = possiblePatient;
+            UIManager.Instance.CurrentActionBarParent.SetActive(true);
         }
     }
 
@@ -345,6 +346,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.TryGetComponent(out Patient possiblePatient))
         {
             PlayerData.Instance.CurrentPatientTreating = null;
+            UIManager.Instance.CurrentActionBarParent.SetActive(false);
         }
     }
     #endregion

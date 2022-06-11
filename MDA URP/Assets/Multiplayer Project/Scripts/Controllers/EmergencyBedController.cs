@@ -5,247 +5,250 @@ using TMPro;
 
 public class EmergencyBedController : MonoBehaviour
 {
-    //public bool TakeOutBed;
-    //public bool Folded;
-    //public bool HasPatient;
-    //public GameObject Patient;
-    //public GameObject Player;
-    //public GameObject GurneyUnFolded, GurneyFolded, GurneyGFX;
-    //public GameObject InteractionsBar;
-    //public Transform PlayerHoldPos;
-    //public Transform PatientPosOnBed;
-    //public Transform PatientPosOffBed;
-    //public Transform GurneyPosInCar, GurneyPosOutCar;
-    //public TextMeshProUGUI _TakeReturnText, FollowUnfollowText, PlaceRemovePatientText;
-    //
-    //private bool _isFollowingPlayer;
-    ////private bool _isFacingTrolley = false;
-    //private bool _inCar;
-    //
-    //// Start is called before the first frame update
-    //void Start()
-    //{
-    //    InteractionsBar.SetActive(false);
-    //}
-    //
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    AlwaysChecking();
-    //}
-    //
-    //private void AlwaysChecking()
-    //{
-    //    // In Car
-    //    if (_inCar)
-    //    {
-    //        GurneyGFX.GetComponent<BoxCollider>().isTrigger = true;
-    //        Folded = true;
-    //    }
-    //    else if (!_inCar)
-    //    {
-    //        GurneyGFX.GetComponent<BoxCollider>().isTrigger = false;
-    //        Folded = false;
-    //    }
-    //
-    //    // Fold
-    //    FoldUnfold();
-    //
-    //    // Follow Player
-    //    FollowPlayer();
-    //
-    //    // Take Out Bed
-    //    TakeOutReturnBed();
-    //}
-    //
-    //public void ShowInteractionsToggle()
-    //{
-    //    if (InteractionsBar.activeInHierarchy)
-    //    {
-    //        InteractionsBar.SetActive(false);
-    //    }
-    //    else if (!InteractionsBar.activeInHierarchy)
-    //    {
-    //        InteractionsBar.SetActive(true);
-    //    }
-    //}
-    //
-    //public void FoldUnfoldToggle()
-    //{
-    //    if (Folded)
-    //    {
-    //        Folded = false;
-    //    }
-    //    else if (!Folded)
-    //    {
-    //        Folded = true;
-    //    }
-    //}
-    //
-    //private void FoldUnfold()
-    //{
-    //    if (Folded)
-    //    {
-    //        GurneyUnFolded.SetActive(false);
-    //        GurneyFolded.SetActive(true);
-    //    }
-    //    else if (!Folded)
-    //    {
-    //        GurneyUnFolded.SetActive(true);
-    //        GurneyFolded.SetActive(false);
-    //    }
-    //}
-    //
-    //public void FollowPlayerToggle()
-    //{
-    //    if (Player != null && TakeOutBed)
-    //    {
-    //        if (_isFollowingPlayer)
-    //        {
-    //            _isFollowingPlayer = false;
-    //        }
-    //        else if (!_isFollowingPlayer)
-    //        {
-    //            _isFollowingPlayer = true;
-    //        }
-    //        InteractionsBar.SetActive(false);
-    //    }
-    //}
-    //
-    //private void FollowPlayer()
-    //{
-    //    if (Player != null)
-    //    {
-    //        if (_isFollowingPlayer)
-    //        {
-    //            Player.transform.position = PlayerHoldPos.position;
-    //            //if (!_isFacingTrolley)
-    //            //{
-    //            //var lookPos = transform.position - Player.transform.position;
-    //            //lookPos.y = 0f;
-    //            //var rotation = Quaternion.LookRotation(lookPos);
-    //            //Player.transform.rotation = Quaternion.Slerp(Player.transform.rotation, rotation, Time.deltaTime * 10f);
-    //            //print($"{Mathf.Abs((Player.transform.rotation.y * Mathf.Rad2Deg) - (rotation.y * Mathf.Rad2Deg))}");
-    //            //if (Mathf.Abs((Player.transform.rotation.y * Mathf.Rad2Deg) - (rotation.y * Mathf.Rad2Deg)) <= 2)
-    //            //{
-    //            //    _isFacingTrolley = true;
-    //            //    gameObject.transform.SetParent(Player.transform);
-    //            //    FollowUnfollowText.text = "Detach \n Bed";
-    //            //}
-    //            //}
-    //            Player.transform.LookAt(transform.position);
-    //            gameObject.transform.SetParent(Player.transform);
-    //            FollowUnfollowText.text = "Detach \n Bed";
-    //        }
-    //        else if (!_isFollowingPlayer)
-    //        {
-    //            //_isFacingTrolley = false;
-    //            gameObject.transform.SetParent(null);
-    //            FollowUnfollowText.text = "Attach \n Bed";
-    //        }
-    //    }
-    //}
-    //
-    //public void PutRemovePatient()
-    //{
-    //    if (Patient != null && !HasPatient)
-    //    {
-    //        HasPatient = true;
-    //        Patient.GetComponent<BoxCollider>().enabled = false;
-    //        Patient.transform.position = PatientPosOnBed.position;
-    //        Patient.transform.rotation = PatientPosOnBed.rotation;
-    //        Patient.transform.SetParent(this.transform);
-    //        PlaceRemovePatientText.text = "Drop \n Patient";
-    //        InteractionsBar.SetActive(false);
-    //    }
-    //    else if (Patient != null && HasPatient && !_inCar)
-    //    {
-    //        HasPatient = false;
-    //        Patient.GetComponent<BoxCollider>().enabled = true;
-    //        Patient.transform.position = PatientPosOffBed.position;
-    //        Patient.transform.SetParent(null);
-    //        PlaceRemovePatientText.text = "Place \n Patient";
-    //        InteractionsBar.SetActive(false);
-    //    }
-    //}
-    //
-    //public void TakeOutReturnBedToggle()
-    //{
-    //    if (_inCar && !TakeOutBed)
-    //    {
-    //        TakeOutBed = true;
-    //        InteractionsBar.SetActive(true);
-    //        transform.position = GurneyPosOutCar.position;
-    //        transform.rotation = GurneyPosOutCar.rotation;
-    //        FollowPlayerToggle();
-    //    }
-    //    else if (_inCar && TakeOutBed)
-    //    {
-    //        TakeOutBed = false;
-    //        InteractionsBar.SetActive(false);
-    //    }
-    //}
-    //
-    //private void TakeOutReturnBed()
-    //{
-    //    if (_inCar && !TakeOutBed)
-    //    {
-    //        _isFollowingPlayer = false;
-    //        transform.position = GurneyPosInCar.position;
-    //        transform.rotation = GurneyPosInCar.rotation;
-    //        transform.SetParent(GurneyPosInCar);
-    //        _TakeReturnText.text = "Take Out";
-    //    }
-    //    else if (_inCar && TakeOutBed)
-    //    {
-    //        _TakeReturnText.text = "Return";
-    //    }
-    //}
-    //
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        Player = other.gameObject;
-    //    }
-    //    if (other.CompareTag("Patient"))
-    //    {
-    //        if (!HasPatient)
-    //        {
-    //            Patient = other.gameObject;
-    //        }
-    //    }
-    //    if (other.CompareTag("Car"))
-    //    {
-    //        _inCar = true;
-    //    }
-    //    if (other.CompareTag("Evac"))
-    //    {
-    //        Patient.GetComponent<BoxCollider>().enabled = true;
-    //    }
-    //}
-    //
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        Player = null;
-    //        //InteractionsBar.SetActive(false);
-    //    }
-    //    if (other.CompareTag("Patient"))
-    //    {
-    //        if (!HasPatient)
-    //        {
-    //            Patient = null;
-    //        }
-    //    }
-    //    if (other.CompareTag("Car"))
-    //    {
-    //        _inCar = false;
-    //    }
-    //    if (other.CompareTag("Evac"))
-    //    {
-    //        Patient.GetComponent<BoxCollider>().enabled = false;
-    //    }
-    //}
+    [Header("Player & Patient")]
+    [SerializeField] private GameObject _patient;
+    [SerializeField] private GameObject _player;
+
+    [Header("Emergency Bed States")]
+    [SerializeField] private GameObject _emergencyBedOpen;
+    [SerializeField] private GameObject _emergencyBedClosed, _emergencyBedModel;
+
+    [Header("UI")]
+    [SerializeField] private GameObject _emergencyBedUI;
+    [SerializeField] private TextMeshProUGUI _takeReturnText;
+    [SerializeField] private TextMeshProUGUI _followUnfollowText, _placeRemovePatientText;
+
+    [Header("Positions")]
+    [SerializeField] private Transform _playerHoldPos;
+    [SerializeField] private Transform _patientPosOnBed, _patientPosOffBed, _emergencyBedPositionInsideVehicle, _emergencyBedPositionOutsideVehicle;
+
+    [Header("Booleans")]
+    [SerializeField] private bool _takeOutBed;
+    [SerializeField] private bool _isBedClosed, _isPatientOnBed, _isFollowingPlayer, _inCar;
+    
+    void Start()
+    {
+        _emergencyBedUI.SetActive(false);
+    }
+    
+    void Update()
+    {
+        AlwaysChecking();
+    }
+    
+    private void AlwaysChecking()
+    {
+        // In Car
+        if (_inCar)
+        {
+            _emergencyBedModel.GetComponent<BoxCollider>().isTrigger = true;
+            _isBedClosed = true;
+        }
+        else if (!_inCar)
+        {
+            _emergencyBedModel.GetComponent<BoxCollider>().isTrigger = false;
+            _isBedClosed = false;
+        }
+    
+        // Fold
+        FoldUnfold();
+    
+        // Follow Player
+        FollowPlayer();
+    
+        // Take Out Bed
+        TakeOutReturnBed();
+    }
+    
+    public void ShowInteractionsToggle()
+    {
+        if (_emergencyBedUI.activeInHierarchy)
+        {
+            _emergencyBedUI.SetActive(false);
+        }
+        else
+        {
+            _emergencyBedUI.SetActive(true);
+        }
+    }
+    
+    public void FoldUnfoldToggle()
+    {
+        if (_isBedClosed)
+        {
+            _isBedClosed = false;
+        }
+        else if (!_isBedClosed)
+        {
+            _isBedClosed = true;
+        }
+    }
+    
+    private void FoldUnfold()
+    {
+        if (_isBedClosed)
+        {
+            _emergencyBedOpen.SetActive(false);
+            _emergencyBedClosed.SetActive(true);
+        }
+        else if (!_isBedClosed)
+        {
+            _emergencyBedOpen.SetActive(true);
+            _emergencyBedClosed.SetActive(false);
+        }
+    }
+    
+    public void FollowPlayerToggle()
+    {
+        if (_player != null && _takeOutBed)
+        {
+            if (_isFollowingPlayer)
+            {
+                _isFollowingPlayer = false;
+            }
+            else if (!_isFollowingPlayer)
+            {
+                _isFollowingPlayer = true;
+            }
+            _emergencyBedUI.SetActive(false);
+        }
+    }
+    
+    private void FollowPlayer()
+    {
+        if (_player != null)
+        {
+            if (_isFollowingPlayer)
+            {
+                _player.transform.position = _playerHoldPos.position;
+                //if (!_isFacingTrolley)
+                //{
+                //var lookPos = transform.position - Player.transform.position;
+                //lookPos.y = 0f;
+                //var rotation = Quaternion.LookRotation(lookPos);
+                //Player.transform.rotation = Quaternion.Slerp(Player.transform.rotation, rotation, Time.deltaTime * 10f);
+                //print($"{Mathf.Abs((Player.transform.rotation.y * Mathf.Rad2Deg) - (rotation.y * Mathf.Rad2Deg))}");
+                //if (Mathf.Abs((Player.transform.rotation.y * Mathf.Rad2Deg) - (rotation.y * Mathf.Rad2Deg)) <= 2)
+                //{
+                //    _isFacingTrolley = true;
+                //    gameObject.transform.SetParent(Player.transform);
+                //    FollowUnfollowText.text = "Detach \n Bed";
+                //}
+                //}
+                _player.transform.LookAt(transform.position);
+                gameObject.transform.SetParent(_player.transform);
+                _followUnfollowText.text = "Detach \n Bed";
+            }
+            else if (!_isFollowingPlayer)
+            {
+                //_isFacingTrolley = false;
+                gameObject.transform.SetParent(null);
+                _followUnfollowText.text = "Attach \n Bed";
+            }
+        }
+    }
+    
+    public void PutRemovePatient()
+    {
+        if (_patient != null && !_isPatientOnBed)
+        {
+            _isPatientOnBed = true;
+            _patient.GetComponent<BoxCollider>().enabled = false;
+            _patient.transform.SetPositionAndRotation(_patientPosOnBed.position, _patientPosOnBed.rotation);
+            _patient.transform.SetParent(this.transform);
+            _placeRemovePatientText.text = "Drop \n Patient";
+            _emergencyBedUI.SetActive(false);
+        }
+        else if (_patient != null && _isPatientOnBed && !_inCar)
+        {
+            _isPatientOnBed = false;
+            _patient.GetComponent<BoxCollider>().enabled = true;
+            _patient.transform.position = _patientPosOffBed.position;
+            _patient.transform.SetParent(null);
+            _placeRemovePatientText.text = "Place \n Patient";
+            _emergencyBedUI.SetActive(false);
+        }
+    }
+    
+    public void TakeOutReturnBedToggle()
+    {
+        if (_inCar && !_takeOutBed)
+        {
+            _takeOutBed = true;
+            _emergencyBedUI.SetActive(true);
+            transform.SetPositionAndRotation(_emergencyBedPositionOutsideVehicle.position, _emergencyBedPositionOutsideVehicle.rotation);
+            FollowPlayerToggle();
+        }
+        else if (_inCar && _takeOutBed)
+        {
+            _takeOutBed = false;
+            _emergencyBedUI.SetActive(false);
+        }
+    }
+    
+    private void TakeOutReturnBed()
+    {
+        if (_inCar && !_takeOutBed)
+        {
+            _isFollowingPlayer = false;
+            transform.position = _emergencyBedPositionInsideVehicle.position;
+            transform.rotation = _emergencyBedPositionInsideVehicle.rotation;
+            transform.SetParent(_emergencyBedPositionInsideVehicle);
+            _takeReturnText.text = "Take Out";
+        }
+        else if (_inCar && _takeOutBed)
+        {
+            _takeReturnText.text = "Return";
+        }
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _player = other.gameObject;
+        }
+
+        if (other.CompareTag("Patient"))
+        {
+            if (!_isPatientOnBed)
+            {
+                _patient = other.gameObject;
+            }
+        }
+
+        if (other.CompareTag("Car"))
+        {
+            _inCar = true;
+        }
+
+        if (other.CompareTag("Evac"))
+        {
+            _patient.GetComponent<BoxCollider>().enabled = true;
+        }
+    }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _player = null;
+            //InteractionsBar.SetActive(false);
+        }
+        if (other.CompareTag("Patient"))
+        {
+            if (!_isPatientOnBed)
+            {
+                _patient = null;
+            }
+        }
+        if (other.CompareTag("Car"))
+        {
+            _inCar = false;
+        }
+        if (other.CompareTag("Evac"))
+        {
+            _patient.GetComponent<BoxCollider>().enabled = false;
+        }
+    }
 }

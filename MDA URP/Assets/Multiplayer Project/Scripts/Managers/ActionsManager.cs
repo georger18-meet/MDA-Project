@@ -13,7 +13,6 @@ public class ActionsManager : MonoBehaviour
 
     #region Data References
     [Header("Data & Scripts")]
-    [SerializeField] private UIManager _uIManager;
     
     public List<Patient> AllPatients;
 
@@ -49,12 +48,12 @@ public class ActionsManager : MonoBehaviour
 
         if (!PlayerData.Instance.CurrentPatientTreating.IsPlayerJoined(PlayerData.Instance))
         {
-            _uIManager.JoinPatientPopUp.SetActive(true);
+            UIManager.Instance.JoinPatientPopUp.SetActive(true);
         }
         else
         {
             SetupPatientInfoDisplay();
-            _uIManager.PatientMenuParent.SetActive(true);
+            UIManager.Instance.PatientMenuParent.SetActive(true);
         }
     }
 
@@ -66,28 +65,28 @@ public class ActionsManager : MonoBehaviour
 
             SetupPatientInfoDisplay();
 
-            _uIManager.JoinPatientPopUp.SetActive(false);
-            _uIManager.PatientMenuParent.SetActive(true);
-            _uIManager.PatientInfoParent.SetActive(false);
+            UIManager.Instance.JoinPatientPopUp.SetActive(false);
+            UIManager.Instance.PatientMenuParent.SetActive(true);
+            UIManager.Instance.PatientInfoParent.SetActive(false);
         }
         else
         {
-            _uIManager.JoinPatientPopUp.SetActive(false);
+            UIManager.Instance.JoinPatientPopUp.SetActive(false);
         }
     }
 
     private void SetupPatientInfoDisplay()
     {
-        _uIManager.SureName.text = _lastClickedPatientData.SureName;
-        _uIManager.LastName.text = _lastClickedPatientData.LastName;
-        _uIManager.Gender.text = _lastClickedPatientData.Gender;
-        _uIManager.Adress.text = _lastClickedPatientData.AddressLocation;
-        _uIManager.InsuranceCompany.text = _lastClickedPatientData.MedicalCompany;
-        _uIManager.Complaint.text = _lastClickedPatientData.Complaint;
+        UIManager.Instance.SureName.text = _lastClickedPatientData.SureName;
+        UIManager.Instance.LastName.text = _lastClickedPatientData.LastName;
+        UIManager.Instance.Gender.text = _lastClickedPatientData.Gender;
+        UIManager.Instance.Adress.text = _lastClickedPatientData.AddressLocation;
+        UIManager.Instance.InsuranceCompany.text = _lastClickedPatientData.MedicalCompany;
+        UIManager.Instance.Complaint.text = _lastClickedPatientData.Complaint;
 
-        _uIManager.Age.text = _lastClickedPatientData.Age.ToString();
-        _uIManager.Id.text = _lastClickedPatientData.Id.ToString();
-        _uIManager.PhoneNumber.text = _lastClickedPatientData.PhoneNumber.ToString();
+        UIManager.Instance.Age.text = _lastClickedPatientData.Age.ToString();
+        UIManager.Instance.Id.text = _lastClickedPatientData.Id.ToString();
+        UIManager.Instance.PhoneNumber.text = _lastClickedPatientData.PhoneNumber.ToString();
     }
 
     public void LeavePatient()
@@ -96,7 +95,7 @@ public class ActionsManager : MonoBehaviour
 
         // if (_photonView.isMine)
         // {
-            _uIManager.CloseAllPatientWindows();
+        UIManager.Instance.CloseAllPatientWindows();
             PlayerData.Instance.CurrentPatientTreating.TreatingUsers.Remove(PlayerData.Instance);
             Debug.Log("Left Patient Succesfully");
         // }

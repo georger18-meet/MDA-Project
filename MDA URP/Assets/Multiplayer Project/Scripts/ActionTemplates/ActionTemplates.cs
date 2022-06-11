@@ -17,15 +17,22 @@ public class ActionTemplates : MonoBehaviour
     #region Most Basic Tools
     public void OpenCloseDisplayWindow(GameObject window)
     {
+        Debug.Log($"Attempting to Open/Close {window.name}");
         // if (_photonView.IsMine)
         // {
             if (window.activeInHierarchy)
+            {
                 window.SetActive(false);
+                Debug.Log($"Closed {window.name}");
+            }
             else
+            {
                 window.SetActive(true);
+                Debug.Log($"Opened {window.name}");
+            }
         // }
 
-        print($"Opend /Closed {window.name}");
+        
     }
 
     public void CreateDestroyWindow(GameObject window)
@@ -116,14 +123,6 @@ public class ActionTemplates : MonoBehaviour
     {
         _docLog.LogThisText(textToLog);
     } 
-
-    //public bool IsPlayerJoined(ActionsManager actionsManager)
-    //{
-    //    if (actionsManager.CurrentPatientScript.IsPlayerJoined(actionsManager.PlayerData))
-    //        return true;
-    //    else
-    //        return false;
-    //}
     #endregion
 
     private void Awake()

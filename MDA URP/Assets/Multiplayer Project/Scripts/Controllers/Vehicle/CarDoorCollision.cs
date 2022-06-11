@@ -25,20 +25,34 @@ public class CarDoorCollision : MonoBehaviour
         EnterExitVehicle();
     }
 
-    public void OpenCloseDoorToggle()
+    public void OpenCloseDoorToggle(int number)
     {
         if (IsDoorOpen)
         {
+            UIManager.Instance.CurrentActionBarParent = number switch
+            {
+                0 => UIManager.Instance.AmbulanceActionBarParent,
+                1 => UIManager.Instance.NatanActionBarParent,
+                _ => UIManager.Instance.AmbulanceActionBarParent,
+            };
+
             IsDoorOpen = false;
             _doorAnimator.SetBool("IsDoorOpen", false);
         }
         else if (!IsDoorOpen)
         {
+            UIManager.Instance.CurrentActionBarParent = number switch
+            {
+                0 => UIManager.Instance.AmbulanceActionBarParent,
+                1 => UIManager.Instance.NatanActionBarParent,
+                _ => UIManager.Instance.AmbulanceActionBarParent,
+            };
+
             IsDoorOpen = true;
             _doorAnimator.SetBool("IsDoorOpen", true);
             if (IsSeatOccupied)
             {
-                EnterExitToggle();
+                EnterExitToggle(number);
             }
         }
     }
@@ -54,14 +68,14 @@ public class CarDoorCollision : MonoBehaviour
         }
     }
 
-    public void EnterExitToggle()
+    public void EnterExitToggle(int number)
     {
         if (IsDoorOpen && CollidingPlayer != null)
         {
             if (!IsSeatOccupied)
             {
                 PlayerController playerController = CollidingPlayer.GetComponent<PlayerController>();
-                OpenCloseDoorToggle();
+                OpenCloseDoorToggle(number);
                 IsSeatOccupied = true;
                 // use player driving state
             }

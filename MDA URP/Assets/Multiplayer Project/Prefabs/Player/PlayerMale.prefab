@@ -365,7 +365,7 @@ MonoBehaviour:
   _playerCamera: {fileID: 8822803001239547996}
   _firstPersonCameraTransform: {fileID: 8822803000982418763}
   _thirdPersonCameraTransform: {fileID: 8822803000880888004}
-  _playerAnimator: {fileID: 0}
+  _playerAnimator: {fileID: 7292725682840954819}
   _characterController: {fileID: 8822803002174255574}
   _mouseSensitivity: {x: 60, y: 40}
   _turnSpeed: 90

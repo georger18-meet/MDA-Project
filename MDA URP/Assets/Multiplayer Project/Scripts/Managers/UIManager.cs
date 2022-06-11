@@ -6,10 +6,12 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance;
+
     #region Player UI
     [Header("Player UI Parents")]
-    public GameObject AmbulanceActionBarParent;
-    public GameObject NatanActionBarParent, BasicActionMenuParent;
+    public GameObject CurrentActionBarParent;
+    public GameObject AmbulanceActionBarParent, NatanActionBarParent, BasicActionMenuParent;
     #endregion
 
     #region Patient UI 
@@ -21,6 +23,11 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI SureName;
     public TextMeshProUGUI LastName, Id, Age, Gender, PhoneNumber, InsuranceCompany, Adress, Complaint; /*IncidentAdress*/
     #endregion
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
