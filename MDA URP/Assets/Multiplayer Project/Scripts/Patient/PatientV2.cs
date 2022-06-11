@@ -7,15 +7,12 @@ public class PatientV2 : MonoBehaviour
 {
     #region Script References
     [Header("Data & Scripts")]
-    private ActionsManager _actionsManager;
-    private ActionsManagerV2 _actionsManager2;
     public PatientData PatientData;
     public List<ActionSequence> ActionSequences;
     #endregion
 
     #region Material References
-    [SerializeField] private Material InitialShirt, InitialPants;
-    [SerializeField] private Renderer Shirt, Pants;
+    public Renderer PatientRenderer;
     #endregion
 
     #region Public fields
@@ -35,14 +32,12 @@ public class PatientV2 : MonoBehaviour
     private void Start()
     {
         ActionsManagerV2.Instance.AllPatients.Add(this);
-        PatientData.PatientShirtMaterial = InitialShirt;
-        PatientData.PatientPantsMaterial = InitialPants;
+        PatientRenderer.material = PatientData.FullyClothedMaterial;
     }
 
     private void Update()
     {
-        Shirt.material = PatientData.PatientShirtMaterial;
-        Pants.material = PatientData.PatientPantsMaterial;
+
     }
 
 

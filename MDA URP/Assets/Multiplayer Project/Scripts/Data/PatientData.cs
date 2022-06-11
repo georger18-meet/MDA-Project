@@ -21,8 +21,8 @@ public class PatientData : ScriptableObject
 
     // Appearance
     [Header("Appearance")]
-    public Material PatientShirtMaterial;
-    public Material PatientPantsMaterial;
+    public Material FullyClothedMaterial;
+    public Material ShirtOnlyMaterial, PantsOnlyMaterial, UnderwearOnlyMaterial;
 
     // Catch Measurement Name
     private List<int> measurementName;

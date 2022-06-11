@@ -29,18 +29,6 @@ public class Patient : MonoBehaviour
     [SerializeField] public List<int> OperatingCrews = new List<int>();
     #endregion
 
-    private void Start()
-    {
-        PatientData.PatientShirtMaterial = InitialShirt;
-        PatientData.PatientPantsMaterial = InitialPants;
-    }
-
-    private void Update()
-    {
-        Shirt.material = PatientData.PatientShirtMaterial;
-        Pants.material = PatientData.PatientPantsMaterial;
-    }
-
     public void DisplayDictionary()
     {
         OperatingUsers.Clear();
