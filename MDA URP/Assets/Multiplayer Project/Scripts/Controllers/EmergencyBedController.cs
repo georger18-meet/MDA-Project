@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class GurneyController : MonoBehaviour
+public class EmergencyBedController : MonoBehaviour
 {
     //public bool TakeOutBed;
     //public bool Folded;
