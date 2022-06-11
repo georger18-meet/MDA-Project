@@ -60,7 +60,7 @@ public class CarDoorCollision : MonoBehaviour
         {
             if (!IsSeatOccupied)
             {
-                PlayerControllerV2 playerController = CollidingPlayer.GetComponent<PlayerControllerV2>();
+                PlayerController playerController = CollidingPlayer.GetComponent<PlayerController>();
                 OpenCloseDoorToggle();
                 IsSeatOccupied = true;
                 // use player driving state

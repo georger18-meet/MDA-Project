@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 
-public class ActionsManagerV2 : MonoBehaviour
+public class ActionsManager : MonoBehaviour
 {
-    public static ActionsManagerV2 Instance;
+    public static ActionsManager Instance;
 
     public List<Measurements> MeasurementList;
 
@@ -15,9 +15,9 @@ public class ActionsManagerV2 : MonoBehaviour
     [Header("Data & Scripts")]
     [SerializeField] private UIManager _uIManager;
     
-    public List<PatientV2> AllPatients;
+    public List<Patient> AllPatients;
 
-    private PatientV2 _lastClickedPatient;
+    private Patient _lastClickedPatient;
     private PatientData _lastClickedPatientData;
     #endregion
 

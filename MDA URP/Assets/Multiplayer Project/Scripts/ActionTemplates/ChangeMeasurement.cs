@@ -6,7 +6,7 @@ using UnityEngine;
 public class ChangeMeasurement : MonoBehaviour
 {
     [Header("Scripts")]
-    [SerializeField] private ActionsManagerV2 _actionManager;
+    [SerializeField] private ActionsManager _actionManager;
     [SerializeField] private ActionTemplates _actionTemplates;
 
     [Header("Component's Data")]

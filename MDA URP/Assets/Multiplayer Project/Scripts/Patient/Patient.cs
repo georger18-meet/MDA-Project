@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatientV2 : MonoBehaviour
+public class Patient : MonoBehaviour
 {
     #region Script References
     [Header("Data & Scripts")]
@@ -31,7 +31,7 @@ public class PatientV2 : MonoBehaviour
 
     private void Start()
     {
-        ActionsManagerV2.Instance.AllPatients.Add(this);
+        ActionsManager.Instance.AllPatients.Add(this);
         PatientRenderer.material = PatientData.FullyClothedMaterial;
     }
 
@@ -125,7 +125,7 @@ public class PatientV2 : MonoBehaviour
 
     public void OnInteracted()
     {
-        ActionsManagerV2.Instance.OnPatientClicked();
+        ActionsManager.Instance.OnPatientClicked();
     }
 
     //public void SetOperatingCrewCheck(GameObject patient)

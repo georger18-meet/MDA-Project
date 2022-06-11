@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Roles
+{
+    CFR, Medic, SeniorMedic, Paramedic, Doctor
+}
+
 public enum Measurements
 {
    BPM, PainLevel, RespiratoryRate, CincinnatiLevel,

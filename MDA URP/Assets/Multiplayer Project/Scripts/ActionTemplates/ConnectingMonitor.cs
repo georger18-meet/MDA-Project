@@ -5,7 +5,7 @@ using UnityEngine;
 public class ConnectingMonitor : MonoBehaviour
 {
     [Header("Scripts")]
-    [SerializeField] private ActionsManagerV2 _actionManager;
+    [SerializeField] private ActionsManager _actionManager;
     [SerializeField] private ActionTemplates _actionTemplates;
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _monitor;

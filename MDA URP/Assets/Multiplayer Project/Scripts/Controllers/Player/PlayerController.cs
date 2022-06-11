@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControllerV2 : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     // player controller
     [Header("Camera")]
@@ -333,7 +333,7 @@ public class PlayerControllerV2 : MonoBehaviour
     #region Collisions & Triggers
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out PatientV2 possiblePatient))
+        if (other.gameObject.TryGetComponent(out Patient possiblePatient))
         {
             PlayerData.Instance.CurrentPatientTreating = possiblePatient;
         }
@@ -342,7 +342,7 @@ public class PlayerControllerV2 : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         
-        if (other.gameObject.TryGetComponent(out PatientV2 possiblePatient))
+        if (other.gameObject.TryGetComponent(out Patient possiblePatient))
         {
             PlayerData.Instance.CurrentPatientTreating = null;
         }
