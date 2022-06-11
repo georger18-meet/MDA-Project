@@ -77,10 +77,10 @@ MonoBehaviour:
   EventToCall:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 499556919957999390}
+      - m_Target: {fileID: 5145118015697076167}
         m_TargetAssemblyTypeName: CarDoorCollision, Assembly-CSharp
         m_MethodName: EnterExitToggle
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -312,9 +312,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsDoorOpen: 0
   IsSeatOccupied: 0
-  SeatNumber: 0
+  SeatNumber: 3
   CollidingPlayer: {fileID: 0}
-  SeatPosition: {fileID: 0}
+  SeatPosition: {fileID: 1679896010398503200}
 --- !u!95 &5907126640177437746
 Animator:
   serializedVersion: 3
@@ -574,7 +574,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7619552833631950374}
   m_Layer: 0
-  m_Name: DoorHinge (1)
+  m_Name: DoorHinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -820,9 +820,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsDoorOpen: 0
   IsSeatOccupied: 0
-  SeatNumber: 0
+  SeatNumber: 1
   CollidingPlayer: {fileID: 0}
-  SeatPosition: {fileID: 0}
+  SeatPosition: {fileID: 2007004135531317393}
 --- !u!95 &1155267507327769118
 Animator:
   serializedVersion: 3
@@ -1454,7 +1454,7 @@ MonoBehaviour:
       - m_Target: {fileID: 5145118015697076167}
         m_TargetAssemblyTypeName: CarDoorCollision, Assembly-CSharp
         m_MethodName: EnterExitToggle
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1770,7 +1770,7 @@ MonoBehaviour:
       - m_Target: {fileID: 5145118015697076167}
         m_TargetAssemblyTypeName: CarDoorCollision, Assembly-CSharp
         m_MethodName: OpenCloseDoorToggle
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1856,10 +1856,10 @@ MonoBehaviour:
   EventToCall:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 961867702671895156}
+      - m_Target: {fileID: 5145118015697076167}
         m_TargetAssemblyTypeName: CarDoorCollision, Assembly-CSharp
         m_MethodName: EnterExitToggle
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2509,10 +2509,10 @@ MonoBehaviour:
   EventToCall:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2354718780450016062}
+      - m_Target: {fileID: 5145118015697076167}
         m_TargetAssemblyTypeName: CarDoorCollision, Assembly-CSharp
         m_MethodName: OpenCloseDoorToggle
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2812,10 +2812,10 @@ MonoBehaviour:
   EventToCall:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 961867702671895156}
+      - m_Target: {fileID: 5145118015697076167}
         m_TargetAssemblyTypeName: CarDoorCollision, Assembly-CSharp
         m_MethodName: OpenCloseDoorToggle
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3033,9 +3033,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsDoorOpen: 0
   IsSeatOccupied: 0
-  SeatNumber: 0
+  SeatNumber: 2
   CollidingPlayer: {fileID: 0}
-  SeatPosition: {fileID: 0}
+  SeatPosition: {fileID: 7127847515440957280}
 --- !u!95 &5061715346753455086
 Animator:
   serializedVersion: 3
@@ -3358,10 +3358,10 @@ MonoBehaviour:
   EventToCall:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2354718780450016062}
+      - m_Target: {fileID: 5145118015697076167}
         m_TargetAssemblyTypeName: CarDoorCollision, Assembly-CSharp
         m_MethodName: EnterExitToggle
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3533,7 +3533,7 @@ MonoBehaviour:
       - m_Target: {fileID: 5145118015697076167}
         m_TargetAssemblyTypeName: CarDoorCollision, Assembly-CSharp
         m_MethodName: OpenCloseDoorToggle
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3752,10 +3752,10 @@ MonoBehaviour:
   EventToCall:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 499556919957999390}
+      - m_Target: {fileID: 5145118015697076167}
         m_TargetAssemblyTypeName: CarDoorCollision, Assembly-CSharp
         m_MethodName: OpenCloseDoorToggle
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3895,6 +3895,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2645373845933056540}
     m_Modifications:
+    - target: {fileID: 66790119364669929, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
+      propertyPath: m_Name
+      value: MD_EmergencyBedClosed
+      objectReference: {fileID: 0}
     - target: {fileID: 1291643038897957687, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -3943,10 +3947,88 @@ PrefabInstance:
       propertyPath: m_Name
       value: EmergencyBed
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1291643039188436932, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
+      propertyPath: EventToCall.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1291643039846222323, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
+      propertyPath: EventToCall.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2514615090674820700, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
+      propertyPath: m_Name
+      value: MD_EmergencyBedOpen
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908853869985648674, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
+      propertyPath: EventToCall.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1291643038897957686, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
 --- !u!4 &8862923347476754586 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1291643038897957687, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
   m_PrefabInstance: {fileID: 7715716554922417069}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &8862923348657959376 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1291643039861025405, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
+  m_PrefabInstance: {fileID: 7715716554922417069}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8862923348743567371 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1291643039644672934, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
+  m_PrefabInstance: {fileID: 7715716554922417069}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2329538710267339093 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5424467342941879032, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
+  m_PrefabInstance: {fileID: 7715716554922417069}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7781923364208962116 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 66790119364669929, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
+  m_PrefabInstance: {fileID: 7715716554922417069}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5329462918440435185 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2514615090674820700, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
+  m_PrefabInstance: {fileID: 7715716554922417069}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8862923347476754581 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1291643038897957688, guid: dce00df234fc8644994f6f10fbc834aa, type: 3}
+  m_PrefabInstance: {fileID: 7715716554922417069}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1643585237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8862923347476754581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 277d8103a323cd244ac13df20a936c23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _patient: {fileID: 0}
+  _player: {fileID: 0}
+  _emergencyBedOpen: {fileID: 5329462918440435185}
+  _emergencyBedClosed: {fileID: 7781923364208962116}
+  _emergencyBed: {fileID: 8862923347476754581}
+  _emergencyBedUI: {fileID: 0}
+  _takeReturnText: {fileID: 0}
+  _followUnfollowText: {fileID: 0}
+  _placeRemovePatientText: {fileID: 0}
+  _playerHoldPos: {fileID: 2329538710267339093}
+  _patientPosOnBed: {fileID: 8862923348743567371}
+  _patientPosOffBed: {fileID: 8862923348657959376}
+  _emergencyBedPositionInsideVehicle: {fileID: 2645373845933056540}
+  _emergencyBedPositionOutsideVehicle: {fileID: 2439254868137273723}
+  _takeOutBed: 0
+  _isBedClosed: 0
+  _isPatientOnBed: 0
+  _isFollowingPlayer: 0
+  _inCar: 0

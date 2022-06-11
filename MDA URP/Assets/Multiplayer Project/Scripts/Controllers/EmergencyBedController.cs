@@ -11,7 +11,7 @@ public class EmergencyBedController : MonoBehaviour
 
     [Header("Emergency Bed States")]
     [SerializeField] private GameObject _emergencyBedOpen;
-    [SerializeField] private GameObject _emergencyBedClosed, _emergencyBedModel;
+    [SerializeField] private GameObject _emergencyBedClosed, _emergencyBed;
 
     [Header("UI")]
     [SerializeField] private GameObject _emergencyBedUI;
@@ -41,12 +41,12 @@ public class EmergencyBedController : MonoBehaviour
         // In Car
         if (_inCar)
         {
-            _emergencyBedModel.GetComponent<BoxCollider>().isTrigger = true;
+            _emergencyBed.GetComponent<BoxCollider>().isTrigger = true;
             _isBedClosed = true;
         }
         else if (!_inCar)
         {
-            _emergencyBedModel.GetComponent<BoxCollider>().isTrigger = false;
+            _emergencyBed.GetComponent<BoxCollider>().isTrigger = false;
             _isBedClosed = false;
         }
     

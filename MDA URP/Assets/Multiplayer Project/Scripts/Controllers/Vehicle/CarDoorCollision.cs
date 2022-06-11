@@ -12,13 +12,12 @@ public class CarDoorCollision : MonoBehaviour
     public Transform SeatPosition;
 
     private Animator _doorAnimator;
-    // Start is called before the first frame update
+
     void Start()
     {
         _doorAnimator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         GetComponent<Collider>().enabled = IsDoorOpen;
